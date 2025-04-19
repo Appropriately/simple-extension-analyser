@@ -1,12 +1,12 @@
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { HashRouter, Route, Routes } from "react-router-dom";
-import Extension from "./routes/extension";
-import Home from "./routes/home";
+
 import Layout from "./routes/layout";
 
-function App() {
-  // const [count, setCount] = useState(0)
+const Home = lazy(() => import("./routes/home"));
+const Extension = lazy(() => import("./routes/extension"));
 
+function App() {
   useEffect(() => {
     (function () {
       const htmlElement = document.querySelector("html");
@@ -32,12 +32,14 @@ function App() {
 
   return (
     <HashRouter>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="/extension/:id" element={<Extension />} />
-        </Route>
-      </Routes>
+      <Suspense fallback={<div className="loading">Loading...</div>}>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="/extension/:id" element={<Extension />} />
+          </Route>
+        </Routes>
+      </Suspense>
     </HashRouter>
   );
 }
