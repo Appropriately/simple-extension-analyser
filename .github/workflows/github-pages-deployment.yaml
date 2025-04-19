@@ -35,9 +35,14 @@ jobs:
         with:
           node-version: lts/*
           cache: 'npm'
+      - name: Navigate to webapp directory
+        working-directory: ./webapp
+        run: echo "Navigating to webapp directory"
       - name: Install dependencies
+        working-directory: ./webapp
         run: npm ci
       - name: Build
+        working-directory: ./webapp
         run: npm run build
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -45,7 +50,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload dist folder
-          path: './dist'
+          path: './webapp/dist'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
