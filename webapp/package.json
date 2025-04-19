@@ -13,6 +13,7 @@
   "dependencies": {
     "@zip.js/zip.js": "^2.7.60",
     "bootstrap": "^5.3.5",
+    "bootstrap-icons": "^1.11.3",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },

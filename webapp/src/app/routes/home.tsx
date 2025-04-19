@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Extension } from "@/features/extension/utils/extension";
+import EntryTree from "@/features/extension/components/entry-tree";
 
 function Home() {
   const [extension, setExtension] = useState<Extension>();
@@ -49,54 +50,48 @@ function Home() {
 
   return (
     <div className="container">
-      <div className="card">
+      <div className="card mb-3">
         <div className="card-header">Browser Extension</div>
         <div className="card-body">
-          <div className="row">
-            <div className="col">
-              <input
-                type="file"
-                id="fileInput"
-                accept=".zip,.crx"
-                onChange={handleFileChange}
-              />
-            </div>
-
+          <div className="input-group">
+            <label className="input-group-text" htmlFor="inputGroupFile01">
+              Upload
+            </label>
+            <input
+              type="file"
+              id="fileInput"
+              accept=".zip,.crx"
+              className="form-control"
+              onChange={handleFileChange}
+            />
             {extension && (
-              <div className="col-auto">
-                <button
-                  onClick={() => {
-                    const fileInput = document.getElementById(
-                      "fileInput"
-                    ) as HTMLInputElement;
-                    if (fileInput) {
-                      fileInput.value = "";
-                      setExtension(undefined);
-                    }
-                  }}
-                  className="btn btn-sm btn-secondary ms-2"
-                >
-                  Clear
-                </button>
-              </div>
+              <button
+                onClick={() => {
+                  const fileInput = document.getElementById(
+                    "fileInput"
+                  ) as HTMLInputElement;
+                  if (fileInput) {
+                    fileInput.value = "";
+                    setExtension(undefined);
+                  }
+                }}
+                className="btn btn-outline-secondary"
+              >
+                Clear
+              </button>
             )}
           </div>
         </div>
-      </div>
+        {extension && (
+          <div className="card-footer">
+            <p>File Name: {extension.filename}</p>
 
-      {extension && (
-        <div>
-          <hr />
-          <h3>{extension.filename}</h3>
-          <ul>
-            {extension.entries().map((entry) => (
-              <li key={entry.filename}>
-                {entry.filename} {entry.directory ? "(directory)" : ""}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+            {extension.entryTree && (
+              <EntryTree rootNode={extension.entryTree} />
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
