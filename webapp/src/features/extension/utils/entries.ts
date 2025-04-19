@@ -1,7 +1,7 @@
 import { Entry } from "@zip.js/zip.js";
-import { EntityTreeNode } from "../types/entity";
+import { EntryTreeNode } from "../types/entry";
 
-export const ROOT_TREE_NODE: EntityTreeNode = {
+export const ROOT_TREE_NODE: EntryTreeNode = {
     name: ".",
     path: ".",
     entries: [],
@@ -11,17 +11,18 @@ export const ROOT_TREE_NODE: EntityTreeNode = {
 /**
  * Builds a tree structure from the given entries.
  * @param {Entry[]} entries - The entries to build the tree from.
- * @returns {EntityTreeNode} The root of the tree structure.
+ * @returns {EntryTreeNode} The root of the tree structure.
  */
-export const buildEntryTree = (entries: Entry[]): EntityTreeNode => {
-    const tree: EntityTreeNode = { ...ROOT_TREE_NODE }
-    const pathMap: { [key: string]: EntityTreeNode } = {};
+export const buildEntryTree = (entries: Entry[]): EntryTreeNode => {
+    const tree: EntryTreeNode = { ...ROOT_TREE_NODE }
+    const pathMap: { [key: string]: EntryTreeNode } = {};
     pathMap["."] = tree;
 
     entries.forEach((entry) => {
         // Early terminate for root entries
         if (entry.filename.split("/").length <= 1) {
             tree.entries!.push(entry);
+            tree.entries!.sort((a, b) => a.filename.localeCompare(b.filename));
             return;
         }
 
@@ -40,7 +41,7 @@ export const buildEntryTree = (entries: Entry[]): EntityTreeNode => {
         for (let i = 0; i < pathParts.length - 1; i++) {
             currentPath += "/" + pathParts[i];
             if (!pathMap[currentPath]) {
-                const node: EntityTreeNode = { name: pathParts[i], path: currentPath, entries: [], children: [] };
+                const node: EntryTreeNode = { name: pathParts[i], path: currentPath, entries: [], children: [] };
                 pathMap[currentPath] = node;
 
                 // Attach the node to its parent
@@ -48,6 +49,7 @@ export const buildEntryTree = (entries: Entry[]): EntityTreeNode => {
                 const parentNode = pathMap[parentPath];
                 if (parentNode) {
                     parentNode.children!.push(node);
+                    parentNode.children!.sort((a, b) => a.name.localeCompare(b.name));
                 }
             }
         }
@@ -58,11 +60,13 @@ export const buildEntryTree = (entries: Entry[]): EntityTreeNode => {
         }
 
         if (entry.directory) {
-            const node: EntityTreeNode = { name: pathParts[pathParts.length - 1], path: fullPath, entries: [], children: [] };
+            const node: EntryTreeNode = { name: pathParts[pathParts.length - 1], path: fullPath, entries: [], children: [] };
             parentNode.children!.push(node);
+            parentNode.children!.sort((a, b) => a.name.localeCompare(b.name));
             pathMap[fullPath] = node;
         } else {
             parentNode.entries!.push(entry);
+            parentNode.entries!.sort((a, b) => a.filename.localeCompare(b.filename));
         }
     });
 

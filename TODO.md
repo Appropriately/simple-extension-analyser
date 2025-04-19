@@ -6,8 +6,9 @@
 - [x] Extension ID routes
 - [x] Read imported extension
 - [ ] Build UI for flicking through files
+- [ ] Add store support for extension by id and version
+- [ ] Analyse extension manifest and reject if not valid
 - [ ] Build mechanism for analysing extension
-- [ ] Add store support
 - [ ] Add ability to store virustotal token
 
 ## Nice to have

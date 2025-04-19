@@ -1,5 +1,5 @@
 import { BlobReader, Entry, ZipReader } from "@zip.js/zip.js";
-import { EntityTreeNode } from "../types/entity";
+import { EntryTreeNode } from "../types/entry";
 import { buildEntryTree } from "./entries";
 
 
@@ -8,7 +8,7 @@ import { buildEntryTree } from "./entries";
  */
 export class Extension {
     filename?: string;
-    entityTree?: EntityTreeNode;
+    entryTree?: EntryTreeNode;
 
     /**
      * Sets up the extension class from a file.
@@ -18,7 +18,7 @@ export class Extension {
         const entries = await (new ZipReader(new BlobReader(file))).getEntries();
         this.filename = file.name;
 
-        this.entityTree = buildEntryTree(entries);
+        this.entryTree = buildEntryTree(entries);
     }
 
     /**
@@ -26,12 +26,12 @@ export class Extension {
      * @returns {Entry[]} An array of entries.
      */
     entries(): Entry[] {
-        if (!this.entityTree) {
+        if (!this.entryTree) {
             throw new Error("Entity tree is not initialized");
         }
 
         const entries: Entry[] = [];
-        const traverse = (node: EntityTreeNode) => {
+        const traverse = (node: EntryTreeNode) => {
             if (node.entries) {
                 entries.push(...node.entries);
             }
@@ -39,7 +39,7 @@ export class Extension {
                 node.children.forEach(traverse);
             }
         };
-        traverse(this.entityTree);
+        traverse(this.entryTree);
         return entries;
     }
 }

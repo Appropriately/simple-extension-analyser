@@ -1,8 +1,8 @@
 import { Entry } from "@zip.js/zip.js";
 
-export interface EntityTreeNode {
+export interface EntryTreeNode {
     name: string;
     path: string;
     entries: Entry[];
-    children: EntityTreeNode[];
+    children: EntryTreeNode[];
 }
