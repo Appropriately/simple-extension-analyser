@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import { ChangeEvent, useState } from "react";
+
+import Viewer from "@/features/extension/components/viewer";
+import EntryProvider from "@/features/extension/context/entry-provider";
 import { Extension } from "@/features/extension/utils/extension";
-import EntryTree from "@/features/extension/components/entry-tree";
 
 function Home() {
   const [extension, setExtension] = useState<Extension>();
 
-  const handleFileChange = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
 
     if (file) {
@@ -49,50 +49,49 @@ function Home() {
   };
 
   return (
-    <div className="container">
-      <div className="card mb-3">
-        <div className="card-header">Browser Extension</div>
-        <div className="card-body">
-          <div className="input-group">
-            <label className="input-group-text" htmlFor="inputGroupFile01">
-              Upload
-            </label>
-            <input
-              type="file"
-              id="fileInput"
-              accept=".zip,.crx"
-              className="form-control"
-              onChange={handleFileChange}
-            />
-            {extension && (
-              <button
-                onClick={() => {
-                  const fileInput = document.getElementById(
-                    "fileInput"
-                  ) as HTMLInputElement;
-                  if (fileInput) {
-                    fileInput.value = "";
-                    setExtension(undefined);
-                  }
-                }}
-                className="btn btn-outline-secondary"
-              >
-                Clear
-              </button>
-            )}
+    <EntryProvider>
+      <div className="container-fluid">
+        <div className="card mb-3">
+          <div className="card-header">Browser Extension</div>
+          <div className="card-body">
+            <div className="input-group">
+              <label className="input-group-text" htmlFor="inputGroupFile01">
+                Upload
+              </label>
+              <input
+                type="file"
+                id="fileInput"
+                accept=".zip,.crx"
+                className="form-control"
+                onChange={handleFileChange}
+              />
+              {extension && (
+                <button
+                  onClick={() => {
+                    const fileInput = document.getElementById(
+                      "fileInput"
+                    ) as HTMLInputElement;
+                    if (fileInput) {
+                      fileInput.value = "";
+                      setExtension(undefined);
+                    }
+                  }}
+                  className="btn btn-outline-secondary"
+                >
+                  Clear
+                </button>
+              )}
+            </div>
           </div>
-        </div>
-        {extension && (
-          <div className="card-footer">
-            <p>File Name: {extension.filename}</p>
 
-            {extension.entryTree && (
-              <EntryTree rootNode={extension.entryTree} />
-            )}
-          </div>
-        )}
+          {extension && (
+            <div className="mx-3">
+              <Viewer extension={extension} />
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </EntryProvider>
   );
 }
 

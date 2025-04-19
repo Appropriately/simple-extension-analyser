@@ -1,8 +1,12 @@
 import { Entry } from "@zip.js/zip.js";
 
+export interface ExtendedEntry extends Entry {
+    _?: string;
+}
+
 export interface EntryTreeNode {
     name: string;
     path: string;
-    entries: Entry[];
+    entries: ExtendedEntry[];
     children: EntryTreeNode[];
 }
