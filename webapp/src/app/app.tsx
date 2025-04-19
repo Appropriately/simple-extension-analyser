@@ -1,8 +1,8 @@
 import { useEffect } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Home from "./routes/Home";
-import Layout from "./routes/Layout";
-import Extension from "./routes/Extension";
+import { HashRouter, Route, Routes } from "react-router-dom";
+import Extension from "./routes/extension";
+import Home from "./routes/home";
+import Layout from "./routes/layout";
 
 function App() {
   // const [count, setCount] = useState(0)
@@ -31,14 +31,14 @@ function App() {
   });
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="/extension/:id" element={<Extension />} />
         </Route>
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
