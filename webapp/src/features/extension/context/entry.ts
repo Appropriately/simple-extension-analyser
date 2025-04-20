@@ -4,7 +4,7 @@ import { ExtendedEntry } from '@/features/extension/types/entry';
 
 interface EntryContextType {
   entry?: ExtendedEntry;
-  setEntry: (entry: ExtendedEntry) => void;
+  setEntry: (entry?: ExtendedEntry) => void;
 }
 
 export const EntryContext = createContext<EntryContextType | undefined>(undefined);

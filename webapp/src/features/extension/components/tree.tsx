@@ -7,7 +7,7 @@ function Tree({ rootNode }: { rootNode: EntryTreeNode }) {
   return (
     <>
       <nav className='tree'>
-        <Node node={rootNode} />
+        <Node node={rootNode} level={0} />
       </nav>
     </>
   );

@@ -1,8 +1,11 @@
-import { TextWriter } from "@zip.js/zip.js";
 import { useEffect, useState } from "react";
+
+import CodeBlock from "@/components/code";
+import { TextWriter } from "@zip.js/zip.js";
+
 import { ExtendedEntry } from "../types/entry";
 
-const ALLOWED_EXTENSIONS = [".json", ".txt", ".md", ".js"];
+const ALLOWED_EXTENSIONS = [".json", ".txt", ".md", ".js", ".html", ".css"];
 
 function Entry({ entry }: { entry: ExtendedEntry }) {
   const [rawData, setRawData] = useState<string>();
@@ -28,17 +31,9 @@ function Entry({ entry }: { entry: ExtendedEntry }) {
 
   return (
     <div className="entry">
-      <h2>{entry.filename}</h2>
       <p>Size: {entry.uncompressedSize} bytes</p>
       <p>Last modified: {new Date(entry.lastModDate).toLocaleString()}</p>
-      <p>Raw data:</p>
-      {rawData ? (
-        <pre>
-          <code className="text-break">{rawData}</code>
-        </pre>
-      ) : (
-        <p>No raw data available</p>
-      )}
+      {rawData ? <CodeBlock raw={rawData} /> : <p>No raw data available</p>}
     </div>
   );
 }
