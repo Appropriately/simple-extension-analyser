@@ -1,6 +1,7 @@
 import { useEntryContext } from "../context/entry";
 import { Extension } from "../utils/extension";
-import Entry from "./entry";
+import EntryView from "./entry-view";
+import ExtensionView from "./extension-view";
 import Tree from "./tree";
 
 function Viewer({ extension }: { extension: Extension }) {
@@ -34,7 +35,7 @@ function Viewer({ extension }: { extension: Extension }) {
           </ol>
         </nav>
 
-        {entry && <Entry entry={entry} />}
+        {entry ? <EntryView entry={entry} /> : <ExtensionView extension={extension} />}
       </div>
     </div>
   );

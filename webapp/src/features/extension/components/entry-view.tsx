@@ -7,7 +7,7 @@ import { ExtendedEntry } from "../types/entry";
 
 const ALLOWED_EXTENSIONS = [".json", ".txt", ".md", ".js", ".html", ".css"];
 
-function Entry({ entry }: { entry: ExtendedEntry }) {
+function EntryView({ entry }: { entry: ExtendedEntry }) {
   const [rawData, setRawData] = useState<string>();
 
   useEffect(() => {
@@ -38,4 +38,4 @@ function Entry({ entry }: { entry: ExtendedEntry }) {
   );
 }
 
-export default Entry;
+export default EntryView;

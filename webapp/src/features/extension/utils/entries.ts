@@ -1,5 +1,7 @@
-import { Entry } from "@zip.js/zip.js";
-import { EntryTreeNode } from "../types/entry";
+import { Entry, TextWriter } from '@zip.js/zip.js';
+
+import { EntryTreeNode } from '../types/entry';
+import { Manifest } from '../types/manifest';
 
 export const ROOT_TREE_NODE: EntryTreeNode = {
     name: ".",
@@ -9,11 +11,23 @@ export const ROOT_TREE_NODE: EntryTreeNode = {
 };
 
 /**
- * Builds a tree structure from the given entries.
- * @param {Entry[]} entries - The entries to build the tree from.
- * @returns {EntryTreeNode} The root of the tree structure.
+ * Reads the manifest from the given entry.
+ * @param entry - The entry to parse.
+ * @returns The parsed manifest.
  */
-export const buildEntryTree = (entries: Entry[]): EntryTreeNode => {
+export const parseManifestEntry = async (entry: Entry) => {
+    if (!entry) throw new Error("Entry is undefined");
+    if (!entry.getData) throw new Error("Entry does not have getData method");
+
+    return JSON.parse(await entry.getData(new TextWriter())) as Manifest;
+}
+
+/**
+ * Builds a tree structure from the given entries.
+ * @param entries - The entries to build the tree from.
+ * @returns The root of the tree structure.
+ */
+export const buildEntryTree = async (entries: Entry[]) => {
     const tree: EntryTreeNode = { ...ROOT_TREE_NODE }
     const pathMap: { [key: string]: EntryTreeNode } = {};
     pathMap["."] = tree;

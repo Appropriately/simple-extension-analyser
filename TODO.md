@@ -6,6 +6,7 @@
 - [x] Extension ID routes
 - [x] Read imported extension
 - [x] Build UI for flicking through files
+- [ ] Improve loading UI
 - [ ] Add store support for extension by id and version
 - [ ] Analyse extension manifest and reject if not valid
 - [ ] Build mechanism for analysing extension

@@ -40,7 +40,7 @@ function Node({ node, level }: NodeProps) {
   return (
     <ul aria-level={level}>
       {node.children.map((child) => (
-        <Directory node={child} level={level} />
+        <Directory node={child} level={level} key={child.path} />
       ))}
 
       {node.entries.map((currentEntry) => (

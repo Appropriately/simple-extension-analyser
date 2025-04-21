@@ -1,7 +1,8 @@
-import { BlobReader, Entry, ZipReader } from "@zip.js/zip.js";
-import { EntryTreeNode } from "../types/entry";
-import { buildEntryTree } from "./entries";
+import { BlobReader, Entry, ZipReader } from '@zip.js/zip.js';
 
+import { EntryTreeNode } from '../types/entry';
+import { Manifest } from '../types/manifest';
+import { buildEntryTree, parseManifestEntry } from './entries';
 
 /**
  * Represents a browser extension.
@@ -10,15 +11,30 @@ export class Extension {
     filename?: string;
     entryTree?: EntryTreeNode;
 
+    manifest?: Manifest;
+
     /**
      * Sets up the extension class from a file.
      * @param {File} file - The file to set up the extension from.
      */
     async setupFromFile(file: File) {
-        const entries = await (new ZipReader(new BlobReader(file))).getEntries();
         this.filename = file.name;
 
-        this.entryTree = buildEntryTree(entries);
+        const entries = await (new ZipReader(new BlobReader(file))).getEntries();
+        this.entryTree = await buildEntryTree(entries);
+
+        this.entries().forEach(async (entry) => {
+            if (entry.filename.endsWith("manifest.json")) parseManifestEntry(entry).then((manifest) => {
+                this.manifest = manifest;
+            })
+        })
+
+        if (!this.entryTree) {
+            throw new Error("Failed to build entry tree");
+        }
+        if (!this.manifest) {
+            throw new Error("Failed to parse manifest");
+        }
     }
 
     /**
