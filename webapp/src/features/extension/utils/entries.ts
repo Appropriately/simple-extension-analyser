@@ -3,13 +3,6 @@ import { Entry, TextWriter } from "@zip.js/zip.js";
 import { EntryTreeNode } from "../types/entry";
 import { Manifest } from "../types/manifest";
 
-export const ROOT_TREE_NODE: EntryTreeNode = {
-    name: ".",
-    path: ".",
-    entries: [],
-    children: [],
-};
-
 /**
  * Reads the manifest from the given entry.
  * @param entry - The entry to parse.
@@ -28,7 +21,13 @@ export const parseManifestEntry = async (entry: Entry) => {
  * @returns The root of the tree structure.
  */
 export const buildEntryTree = async (entries: Entry[]) => {
-    const tree: EntryTreeNode = { ...ROOT_TREE_NODE }
+    const tree: EntryTreeNode = {
+        name: ".",
+        path: ".",
+        entries: [],
+        children: []
+    }
+
     const pathMap: { [key: string]: EntryTreeNode } = {};
     pathMap["."] = tree;
 
@@ -41,15 +40,11 @@ export const buildEntryTree = async (entries: Entry[]) => {
         }
 
         let fullPath = "./" + entry.filename;
-        if (fullPath.endsWith("/")) {
-            fullPath = fullPath.slice(0, -1);
-        }
+        if (fullPath.endsWith("/")) fullPath = fullPath.slice(0, -1);
 
         // Get the appropriate tier of the pathMap. If each layer of the path is not already in the map, create it.
         const pathParts = entry.filename.split("/");
-        if (pathParts[pathParts.length - 1] === "") {
-            pathParts.pop();
-        }
+        if (pathParts[pathParts.length - 1] === "") pathParts.pop();
 
         let currentPath = ".";
         for (let i = 0; i < pathParts.length - 1; i++) {
@@ -69,9 +64,7 @@ export const buildEntryTree = async (entries: Entry[]) => {
         }
 
         const parentNode = pathMap[currentPath];
-        if (!parentNode) {
-            throw new Error(`Parent node not found for path: ${currentPath}`);
-        }
+        if (!parentNode) throw new Error(`Parent node not found for path: ${currentPath}`);
 
         if (entry.directory) {
             const node: EntryTreeNode = { name: pathParts[pathParts.length - 1], path: fullPath, entries: [], children: [] };

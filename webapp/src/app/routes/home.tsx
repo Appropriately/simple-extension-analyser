@@ -3,21 +3,23 @@ import { ChangeEvent, useState } from "react";
 import EntryProvider from "@/features/extension/components/entry-provider";
 import Viewer from "@/features/extension/components/viewer";
 import { Extension } from "@/features/extension/utils/extension";
+import { useToasts } from "@/features/toasts/hooks/toasts";
 
 function Home() {
   const [extension, setExtension] = useState<Extension>();
+  const toasts = useToasts();
 
   const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
 
     if (file) {
+      setExtension(undefined);
+
       const validExtensions = [".zip", ".crx"];
       const fileExtension = file.name.slice(file.name.lastIndexOf("."));
 
       if (!validExtensions.includes(fileExtension)) {
-        console.error(
-          "Invalid file type. Please upload a browser extension file."
-        );
+        toasts.error(new Error("Invalid file type. Please upload a browser extension file."));
         return;
       }
 
@@ -38,11 +40,19 @@ function Home() {
       };
 
       reader.onerror = () => {
-        console.error("Error reading file:", reader.error);
+        if (reader.error instanceof Error) toasts.error(reader.error);
       };
 
       const extension = new Extension();
-      await extension.setupFromFile(file);
+
+      try {
+        await extension.setupFromFile(file);
+      } catch (error) {
+        if (error instanceof Error) toasts.error(error);
+
+        console.error("Error setting up extension:", error);
+        return;
+      }
 
       setExtension(extension);
     }

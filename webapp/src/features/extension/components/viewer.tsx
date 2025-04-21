@@ -15,6 +15,14 @@ function Viewer({ extension }: { extension: Extension }) {
         </div>
       )}
 
+      <div className="d-none">{extension.entries().map(
+        (entry) => (
+          <div key={entry.filename} className="d-none">
+            {entry.filename}
+          </div>
+        )
+      )}</div>
+
       <div className="col-md-8 col-lg-9 col-xl-10">
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb">

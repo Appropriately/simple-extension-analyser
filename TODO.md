@@ -1,5 +1,10 @@
 # TODO <!-- omit in toc -->
 
+## Table of Contents <!-- omit in toc -->
+
+- [Critical](#critical)
+- [Nice to have](#nice-to-have)
+
 ## Critical
 
 - [x] Build basic app
