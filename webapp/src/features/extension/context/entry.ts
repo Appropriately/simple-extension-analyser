@@ -1,6 +1,6 @@
-import { createContext, useContext } from 'react';
+import { createContext, useContext } from "react";
 
-import { ExtendedEntry } from '@/features/extension/types/entry';
+import { ExtendedEntry } from "@/features/extension/types/entry";
 
 interface EntryContextType {
   entry?: ExtendedEntry;

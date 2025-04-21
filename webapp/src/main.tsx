@@ -1,13 +1,13 @@
-import 'bootstrap/dist/css/bootstrap.css';
-import './main.scss';
+import "bootstrap/dist/css/bootstrap.css";
+import "./main.scss";
 
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
 
-import App from './app/app.tsx';
+import App from "./app/app.tsx";
 
-createRoot(document.getElementById('root')!).render(
+createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <App />
-  </StrictMode>,
-)
+  </StrictMode>
+);

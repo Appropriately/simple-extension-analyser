@@ -3,15 +3,15 @@
  * Common structure for V2 and V3.
  */
 type IconPaths = string | {
-    '16'?: string;
-    '19'?: string; // Often used for browser actions
-    '24'?: string;
-    '32'?: string;
-    '38'?: string; // Often used for browser actions
-    '48'?: string;
-    '64'?: string;
-    '96'?: string;
-    '128'?: string;
+    "16"?: string;
+    "19"?: string; // Often used for browser actions
+    "24"?: string;
+    "32"?: string;
+    "38"?: string; // Often used for browser actions
+    "48"?: string;
+    "64"?: string;
+    "96"?: string;
+    "128"?: string;
     [size: string]: string | undefined; // Allow other numeric string keys
 };
 
@@ -58,12 +58,12 @@ interface ContentScript {
     exclude_matches?: string[];
     css?: string[];
     js?: string[];
-    run_at?: 'document_start' | 'document_end' | 'document_idle';
+    run_at?: "document_start" | "document_end" | "document_idle";
     match_about_blank?: boolean; // Primarily V3? Check browser docs
     all_frames?: boolean;
     include_globs?: string[]; // Firefox specific
     exclude_globs?: string[]; // Firefox specific
-    world?: 'ISOLATED' | 'MAIN'; // V3 only: Specify JS execution world
+    world?: "ISOLATED" | "MAIN"; // V3 only: Specify JS execution world
 }
 
 /**
@@ -159,7 +159,7 @@ interface BaseManifest {
     // file_browser_handlers, file_system_provider_capabilities - Chrome OS specific, assume common structure if used
     homepage_url?: string;
     // import/export - Deprecated but structurally common if used
-    incognito?: 'spanning' | 'split' | 'not_allowed';
+    incognito?: "spanning" | "split" | "not_allowed";
     key?: string; // Development key
     minimum_chrome_version?: string; // Common
     // minimum_edge_version, minimum_firefox_version - Custom additions, check specs
@@ -171,7 +171,7 @@ interface BaseManifest {
     options_ui?: OptionsUI; // V3 style preferred
     // platforms - Deprecated (Chrome Apps)
     // replacement_web_app - Deprecated (Chrome Apps)
-    requirements?: { '3D'?: { features: string[] }; plugins?: { npapi?: boolean } }; // NPAPI deprecated
+    requirements?: { "3D"?: { features: string[] }; plugins?: { npapi?: boolean } }; // NPAPI deprecated
     sandbox?: { pages: string[]; content_security_policy?: string }; // Primarily V3? Check V2 usage
     short_name?: string;
     // signature - Added by store
@@ -209,7 +209,7 @@ export interface ManifestV3 extends BaseManifest {
 
     background?: {
         service_worker: string; // V3: Service worker path is required for background logic
-        type?: 'module';
+        type?: "module";
     };
 
     action?: ActionV3; // V3: Unified action

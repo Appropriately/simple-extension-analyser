@@ -1,7 +1,7 @@
-import { Entry, TextWriter } from '@zip.js/zip.js';
+import { Entry, TextWriter } from "@zip.js/zip.js";
 
-import { EntryTreeNode } from '../types/entry';
-import { Manifest } from '../types/manifest';
+import { EntryTreeNode } from "../types/entry";
+import { Manifest } from "../types/manifest";
 
 export const ROOT_TREE_NODE: EntryTreeNode = {
     name: ".",

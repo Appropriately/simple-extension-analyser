@@ -1,7 +1,7 @@
-import './tree.scss';
+import "./tree.scss";
 
-import { EntryTreeNode } from '../types/entry';
-import Node from './node';
+import { EntryTreeNode } from "../types/entry";
+import Node from "./node";
 
 function Tree({ rootNode }: { rootNode: EntryTreeNode }) {
   return (

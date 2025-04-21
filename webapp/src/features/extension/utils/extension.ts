@@ -1,8 +1,8 @@
-import { BlobReader, Entry, ZipReader } from '@zip.js/zip.js';
+import { BlobReader, Entry, ZipReader } from "@zip.js/zip.js";
 
-import { EntryTreeNode } from '../types/entry';
-import { Manifest } from '../types/manifest';
-import { buildEntryTree, parseManifestEntry } from './entries';
+import { EntryTreeNode } from "../types/entry";
+import { Manifest } from "../types/manifest";
+import { buildEntryTree, parseManifestEntry } from "./entries";
 
 /**
  * Represents a browser extension.

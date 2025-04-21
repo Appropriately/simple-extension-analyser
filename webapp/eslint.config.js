@@ -4,6 +4,7 @@ import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
 import tseslint from "typescript-eslint";
 import checkFile from 'eslint-plugin-check-file';
+import stylistic from '@stylistic/eslint-plugin'
 
 export default tseslint.config(
   { ignores: ["dist"] },
@@ -18,9 +19,15 @@ export default tseslint.config(
       "react-hooks": reactHooks,
       "react-refresh": reactRefresh,
       'check-file': checkFile,
+      stylistic: stylistic
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
+      "stylistic/quotes": [
+        "error",
+        "double",
+        { avoidEscape: true, allowTemplateLiterals: true },
+      ],
       "react-refresh/only-export-components": [
         "warn",
         { allowConstantExport: true },

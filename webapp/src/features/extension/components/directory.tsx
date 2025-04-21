@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-import Icon from '@/components/icon';
+import Icon from "@/components/icon";
 
-import { EntryTreeNode } from '../types/entry';
-import Node from './node';
+import { EntryTreeNode } from "../types/entry";
+import Node from "./node";
 
 interface DirectoryProps {
   node: EntryTreeNode;
