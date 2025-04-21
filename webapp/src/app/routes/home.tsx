@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from "react";
 
+import EntryProvider from "@/features/extension/components/entry-provider";
 import Viewer from "@/features/extension/components/viewer";
-import EntryProvider from "@/features/extension/context/entry-provider";
 import { Extension } from "@/features/extension/utils/extension";
 
 function Home() {
