@@ -26,7 +26,7 @@ function Viewer({ extension }: { extension: Extension }) {
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
               {entry ? (
-                <a href="#" onClick={() => setEntry(undefined)}>
+                <a href="javascript:;" onClick={() => setEntry(undefined)}>
                   {extension.filename}
                 </a>
               ) : (
