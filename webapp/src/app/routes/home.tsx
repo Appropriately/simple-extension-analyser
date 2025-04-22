@@ -1,9 +1,11 @@
 import { ChangeEvent, useState } from "react";
 
-import EntryProvider from "@/features/extension/components/entry-provider";
-import Viewer from "@/features/extension/components/viewer";
-import { Extension } from "@/features/extension/utils/extension";
-import { useToasts } from "@/features/toasts/hooks/toasts";
+import {
+  EntryProvider,
+  Extension,
+  ExtensionViewer,
+} from "@/features/extension";
+import { useToasts } from "@/features/toasts";
 
 function Home() {
   const [extension, setExtension] = useState<Extension>();
@@ -19,7 +21,11 @@ function Home() {
       const fileExtension = file.name.slice(file.name.lastIndexOf("."));
 
       if (!validExtensions.includes(fileExtension)) {
-        toasts.error(new Error("Invalid file type. Please upload a browser extension file."));
+        toasts.error(
+          new Error(
+            "Invalid file type. Please upload a browser extension file."
+          )
+        );
         return;
       }
 
@@ -96,7 +102,7 @@ function Home() {
 
           {extension && (
             <div className="mx-3">
-              <Viewer extension={extension} />
+              <ExtensionViewer extension={extension} />
             </div>
           )}
         </div>

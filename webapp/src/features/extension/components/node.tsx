@@ -1,4 +1,4 @@
-import { useEntryContext } from "@/features/extension/context/entry";
+import { useEntryContext } from "../context/entry";
 import Icon from "@/components/icon";
 
 import { EntryTreeNode, ExtendedEntry } from "../types/entry";

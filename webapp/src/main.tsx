@@ -3,8 +3,9 @@ import "./styles/main.scss";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
+import { ToastsProvider } from "@/features/toasts";
+
 import App from "./app/app.tsx";
-import ToastsProvider from "./features/toasts/components/toast-provider.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
