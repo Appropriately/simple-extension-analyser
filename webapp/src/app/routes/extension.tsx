@@ -3,26 +3,24 @@ import { useParams } from "react-router-dom";
 import { EntryProvider, ExtensionViewer } from "@/features/extension";
 import { store } from "@/stores";
 
+const ExtensionNotFound = ({ id }: { id?: string }) => {
+  return (
+    <div className="container py-3">
+      <div className="text-center">
+        <h3 className="m-0">Extension '{id}' not found!</h3>
+      </div>
+    </div>
+  );
+};
+
 function Extension() {
   const { id } = useParams();
 
-  if (!id) return <div>Extension not found !</div>;
+  if (!id) return ExtensionNotFound({ id });
 
   // TODO: Look into useSelector instead of the getState approach.
   const extension = store.getState().extensions.extensions[id];
-  if (!extension)
-    return (
-      <div>
-        Extension not found !<br />
-        <pre>
-          {JSON.stringify(
-            Object.keys(store.getState().extensions.extensions),
-            null,
-            2
-          )}
-        </pre>
-      </div>
-    );
+  if (!extension) return ExtensionNotFound({ id });
 
   return (
     <EntryProvider>
