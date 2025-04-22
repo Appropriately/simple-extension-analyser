@@ -1,27 +1,24 @@
-import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-import {
-  EntryProvider,
-  Extension,
-  ExtensionSelect,
-  ExtensionViewer,
-} from "@/features/extension";
+import { Extension, ExtensionSelect } from "@/features/extension";
+import { addExtension } from "@/stores";
 
 function Home() {
-  const [extension, setExtension] = useState<Extension>();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const setExtension = (extension?: Extension) => {
+    if (!extension) return;
+
+    dispatch(addExtension({ extension }));
+    navigate(`/extension/${extension.id()}`);
+  };
 
   return (
-    <EntryProvider>
-      <div className="container-fluid mb-3">
-        <ExtensionSelect onUpdate={(extension) => setExtension(extension)} />
-
-        {extension && (
-          <div className="mx-3">
-            <ExtensionViewer extension={extension} />
-          </div>
-        )}
-      </div>
-    </EntryProvider>
+    <div className="container my-3">
+      <ExtensionSelect onUpdate={setExtension} />
+    </div>
   );
 }
 

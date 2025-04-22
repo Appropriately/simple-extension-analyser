@@ -4,7 +4,7 @@ import Icon from "@/components/icon";
 const Layout = () => {
   return (
     <>
-      <nav className="navbar navbar-expand bg-body-tertiary mb-3">
+      <nav className="navbar navbar-expand bg-secondary-subtle border-bottom position-relative">
         <div className="container-fluid">
           <Link to="/" className="navbar-brand">
             <div className="d-inline-flex align-items-center">

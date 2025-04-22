@@ -8,6 +8,8 @@ import { buildEntryTree, parseManifestEntry } from "./entries";
  * Represents a browser extension.
  */
 export class Extension {
+    extensionId?: string;
+
     filename?: string;
     entryTree?: EntryTreeNode;
 
@@ -33,6 +35,13 @@ export class Extension {
 
         if (!this.entryTree) throw new Error("Failed to build entry tree");
         if (!this.manifest) throw new Error("Failed to parse manifest");
+    }
+
+    id(): string {
+        if (this.extensionId) return this.extensionId;
+
+        // TODO: Implement a proper ID generation/pulling method. Likely needs to hash the name / version.
+        return "!";
     }
 
     /**

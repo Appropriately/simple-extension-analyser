@@ -1,3 +1,5 @@
+import "../styles/viewer.scss";
+
 import { useEntryContext } from "../context/entry";
 import { Extension } from "../utils/extension";
 import EntryView from "./entry-view";
@@ -8,23 +10,19 @@ function Viewer({ extension }: { extension: Extension }) {
   const { entry, setEntry } = useEntryContext();
 
   return (
-    <div className="row">
+    <div className="row vh-100">
       {extension.entryTree && (
-        <div className="col-md-4 col-lg-3 col-xl-2">
+        <div
+          className="col-md-4 col-lg-3 col-xl-2 py-1 border-end scrollable-max-height"
+        >
           <Tree rootNode={extension.entryTree} />
         </div>
       )}
 
-      <div className="d-none">{extension.entries().map(
-        (entry) => (
-          <div key={entry.filename} className="d-none">
-            {entry.filename}
-          </div>
-        )
-      )}</div>
-
-      <div className="col-md-8 col-lg-9 col-xl-10">
-        <nav aria-label="breadcrumb">
+      <div
+        className="col-md-8 col-lg-9 col-xl-10 scrollable-max-height"
+      >
+        <nav className="my-3" aria-label="breadcrumb">
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
               {entry ? (
@@ -43,7 +41,11 @@ function Viewer({ extension }: { extension: Extension }) {
           </ol>
         </nav>
 
-        {entry ? <EntryView entry={entry} /> : <ExtensionView extension={extension} />}
+        {entry ? (
+          <EntryView entry={entry} />
+        ) : (
+          <ExtensionView extension={extension} />
+        )}
       </div>
     </div>
   );
