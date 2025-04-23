@@ -14,12 +14,15 @@
 - [x] Analyse extension manifest and reject if not valid
 - [x] Improve loading UI
 - [ ] Add store support for extension by id and version
+- [ ] Async handling of entry opening.
+- [ ] Render line numbers for code blocks.
 - [ ] Build mechanism for analysing extension
 - [ ] Add ability to store virustotal token
 
 ## Nice to have
 
 - [ ] Solid error handling
+- [ ] Improve rendering of entry tree
 - [ ] Improve light mode rendering
 - [ ] Translation support
 - [ ] Allow directories to be selected.

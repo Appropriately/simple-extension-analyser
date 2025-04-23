@@ -33,7 +33,8 @@ function EntryView({ entry }: { entry: ExtendedEntry }) {
     <div className="entry">
       <p>Size: {entry.uncompressedSize} bytes</p>
       <p>Last modified: {new Date(entry.lastModDate).toLocaleString()}</p>
-      {rawData ? <CodeBlock raw={rawData} /> : <p>No raw data available</p>}
+
+      {rawData ? <CodeBlock language={entry.filename.split(".").pop()} raw={rawData} /> : null}
     </div>
   );
 }
