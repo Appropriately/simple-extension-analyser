@@ -1,9 +1,21 @@
+import { combineReducers } from "redux";
+import { persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+
 import { configureStore } from "@reduxjs/toolkit";
 
-import { extensionsSlice } from "./extensions";
+import { extensionsSlice } from "./reducers";
+
+const reducers = combineReducers({
+    extensions: extensionsSlice.reducer,
+});
+
+const persistConfig = {
+    key: "root",
+    storage,
+    whitelist: ["extensions"],
+};
 
 export default configureStore({
-    reducer: {
-        extensions: extensionsSlice.reducer,
-    },
-})
+    reducer: persistReducer(persistConfig, reducers),
+});
