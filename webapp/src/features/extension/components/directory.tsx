@@ -14,8 +14,8 @@ function Directory({ node, level }: DirectoryProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <li className={`directory${isOpen ? " open" : ""}`} key={node.path}>
-      <button className="btn btn-link" onClick={() => setIsOpen(!isOpen)}>
+    <li key={node.path}>
+      <button className={`btn btn-link directory${isOpen ? " open" : ""}`} onClick={() => setIsOpen(!isOpen)}>
         <Icon icon={isOpen ? "folder-minus" : "folder-plus"} className="me-2" />
         <span>{node.name}</span>
       </button>

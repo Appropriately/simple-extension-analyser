@@ -13,7 +13,7 @@ function Viewer({ extension }: { extension: Extension }) {
     <div className="row vh-100">
       {extension.entryTree && (
         <div
-          className="col-md-4 col-lg-3 col-xl-2 py-1 border-end scrollable-max-height"
+          className="col-md-4 col-lg-3 col-xl-2 pt-2 ps-1 border-end scrollable-max-height"
         >
           <Tree rootNode={extension.entryTree} />
         </div>

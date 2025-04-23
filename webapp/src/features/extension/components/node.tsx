@@ -18,6 +18,7 @@ function Node({ node, level }: NodeProps) {
       case "json":
         return <Icon icon="filetype-json" className="me-2" />;
       case "js":
+        return <Icon icon="filetype-js" className="me-2" />;
       case "ts":
       case "jsx":
       case "tsx":
@@ -44,15 +45,11 @@ function Node({ node, level }: NodeProps) {
       ))}
 
       {node.entries.map((currentEntry) => (
-        <li
-          key={currentEntry.filename}
-          aria-level={level}
-          className={`${
-            entry?.filename == currentEntry.filename ? "selected" : ""
-          }`}
-        >
+        <li key={currentEntry.filename} aria-level={level}>
           <button
-            className="btn btn-link"
+            className={`btn btn-link${
+              entry?.filename == currentEntry.filename ? " selected" : ""
+            }`}
             onClick={() => setEntry(currentEntry)}
           >
             {entryToIcon(currentEntry)}
