@@ -13,7 +13,7 @@ const reducers = combineReducers({
 const persistConfig = {
     key: "root",
     storage,
-    whitelist: ["extensions"],
+    // whitelist: ["extensions"], // TODO: Handle serialisation issues with extensions
 };
 
 export default configureStore({
