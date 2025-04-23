@@ -1,7 +1,9 @@
 import { ChangeEvent } from "react";
 
 import { useToasts } from "@/features/toasts";
-import { Extension } from "..";
+
+import { Extension } from "../";
+import { setupExtensionFromFile } from "../utils";
 
 interface ExtensionSelectProps {
   cardClassName?: string;
@@ -49,18 +51,15 @@ function ExtensionSelect({ cardClassName, onUpdate }: ExtensionSelectProps) {
         if (reader.error instanceof Error) toasts.error(reader.error);
       };
 
-      const extension = new Extension();
-
       try {
-        await extension.setupFromFile(file);
+        const extension = await setupExtensionFromFile(file);
+        onUpdate?.(extension);
       } catch (error) {
         if (error instanceof Error) toasts.error(error);
 
         console.error("Error setting up extension:", error);
         return;
       }
-
-      onUpdate?.(extension);
     }
   };
 

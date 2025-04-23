@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { Extension, ExtensionSelect } from "@/features/extension";
+import { Extension, ExtensionSelect, getExtensionId } from "@/features/extension";
 import { addExtension } from "@/stores";
 
 function Home() {
@@ -12,7 +12,7 @@ function Home() {
     if (!extension) return;
 
     dispatch(addExtension({ extension }));
-    navigate(`/extension/${extension.id()}`);
+    navigate(`/extension/${getExtensionId(extension)}`);
   };
 
   return (

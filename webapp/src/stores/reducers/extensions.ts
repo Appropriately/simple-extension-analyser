@@ -1,4 +1,4 @@
-import { Extension } from "@/features/extension";
+import { Extension, getExtensionId } from "@/features/extension";
 import { createSlice } from "@reduxjs/toolkit";
 
 interface ExtensionsById {
@@ -19,15 +19,11 @@ export const extensionsSlice = createSlice({
     reducers: {
         addExtension: (state, action) => {
             const { extension } = action.payload;
-            state.extensions[extension.id()] = extension;
+            state.extensions[getExtensionId(extension)] = extension;
         },
         removeExtension: (state, action) => {
             const { id } = action.payload;
             delete state.extensions[id];
-        },
-        updateExtension: (state, action) => {
-            const { extension } = action.payload;
-            state.extensions[extension.id()] = extension;
         },
         clearExtensions: (state) => {
             state.extensions = {};
@@ -35,4 +31,4 @@ export const extensionsSlice = createSlice({
     },
 });
 
-export const { addExtension, removeExtension, updateExtension, clearExtensions } = extensionsSlice.actions;
+export const { addExtension, removeExtension, clearExtensions } = extensionsSlice.actions;

@@ -1,7 +1,6 @@
 import { Entry, TextWriter } from "@zip.js/zip.js";
 
-import { EntryTreeNode } from "../types/entry";
-import { Manifest } from "../types/manifest";
+import { EntryTreeNode, ExtendedEntry, Extension, Manifest } from "../types";
 
 /**
  * Reads the manifest from the given entry.
@@ -79,3 +78,32 @@ export const buildEntryTree = async (entries: Entry[]) => {
 
     return tree;
 };
+
+/**
+ * Reads through the entry tree, returning all entries.
+ * @param extension - The extension to read the entries from.
+ * @returns An array of entries.
+ */
+export const getEntries = (extension: Extension): ExtendedEntry[] => {
+    if (!extension.entryTree) throw new Error("Entity tree is not initialized");
+
+    const entries: ExtendedEntry[] = [];
+    const traverse = (node: EntryTreeNode) => {
+        if (node.entries) entries.push(...node.entries);
+        if (node.children) node.children.forEach(traverse);
+    };
+    traverse(extension.entryTree);
+    return entries;
+}
+
+/**
+ * Gets the data from the given entry.
+ * @param entry - The entry to get the data from.
+ * @returns The raw data of an entry, represented as a string.
+ */
+export const getEntryData = async (entry: ExtendedEntry) => {
+    if (!entry) throw new Error("Entry is undefined");
+    if (!entry.getData) throw new Error("Entry does not have getData method");
+
+    return await entry.getData(new TextWriter());
+}

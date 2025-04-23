@@ -2,7 +2,7 @@ import { lazy, Suspense, useEffect } from "react";
 import { HashRouter, Route, Routes } from "react-router-dom";
 
 import Loading from "@/components/loading";
-import { updateTheme } from "@/features/extension/utils/theme";
+import { updateTheme } from "@/utils";
 
 import Layout from "./routes/layout";
 

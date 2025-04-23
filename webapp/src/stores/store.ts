@@ -18,4 +18,10 @@ const persistConfig = {
 
 export default configureStore({
     reducer: persistReducer(persistConfig, reducers),
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            serializableCheck: {
+                ignoredActions: ["persist/PERSIST", "persist/REHYDRATE"],
+            },
+        }),
 });

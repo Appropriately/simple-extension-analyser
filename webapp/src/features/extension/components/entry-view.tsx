@@ -1,40 +1,44 @@
 import { useEffect, useState } from "react";
 
 import CodeBlock from "@/components/code";
-import { TextWriter } from "@zip.js/zip.js";
 
-import { ExtendedEntry } from "../types/entry";
+import { getEntryData } from "../utils";
+import { ExtendedEntry } from "../types";
+import { useToasts } from "@/features/toasts";
 
 const ALLOWED_EXTENSIONS = [".json", ".txt", ".md", ".js", ".html", ".css"];
 
 function EntryView({ entry }: { entry: ExtendedEntry }) {
   const [rawData, setRawData] = useState<string>();
 
+  const toasts = useToasts();
+
   useEffect(() => {
-    if (
-      ALLOWED_EXTENSIONS.some((ext) => entry.filename.endsWith(ext)) &&
-      entry.getData
-    ) {
-      entry
-        .getData(new TextWriter())
-        .then((data) => {
-          setRawData(data);
-        })
-        .catch((error) => {
-          console.error("Error reading entry data:", error);
-          setRawData(undefined);
-        });
+    if (ALLOWED_EXTENSIONS.some((ext) => entry.filename.endsWith(ext))) {
+      try {
+        getEntryData(entry)
+          .then((data) => setRawData(data ? data : undefined))
+          .catch((error) => {
+            if (error instanceof Error) toasts.error(error);
+            setRawData(undefined);
+          });
+      } catch (error) {
+        if (error instanceof Error) toasts.error(error);
+        setRawData(undefined);
+      }
     } else {
       setRawData(undefined);
     }
-  }, [entry]);
+  }, [entry, toasts]);
 
   return (
     <div className="entry">
       <p>Size: {entry.uncompressedSize} bytes</p>
       <p>Last modified: {new Date(entry.lastModDate).toLocaleString()}</p>
 
-      {rawData ? <CodeBlock language={entry.filename.split(".").pop()} raw={rawData} /> : null}
+      {rawData ? (
+        <CodeBlock language={entry.filename.split(".").pop()} raw={rawData} />
+      ) : null}
     </div>
   );
 }

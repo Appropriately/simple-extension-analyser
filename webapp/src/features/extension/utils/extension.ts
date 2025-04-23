@@ -1,62 +1,43 @@
-import { BlobReader, Entry, ZipReader } from "@zip.js/zip.js";
+import { BlobReader, ZipReader } from "@zip.js/zip.js";
 
-import { EntryTreeNode } from "../types/entry";
-import { Manifest } from "../types/manifest";
+import { Extension } from "../types";
 import { buildEntryTree, parseManifestEntry } from "./entries";
 
 /**
- * Represents a browser extension.
+ * Returns the extension ID. Hashes the extension ID if it is not pulled
+ * from the appropriate store.
+ * @param extension The extension object.
+ * @returns The extension ID.
  */
-export class Extension {
-    extensionId?: string;
+export const getExtensionId = (extension: Extension): string => {
+    if (extension.extensionId) return extension.extensionId;
 
-    filename?: string;
-    entryTree?: EntryTreeNode;
+    return "!";
+}
 
-    manifest?: Manifest;
+/**
+ * Takes a file and returns an extension object.
+ * @param file The file upload.
+ * @returns The extension object.
+ */
+export const setupExtensionFromFile = async (file: File) => {
+    const extension: Extension = {
+        filename: file.name,
+    };
 
-    /**
-     * Sets up the extension class from a file.
-     * @param {File} file - The file to set up the extension from.
-     */
-    async setupFromFile(file: File) {
-        this.filename = file.name;
+    const entries = await (new ZipReader(new BlobReader(file))).getEntries();
+    extension.entryTree = await buildEntryTree(entries);
 
-        const entries = await (new ZipReader(new BlobReader(file))).getEntries();
-        this.entryTree = await buildEntryTree(entries);
+    const manifestEntry = entries.find((entry) => entry.filename.endsWith("manifest.json"));
+    if (!manifestEntry) throw new Error("No manifest entry found");
 
-        const manifestEntry = entries.find((entry) => entry.filename.endsWith("manifest.json"));
-        if (!manifestEntry) throw new Error("No manifest entry found");
+    const manifest = await parseManifestEntry(manifestEntry);
+    if (!manifest) throw new Error("Failed to parse manifest entry");
 
-        const manifest = await parseManifestEntry(manifestEntry);
-        if (!manifest) throw new Error("Failed to parse manifest entry");
+    extension.manifest = manifest;
 
-        this.manifest = manifest;
+    if (!extension.entryTree) throw new Error("Failed to build entry tree");
+    if (!extension.manifest) throw new Error("Failed to parse manifest");
 
-        if (!this.entryTree) throw new Error("Failed to build entry tree");
-        if (!this.manifest) throw new Error("Failed to parse manifest");
-    }
-
-    id(): string {
-        if (this.extensionId) return this.extensionId;
-
-        // TODO: Implement a proper ID generation/pulling method. Likely needs to hash the name / version.
-        return "!";
-    }
-
-    /**
-     * Returns all entries in the entity tree.
-     * @returns {Entry[]} An array of entries.
-     */
-    entries(): Entry[] {
-        if (!this.entryTree) throw new Error("Entity tree is not initialized");
-
-        const entries: Entry[] = [];
-        const traverse = (node: EntryTreeNode) => {
-            if (node.entries) entries.push(...node.entries);
-            if (node.children) node.children.forEach(traverse);
-        };
-        traverse(this.entryTree);
-        return entries;
-    }
+    return extension;
 }
