@@ -1,4 +1,4 @@
-import { Extension } from "../utils/extension";
+import { Extension } from "../types";
 
 function ExtensionView({ extension }: { extension: Extension }) {
   return (
