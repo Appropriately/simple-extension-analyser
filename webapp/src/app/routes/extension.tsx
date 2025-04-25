@@ -27,9 +27,7 @@ function Extension() {
 
   return (
     <EntryProvider>
-      <div>
-        <ExtensionViewer extension={extension} />
-      </div>
+      <ExtensionViewer extension={extension} />
     </EntryProvider>
   );
 }

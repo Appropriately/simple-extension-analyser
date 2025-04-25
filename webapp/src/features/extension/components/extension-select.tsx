@@ -40,9 +40,7 @@ function ExtensionSelect({ onUpdate }: ExtensionSelectProps) {
         }
       };
 
-      reader.onloadstart = () => {
-        console.log("File reading started...");
-      };
+      reader.onloadstart = () => console.log("File reading started...");
 
       reader.onload = () => {
         console.log("File reading completed.");
@@ -69,7 +67,10 @@ function ExtensionSelect({ onUpdate }: ExtensionSelectProps) {
   return (
     <Card className="mb-3">
       <div>
-        <label htmlFor="file_input" className="block mb-2 text-sm font-medium text-zinc-300">
+        <label
+          htmlFor="file_input"
+          className="block mb-2 text-sm font-medium text-zinc-300"
+        >
           Upload a browser extension file
         </label>
         <Input

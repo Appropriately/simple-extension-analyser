@@ -20,6 +20,7 @@ function Directory({ node, level }: DirectoryProps) {
       >
         <span>{node.name}</span>
       </TreeButton>
+
       {isOpen && (node.children.length > 0 || node.entries.length > 0) && (
         <Node node={node} level={level + 1} />
       )}

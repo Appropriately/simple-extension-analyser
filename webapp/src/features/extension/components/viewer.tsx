@@ -18,12 +18,12 @@ function Viewer({ extension }: { extension: Extension }) {
   return (
     <div className="flex">
       {extension.entryTree && (
-        <div className="w-64 flex-none p-2 overflow-y-auto overflow-x-hidden max-h-screen">
+        <div className="w-64 flex-none p-1 overflow-y-auto overflow-x-hidden max-h-[calc(100vh-4rem)]">
           <Tree rootNode={extension.entryTree} />
         </div>
       )}
 
-      <div className="grow border-l-1 border-zinc-700 p-3 overflow-auto max-h-screen">
+      <div className="grow border-l-1 border-zinc-700 p-3 overflow-auto max-h-[calc(100vh-4rem)]">
         <nav className="mb-3">
           <ol className="flex items-center gap-x-2">
             <li>
