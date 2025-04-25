@@ -5,9 +5,12 @@ import { store } from "@/stores";
 
 const ExtensionNotFound = ({ id }: { id?: string }) => {
   return (
-    <div className="container py-3">
-      <div className="text-center">
-        <h3 className="m-0">Extension '{id}' not found!</h3>
+    <div className="container mx-auto pt-5">
+      <div className="flex flex-col items-center justify-center">
+        <h1 className="text-3xl font-bold">Extension Not Found</h1>
+        <p className="mt-2 text-lg text-zinc-400">
+          The extension with ID '<strong>{id}</strong>' was not found.
+        </p>
       </div>
     </div>
   );
@@ -24,7 +27,7 @@ function Extension() {
 
   return (
     <EntryProvider>
-      <div className="container-fluid">
+      <div>
         <ExtensionViewer extension={extension} />
       </div>
     </EntryProvider>

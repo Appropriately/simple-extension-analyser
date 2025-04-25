@@ -1,27 +1,14 @@
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense } from "react";
 import { HashRouter, Route, Routes } from "react-router-dom";
 
 import Loading from "@/components/loading";
-import { updateTheme } from "@/utils";
 
-import Layout from "./routes/layout";
+import Layout from "./layout";
 
 const Home = lazy(() => import("./routes/home"));
 const Extension = lazy(() => import("./routes/extension"));
 
 function Router() {
-  useEffect(() => {
-    (function () {
-      const htmlElement = document.querySelector("html");
-      if (htmlElement && htmlElement.getAttribute("data-bs-theme") === "auto") {
-        window
-          .matchMedia("(prefers-color-scheme: dark)")
-          .addEventListener("change", updateTheme);
-        updateTheme();
-      }
-    })();
-  });
-
   return (
     <HashRouter>
       <Suspense fallback={<Loading />}>

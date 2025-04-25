@@ -1,4 +1,4 @@
-import "@/styles/code.scss";
+import "@/styles/code.css";
 
 import { Nodes } from "hast";
 import { createElement, ReactNode } from "react";
@@ -34,7 +34,7 @@ function CodeBlock({ raw, language }: CodeBlockProps) {
   };
 
   return (
-    <pre className={`bg-secondary-subtle p-2 rounded`}>
+    <pre className="bg-black p-2 rounded text-xs">
       <code>{render(tree.children)}</code>
     </pre>
   );

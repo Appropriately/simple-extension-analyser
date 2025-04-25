@@ -16,7 +16,7 @@ function Home() {
   };
 
   return (
-    <div className="container my-3">
+    <div className="container mx-auto mt-2">
       <ExtensionSelect onUpdate={setExtension} />
     </div>
   );

@@ -15,6 +15,7 @@ This is a simple extension analyser that allows you to upload an extension and g
 
 - `react` + `typescript`: building the user interface.
 - `vite`: building and bundling the application.
+- `tailwindcss`: styling the application.
 - `zip.js`: unzipping the extension files and reading the contents of the files.
 - `lowlight.js`: syntax highlighting the files found in the extension.
 

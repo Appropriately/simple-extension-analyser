@@ -1,8 +1,7 @@
-import "../styles/toast-item.scss";
-
 import { useEffect } from "react";
 
 import { Toast } from "../types/toast";
+import Icon from "@/components/icon";
 
 interface ToastItemProps {
   toast: Toast;
@@ -10,7 +9,6 @@ interface ToastItemProps {
 }
 
 function ToastItem({ toast, onClose }: ToastItemProps) {
-  // Automatically close the toast after the specified duration.
   useEffect(() => {
     if (toast.durationMs) {
       const timer = setTimeout(() => onClose?.(), toast.durationMs);
@@ -18,16 +16,36 @@ function ToastItem({ toast, onClose }: ToastItemProps) {
     }
   });
 
+  const typeIcon = () => {
+    switch (toast.type) {
+      case "info":
+        return <Icon icon="circle" className="me-2 text-blue-500" width={12} height={12} />;
+      case "success":
+        return <Icon icon="circle" className="me-2 text-green-500" width={12} height={12} />;
+      case "error":
+        return <Icon icon="circle" className="me-2 text-red-500" width={12} height={12} />;
+    }
+
+    return null;
+  };
+
   return (
     <div
-      className={`toast${toast.type ? ` toast-${toast.type}` : ""} show`}
+      className="bg-zinc-700 border-1 border-zinc-600 rounded shadow-lg text-sm min-w-72"
       role="alert"
       aria-live="assertive"
       aria-atomic="true"
     >
-      {toast.header && <div className="toast-header">{toast.header}</div>}
-      <div className="toast-body">{toast.body}</div>
-      {toast.footer && <div className="toast-footer">{toast.footer}</div>}
+      {toast.header && typeof toast.header === "string" ? (
+        <div className="border-b-1 border-zinc-600 p-2 text-zinc-400 flex items-center">
+          {typeIcon()}
+          {toast.header}
+        </div>
+      ) : (
+        toast.header
+      )}
+      <div className="p-2">{toast.body}</div>
+      {toast.footer && <div className="p-2">{toast.footer}</div>}
     </div>
   );
 }

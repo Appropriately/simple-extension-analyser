@@ -1,5 +1,3 @@
-import "../styles/tree.scss";
-
 import { EntryTreeNode } from "../types/entry";
 import Node from "./node";
 

@@ -34,7 +34,7 @@ const Toasts = forwardRef<ToastsHandle, { limit?: number }>(
     }));
 
     return (
-      <div className="toast-container top-0 end-0 p-3">
+      <div className="fixed top-0 right-0 z-50 flex flex-col gap-2 p-3">
         {toasts.map((toast) => (
           <ToastItem
             key={toast.id}

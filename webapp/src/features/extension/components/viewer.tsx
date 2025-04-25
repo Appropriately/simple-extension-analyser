@@ -1,6 +1,4 @@
-import "../styles/viewer.scss";
-
-import { MouseEvent } from "react";
+import { MouseEvent, Fragment } from "react";
 
 import { Extension } from "../";
 import { useEntryContext } from "../context/entry";
@@ -18,30 +16,38 @@ function Viewer({ extension }: { extension: Extension }) {
   };
 
   return (
-    <div className="row vh-100">
+    <div className="flex">
       {extension.entryTree && (
-        <div className="col-md-4 col-lg-3 col-xl-2 pt-2 ps-1 border-end scrollable-max-height">
+        <div className="w-64 flex-none p-2 overflow-y-auto overflow-x-hidden max-h-screen">
           <Tree rootNode={extension.entryTree} />
         </div>
       )}
 
-      <div className="col-md-8 col-lg-9 col-xl-10 scrollable-max-height">
-        <nav className="my-3" aria-label="breadcrumb">
-          <ol className="breadcrumb">
-            <li className="breadcrumb-item">
+      <div className="grow border-l-1 border-zinc-700 p-3 overflow-auto max-h-screen">
+        <nav className="mb-3">
+          <ol className="flex items-center gap-x-2">
+            <li>
               {entry ? (
-                <a href="#" onClick={(e) => updateEntry(e, undefined)}>
+                <a
+                  href="#"
+                  onClick={(e) => updateEntry(e, undefined)}
+                  className="text-blue-400 hover:underline"
+                >
                   {extension.filename}
                 </a>
               ) : (
-                <span>{extension.filename}</span>
+                <span className="text-zinc-300">{extension.filename}</span>
               )}
             </li>
-            {entry?.filename.split("/").map((part, index) => (
-              <li key={index} className="breadcrumb-item">
-                <span className="text-muted">{part}</span>
-              </li>
-            ))}
+            {entry &&
+              entry?.filename.split("/").map((part, index) => (
+                <Fragment key={index}>
+                  <li className="text-zinc-500">/</li>
+                  <li>
+                    <span className="text-zinc-300">{part}</span>
+                  </li>
+                </Fragment>
+              ))}
           </ol>
         </nav>
 

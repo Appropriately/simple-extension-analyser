@@ -1,8 +1,7 @@
 import { useEntryContext } from "../context/entry";
-import Icon from "@/components/icon";
-
 import { EntryTreeNode, ExtendedEntry } from "../types/entry";
 import Directory from "./directory";
+import TreeButton from "./tree-button";
 
 interface NodeProps {
   node: EntryTreeNode;
@@ -10,15 +9,15 @@ interface NodeProps {
 }
 
 function Node({ node, level }: NodeProps) {
-  const { setEntry, entry } = useEntryContext();
+  const { setEntry } = useEntryContext();
 
   const entryToIcon = (entry: ExtendedEntry) => {
     const ext = entry.filename.split(".").pop();
     switch (ext) {
       case "json":
-        return <Icon icon="filetype-json" className="me-2" />;
+        return "filetype-json";
       case "js":
-        return <Icon icon="filetype-js" className="me-2" />;
+        return "filetype-js";
       case "ts":
       case "jsx":
       case "tsx":
@@ -26,35 +25,35 @@ function Node({ node, level }: NodeProps) {
       case "css":
       case "md":
       case "txt":
-        return <Icon icon="file-earmark-code" className="me-2" />;
+        return "file-earmark-code";
       case "png":
       case "jpg":
       case "jpeg":
       case "gif":
       case "svg":
-        return <Icon icon="file-earmark-image" className="me-2" />;
+        return "file-earmark-image";
     }
 
-    return <Icon icon="file-earmark" className="me-2" />;
+    return "file-earmark";
   };
 
   return (
-    <ul aria-level={level}>
+    <ul
+      className="ms-1 ps-1 [&:not(:first-child)]:border-l-1 border-zinc-700"
+      aria-level={level}
+    >
       {node.children.map((child) => (
         <Directory node={child} level={level} key={child.path} />
       ))}
 
       {node.entries.map((currentEntry) => (
         <li key={currentEntry.filename} aria-level={level}>
-          <button
-            className={`btn btn-link${
-              entry?.filename == currentEntry.filename ? " selected" : ""
-            }`}
+          <TreeButton
+            icon={entryToIcon(currentEntry)}
             onClick={() => setEntry(currentEntry)}
           >
-            {entryToIcon(currentEntry)}
             <span>{currentEntry.filename.split("/").pop() ?? ""}</span>
-          </button>
+          </TreeButton>
         </li>
       ))}
     </ul>

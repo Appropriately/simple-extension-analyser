@@ -2,15 +2,17 @@ import { ChangeEvent } from "react";
 
 import { useToasts } from "@/features/toasts";
 
+import Card from "@/components/card";
+import Input from "@/components/forms/input";
+
 import { Extension } from "../";
 import { setupExtensionFromFile } from "../utils";
 
 interface ExtensionSelectProps {
-  cardClassName?: string;
   onUpdate?: (extension?: Extension) => void;
 }
 
-function ExtensionSelect({ cardClassName, onUpdate }: ExtensionSelectProps) {
+function ExtensionSelect({ onUpdate }: ExtensionSelectProps) {
   const toasts = useToasts();
 
   const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
@@ -57,6 +59,7 @@ function ExtensionSelect({ cardClassName, onUpdate }: ExtensionSelectProps) {
       } catch (error) {
         if (error instanceof Error) toasts.error(error);
 
+        event.target.value = "";
         console.error("Error setting up extension:", error);
         return;
       }
@@ -64,23 +67,23 @@ function ExtensionSelect({ cardClassName, onUpdate }: ExtensionSelectProps) {
   };
 
   return (
-    <div className={`card mb-3${cardClassName ? " " + cardClassName : ""}`}>
-      <div className="card-header">Browser Extension</div>
-      <div className="card-body">
-        <div className="input-group">
-          <label className="input-group-text" htmlFor="inputGroupFile01">
-            Upload
-          </label>
-          <input
-            type="file"
-            id="fileInput"
-            accept=".zip,.crx"
-            className="form-control"
-            onChange={handleFileChange}
-          />
-        </div>
+    <Card className="mb-3">
+      <div>
+        <label htmlFor="file_input" className="block mb-2 text-sm font-medium text-zinc-300">
+          Upload a browser extension file
+        </label>
+        <Input
+          type="file"
+          id="file_input"
+          accept=".zip,.crx"
+          onChange={handleFileChange}
+          aria-describedby="file_input_help"
+        />
+        <p id="file_input_help" className="mt-2 text-sm text-zinc-400">
+          Upload a .zip or .crx file containing the browser extension.
+        </p>
       </div>
-    </div>
+    </Card>
   );
 }
 

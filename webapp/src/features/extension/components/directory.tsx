@@ -1,9 +1,8 @@
 import { useState } from "react";
 
-import Icon from "@/components/icon";
-
 import { EntryTreeNode } from "../types/entry";
 import Node from "./node";
+import TreeButton from "./tree-button";
 
 interface DirectoryProps {
   node: EntryTreeNode;
@@ -15,10 +14,12 @@ function Directory({ node, level }: DirectoryProps) {
 
   return (
     <li key={node.path}>
-      <button className={`btn btn-link directory${isOpen ? " open" : ""}`} onClick={() => setIsOpen(!isOpen)}>
-        <Icon icon={isOpen ? "folder-minus" : "folder-plus"} className="me-2" />
+      <TreeButton
+        icon={isOpen ? "folder-minus" : "folder-plus"}
+        onClick={() => setIsOpen(!isOpen)}
+      >
         <span>{node.name}</span>
-      </button>
+      </TreeButton>
       {isOpen && (node.children.length > 0 || node.entries.length > 0) && (
         <Node node={node} level={level + 1} />
       )}
