@@ -9,7 +9,7 @@ interface Props {
 }
 
 function Node({ node, level }: Props) {
-  const { setEntry } = useEntryContext();
+  const { entry, setEntry } = useEntryContext();
 
   const entryToIcon = (entry: ExtendedEntry) => {
     const ext = entry.filename.split(".").pop();
@@ -51,6 +51,7 @@ function Node({ node, level }: Props) {
           <TreeButton
             icon={entryToIcon(currentEntry)}
             onClick={() => setEntry(currentEntry)}
+            aria-selected={entry?.filename === currentEntry.filename}
           >
             <span>{currentEntry.filename.split("/").pop() ?? ""}</span>
           </TreeButton>
