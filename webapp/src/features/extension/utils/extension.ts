@@ -1,7 +1,7 @@
 import { BlobReader, ZipReader } from "@zip.js/zip.js";
 
 import { Extension } from "../types";
-import { buildEntryTree, parseManifestEntry } from "./entries";
+import { parseManifestEntry } from "./entries";
 
 /**
  * Returns the extension ID. Hashes the extension ID if it is not pulled
@@ -25,19 +25,13 @@ export const setupExtensionFromFile = async (file: File) => {
         filename: file.name,
     };
 
-    const entries = await (new ZipReader(new BlobReader(file))).getEntries();
-    extension.entryTree = await buildEntryTree(entries);
+    extension.entries = await (new ZipReader(new BlobReader(file))).getEntries();
 
-    const manifestEntry = entries.find((entry) => entry.filename.endsWith("manifest.json"));
+    const manifestEntry = extension.entries.find((entry) => entry.filename.endsWith("manifest.json"));
     if (!manifestEntry) throw new Error("No manifest entry found");
 
-    const manifest = await parseManifestEntry(manifestEntry);
-    if (!manifest) throw new Error("Failed to parse manifest entry");
-
-    extension.manifest = manifest;
-
-    if (!extension.entryTree) throw new Error("Failed to build entry tree");
-    if (!extension.manifest) throw new Error("Failed to parse manifest");
+    extension.manifest = await parseManifestEntry(manifestEntry);
+    if (!extension.manifest) throw new Error("Failed to parse manifest entry");
 
     return extension;
 }

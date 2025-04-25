@@ -1,7 +1,7 @@
 import { ReactNode, useState } from "react";
 
-import { EntryContext } from "../context/entry";
-import { ExtendedEntry } from "../types/entry";
+import { EntryContext } from "../context";
+import { ExtendedEntry } from "../types";
 
 const EntryProvider = ({ children }: { children: ReactNode }) => {
   const [entry, setEntry] = useState<ExtendedEntry | undefined>(undefined);

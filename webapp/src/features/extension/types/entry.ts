@@ -10,3 +10,7 @@ export interface EntryTreeNode {
     entries: ExtendedEntry[];
     children: EntryTreeNode[];
 }
+
+export interface EntryTreeFilters {
+    term?: string;
+}

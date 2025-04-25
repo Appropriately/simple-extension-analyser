@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { EntryTreeNode } from "../types/entry";
+import { EntryTreeNode } from "../types";
 import Node from "./node";
 import TreeButton from "./tree-button";
 

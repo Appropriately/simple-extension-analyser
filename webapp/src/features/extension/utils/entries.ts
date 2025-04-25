@@ -1,6 +1,6 @@
 import { Entry, TextWriter } from "@zip.js/zip.js";
 
-import { EntryTreeNode, ExtendedEntry, Extension, Manifest } from "../types";
+import { EntryTreeNode, ExtendedEntry, Manifest } from "../types";
 
 /**
  * Reads the manifest from the given entry.
@@ -8,93 +8,90 @@ import { EntryTreeNode, ExtendedEntry, Extension, Manifest } from "../types";
  * @returns The parsed manifest.
  */
 export const parseManifestEntry = async (entry: Entry) => {
-    if (!entry) throw new Error("Entry is undefined");
-    if (!entry.getData) throw new Error("Entry does not have getData method");
+  if (!entry) throw new Error("Entry is undefined");
+  if (!entry.getData) throw new Error("Entry does not have getData method");
 
-    return JSON.parse(await entry.getData(new TextWriter())) as Manifest;
-}
+  return JSON.parse(await entry.getData(new TextWriter())) as Manifest;
+};
 
 /**
  * Builds a tree structure from the given entries.
  * @param entries - The entries to build the tree from.
  * @returns The root of the tree structure.
  */
-export const buildEntryTree = async (entries: Entry[]) => {
-    const tree: EntryTreeNode = {
-        name: ".",
-        path: ".",
-        entries: [],
-        children: []
+export const buildEntryTree = async (entries: ExtendedEntry[]) => {
+  const tree: EntryTreeNode = {
+    name: ".",
+    path: ".",
+    entries: [],
+    children: [],
+  };
+
+  const pathMap: { [key: string]: EntryTreeNode } = {};
+  pathMap["."] = tree;
+
+  entries.forEach((entry) => {
+    // Early terminate for root entries
+    if (entry.filename.split("/").length <= 1) {
+      tree.entries!.push(entry);
+      tree.entries!.sort((a, b) => a.filename.localeCompare(b.filename));
+      return;
     }
 
-    const pathMap: { [key: string]: EntryTreeNode } = {};
-    pathMap["."] = tree;
+    let fullPath = "./" + entry.filename;
+    if (fullPath.endsWith("/")) fullPath = fullPath.slice(0, -1);
 
-    entries.forEach((entry) => {
-        // Early terminate for root entries
-        if (entry.filename.split("/").length <= 1) {
-            tree.entries!.push(entry);
-            tree.entries!.sort((a, b) => a.filename.localeCompare(b.filename));
-            return;
+    // Get the appropriate tier of the pathMap. If each layer of the path is not already in the map, create it.
+    const pathParts = entry.filename.split("/");
+    if (pathParts[pathParts.length - 1] === "") pathParts.pop();
+
+    let currentPath = ".";
+    for (let i = 0; i < pathParts.length - 1; i++) {
+      currentPath += "/" + pathParts[i];
+      if (!pathMap[currentPath]) {
+        const node: EntryTreeNode = {
+          name: pathParts[i],
+          path: currentPath,
+          entries: [],
+          children: [],
+        };
+        pathMap[currentPath] = node;
+
+        // Attach the node to its parent
+        const parentPath = currentPath.substring(
+          0,
+          currentPath.lastIndexOf("/")
+        );
+        const parentNode = pathMap[parentPath];
+        if (parentNode) {
+          parentNode.children!.push(node);
+          parentNode.children!.sort((a, b) => a.name.localeCompare(b.name));
         }
+      }
+    }
 
-        let fullPath = "./" + entry.filename;
-        if (fullPath.endsWith("/")) fullPath = fullPath.slice(0, -1);
+    const parentNode = pathMap[currentPath];
+    if (!parentNode)
+      throw new Error(`Parent node not found for path: ${currentPath}`);
 
-        // Get the appropriate tier of the pathMap. If each layer of the path is not already in the map, create it.
-        const pathParts = entry.filename.split("/");
-        if (pathParts[pathParts.length - 1] === "") pathParts.pop();
+    if (entry.directory) {
+      const node: EntryTreeNode = {
+        name: pathParts[pathParts.length - 1],
+        path: fullPath,
+        entries: [],
+        children: [],
+      };
+      parentNode.children!.push(node);
+      parentNode.children!.sort((a, b) => a.name.localeCompare(b.name));
+      pathMap[fullPath] = node;
+    } else {
+      parentNode.entries!.push(entry);
+      parentNode.entries!.sort((a, b) => a.filename.localeCompare(b.filename));
+    }
+  });
 
-        let currentPath = ".";
-        for (let i = 0; i < pathParts.length - 1; i++) {
-            currentPath += "/" + pathParts[i];
-            if (!pathMap[currentPath]) {
-                const node: EntryTreeNode = { name: pathParts[i], path: currentPath, entries: [], children: [] };
-                pathMap[currentPath] = node;
-
-                // Attach the node to its parent
-                const parentPath = currentPath.substring(0, currentPath.lastIndexOf("/"));
-                const parentNode = pathMap[parentPath];
-                if (parentNode) {
-                    parentNode.children!.push(node);
-                    parentNode.children!.sort((a, b) => a.name.localeCompare(b.name));
-                }
-            }
-        }
-
-        const parentNode = pathMap[currentPath];
-        if (!parentNode) throw new Error(`Parent node not found for path: ${currentPath}`);
-
-        if (entry.directory) {
-            const node: EntryTreeNode = { name: pathParts[pathParts.length - 1], path: fullPath, entries: [], children: [] };
-            parentNode.children!.push(node);
-            parentNode.children!.sort((a, b) => a.name.localeCompare(b.name));
-            pathMap[fullPath] = node;
-        } else {
-            parentNode.entries!.push(entry);
-            parentNode.entries!.sort((a, b) => a.filename.localeCompare(b.filename));
-        }
-    });
-
-    return tree;
+  return tree;
 };
-
-/**
- * Reads through the entry tree, returning all entries.
- * @param extension - The extension to read the entries from.
- * @returns An array of entries.
- */
-export const getEntries = (extension: Extension): ExtendedEntry[] => {
-    if (!extension.entryTree) throw new Error("Entity tree is not initialized");
-
-    const entries: ExtendedEntry[] = [];
-    const traverse = (node: EntryTreeNode) => {
-        if (node.entries) entries.push(...node.entries);
-        if (node.children) node.children.forEach(traverse);
-    };
-    traverse(extension.entryTree);
-    return entries;
-}
 
 /**
  * Gets the data from the given entry.
@@ -102,8 +99,8 @@ export const getEntries = (extension: Extension): ExtendedEntry[] => {
  * @returns The raw data of an entry, represented as a string.
  */
 export const getEntryData = async (entry: ExtendedEntry) => {
-    if (!entry) throw new Error("Entry is undefined");
-    if (!entry.getData) throw new Error("Entry does not have getData method");
+  if (!entry) throw new Error("Entry is undefined");
+  if (!entry.getData) throw new Error("Entry does not have getData method");
 
-    return await entry.getData(new TextWriter());
-}
+  return await entry.getData(new TextWriter());
+};

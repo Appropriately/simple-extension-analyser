@@ -1,14 +1,14 @@
-import { useEntryContext } from "../context/entry";
-import { EntryTreeNode, ExtendedEntry } from "../types/entry";
+import { useEntryContext } from "../context";
+import { EntryTreeNode, ExtendedEntry } from "../types";
 import Directory from "./directory";
 import TreeButton from "./tree-button";
 
-interface NodeProps {
+interface Props {
   node: EntryTreeNode;
   level: number;
 }
 
-function Node({ node, level }: NodeProps) {
+function Node({ node, level }: Props) {
   const { setEntry } = useEntryContext();
 
   const entryToIcon = (entry: ExtendedEntry) => {

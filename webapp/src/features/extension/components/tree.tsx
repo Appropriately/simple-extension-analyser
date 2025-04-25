@@ -1,13 +1,16 @@
-import { EntryTreeNode } from "../types/entry";
+import { EntryTreeNode } from "../types";
 import Node from "./node";
 
-function Tree({ rootNode }: { rootNode: EntryTreeNode }) {
+interface Props {
+  rootNode: EntryTreeNode;
+  className?: string;
+}
+
+function Tree({ rootNode, className }: Props) {
   return (
-    <>
-      <nav className="tree">
-        <Node node={rootNode} level={0} />
-      </nav>
-    </>
+    <nav className={className}>
+      <Node node={rootNode} level={0} />
+    </nav>
   );
 }
 
