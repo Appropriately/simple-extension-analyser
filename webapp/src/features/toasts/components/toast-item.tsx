@@ -31,7 +31,7 @@ function ToastItem({ toast, onClose }: ToastItemProps) {
 
   return (
     <div
-      className="bg-zinc-700 border-1 border-zinc-600 rounded shadow-lg text-sm min-w-72"
+      className="bg-zinc-700 border-1 border-zinc-600 rounded shadow-lg text-sm min-w-72 max-w-96"
       role="alert"
       aria-live="assertive"
       aria-atomic="true"
