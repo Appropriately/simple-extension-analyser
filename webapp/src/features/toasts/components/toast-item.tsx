@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 
-import { Toast } from "../types/toast";
 import Icon from "@/components/icon";
+
+import { Toast } from "../types/toast";
 
 interface ToastItemProps {
   toast: Toast;
@@ -19,11 +20,32 @@ function ToastItem({ toast, onClose }: ToastItemProps) {
   const typeIcon = () => {
     switch (toast.type) {
       case "info":
-        return <Icon icon="circle" className="me-2 text-blue-500" width={12} height={12} />;
+        return (
+          <Icon
+            icon="circle"
+            className="me-2 text-blue-500"
+            width={12}
+            height={12}
+          />
+        );
       case "success":
-        return <Icon icon="circle" className="me-2 text-green-500" width={12} height={12} />;
+        return (
+          <Icon
+            icon="circle"
+            className="me-2 text-green-500"
+            width={12}
+            height={12}
+          />
+        );
       case "error":
-        return <Icon icon="circle" className="me-2 text-red-500" width={12} height={12} />;
+        return (
+          <Icon
+            icon="circle"
+            className="me-2 text-red-500"
+            width={12}
+            height={12}
+          />
+        );
     }
 
     return null;
