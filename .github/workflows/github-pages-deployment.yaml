@@ -4,9 +4,9 @@ name: Deploy static content to Pages
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches: ['main']
+    branches: ["main"]
     paths:
-      - 'webapp/**'
+      - "webapp/**"
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -19,7 +19,7 @@ permissions:
 
 # Allow one concurrent deployment
 concurrency:
-  group: 'pages'
+  group: "pages"
   cancel-in-progress: true
 
 jobs:
@@ -37,12 +37,15 @@ jobs:
         run: |
           cd analyser
           wasm-pack build --target web --release
+      - name: Compress WASM folder
+        run: |
+          cd analyser
+          zip -r wasm-module.zip pkg
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: wasm-module
-          path: ./analyser/pkg
-          
+          path: ./analyser/wasm-module.zip
 
   # Deploy the static content to GitHub Pages
   deploy:
@@ -59,7 +62,7 @@ jobs:
         with:
           cache-dependency-path: webapp/package-lock.json
           node-version: lts/*
-          cache: 'npm'
+          cache: "npm"
       - name: Install dependencies
         working-directory: ./webapp
         run: npm ci
@@ -67,10 +70,10 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: wasm-module
-      - name: Copy WASM module
+      - name: Extract WASM folder
         run: |
           mkdir -p webapp/src/features/analyser/lib/analyser
-          cp -r analyser/pkg/* webapp/src/features/analyser/lib/analyser/
+          unzip wasm-module.zip -d webapp/src/features/analyser/lib/analyser/
       - name: Build
         working-directory: ./webapp
         run: npm run build
@@ -79,8 +82,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload dist folder
-          path: './webapp/dist'
+          path: "./webapp/dist"
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
