@@ -17,7 +17,7 @@ function Viewer({ extension }: { extension: Extension }) {
   useEffect(() => {
     buildEntryTree(
       (extension.entries ?? []).filter(
-        (entry) => !filters.term || entry.filename.includes(filters.term)
+        (entry) => !filters.term || entry.filename.toLowerCase().includes(filters.term.toLowerCase())
       )
     ).then((tree) => setEntryTree(tree));
   }, [extension.entries, filters]);
