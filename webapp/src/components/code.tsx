@@ -15,7 +15,7 @@ interface CodeBlockProps {
 }
 
 function CodeBlock({ raw, language }: CodeBlockProps) {
-  const tree =
+  const root =
     language && lowlight.listLanguages().includes(language)
       ? lowlight.highlight(language, String(raw), OPTIONS)
       : lowlight.highlightAuto(String(raw), OPTIONS);
@@ -35,7 +35,7 @@ function CodeBlock({ raw, language }: CodeBlockProps) {
 
   return (
     <pre className="bg-black p-2 rounded text-xs">
-      <code>{render(tree.children)}</code>
+      <code>{render(root.children)}</code>
     </pre>
   );
 }

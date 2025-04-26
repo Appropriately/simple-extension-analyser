@@ -10,6 +10,19 @@ import { getEntryData } from "../utils";
 
 const ALLOWED_EXTENSIONS = [".json", ".txt", ".md", ".js", ".html", ".css"];
 
+// Map of common file extensions to their corresponding language identifiers.
+// The code component will otherwise attempt to guess the language.
+const FILE_EXTENSION_TO_LANGUAGE: Record<string, string> = {
+  cs: "csharp",
+  js: "javascript",
+  kt: "kotlin",
+  md: "markdown",
+  pl: "perl",
+  py: "python",
+  rb: "ruby",
+  rs: "rust",
+};
+
 function EntryView({ entry }: { entry: ExtendedEntry }) {
   const [rawData, setRawData] = useState<string>();
 
@@ -63,7 +76,13 @@ function EntryView({ entry }: { entry: ExtendedEntry }) {
       </Card>
 
       {rawData ? (
-        <CodeBlock language={entry.filename.split(".").pop()} raw={rawData} />
+        <CodeBlock
+          language={
+            FILE_EXTENSION_TO_LANGUAGE[entry.filename.split(".").pop()!] ??
+            entry.filename.split(".").pop()
+          }
+          raw={rawData}
+        />
       ) : null}
     </div>
   );
