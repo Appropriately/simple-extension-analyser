@@ -30,11 +30,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Set up Rust
-        uses: actions/setup-rust@v4
-        with:
-          toolchain: stable
-          override: true
-          components: rustfmt, clippy
+        run: rustup update
       - name: Install dependencies
         run: cargo install wasm-pack
       - name: Build WASM module
