@@ -29,7 +29,7 @@ function Viewer({ extension }: { extension: Extension }) {
 
   return (
     <div className="flex">
-      <div className="w-64 flex-none max-h-[calc(100vh-4rem)]">
+      <div className="w-64 flex-none h-[calc(100vh-4rem)]">
         <div className="p-2 h-12 border-b-1 border-zinc-700">
           <TreeFilters onChange={(filters) => setFilters(filters)} />
         </div>
@@ -39,7 +39,7 @@ function Viewer({ extension }: { extension: Extension }) {
         </div>
       </div>
 
-      <div className="grow border-l-1 border-zinc-700 p-3 overflow-auto max-h-[calc(100vh-4rem)]">
+      <div className="grow border-l-1 border-zinc-700 p-3 overflow-auto h-[calc(100vh-4rem)]">
         <nav className="mb-3">
           <ol className="flex items-center gap-x-2">
             <li>
