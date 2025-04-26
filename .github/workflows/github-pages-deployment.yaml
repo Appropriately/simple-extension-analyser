@@ -23,7 +23,26 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # Single deploy job since we're just deploying
+  # Build the WASM module written in rust
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Rust
+        uses: actions/setup-rust@v4
+        with:
+          toolchain: stable
+          override: true
+          components: rustfmt, clippy
+      - name: Install dependencies
+        run: cargo install wasm-pack
+      - name: Build WASM module
+        run: |
+          cd analyser
+          wasm-pack build --target web --release
+
+  # Deploy the static content to GitHub Pages
   deploy:
     environment:
       name: github-pages
@@ -41,6 +60,10 @@ jobs:
       - name: Install dependencies
         working-directory: ./webapp
         run: npm ci
+      - name: Copy WASM module
+        run: |
+          mkdir -p webapp/src/features/analyser/lib/analyser
+          cp -r analyser/pkg/* webapp/src/features/analyser/lib/analyser/
       - name: Build
         working-directory: ./webapp
         run: npm run build

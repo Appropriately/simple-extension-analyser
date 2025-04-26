@@ -28,6 +28,7 @@
 
 ## Nice to have
 
+- [ ] Look into `wee_alloc` for wasm
 - [ ] Solid error handling
 - [ ] Improve rendering of entry tree
 - [ ] Add light mode support

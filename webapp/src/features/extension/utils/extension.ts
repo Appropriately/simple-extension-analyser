@@ -10,10 +10,10 @@ import { parseManifestEntry } from "./entries";
  * @returns The extension ID.
  */
 export const getExtensionId = (extension: Extension): string => {
-    if (extension.extensionId) return extension.extensionId;
+  if (extension.extensionId) return extension.extensionId;
 
-    return "!";
-}
+  return "!";
+};
 
 /**
  * Takes a file and returns an extension object.
@@ -21,17 +21,19 @@ export const getExtensionId = (extension: Extension): string => {
  * @returns The extension object.
  */
 export const setupExtensionFromFile = async (file: File) => {
-    const extension: Extension = {
-        filename: file.name,
-    };
+  const extension: Extension = {
+    filename: file.name,
+  };
 
-    extension.entries = await (new ZipReader(new BlobReader(file))).getEntries();
+  extension.entries = await new ZipReader(new BlobReader(file)).getEntries();
 
-    const manifestEntry = extension.entries.find((entry) => entry.filename.endsWith("manifest.json"));
-    if (!manifestEntry) throw new Error("No manifest entry found");
+  const manifestEntry = extension.entries.find((entry) =>
+    entry.filename.endsWith("manifest.json")
+  );
+  if (!manifestEntry) throw new Error("No manifest entry found");
 
-    extension.manifest = await parseManifestEntry(manifestEntry);
-    if (!extension.manifest) throw new Error("Failed to parse manifest entry");
+  extension.manifest = await parseManifestEntry(manifestEntry);
+  if (!extension.manifest) throw new Error("Failed to parse manifest entry");
 
-    return extension;
-}
+  return extension;
+};

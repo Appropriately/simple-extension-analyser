@@ -1,9 +1,9 @@
 import { ChangeEvent } from "react";
 
-import { useToasts } from "@/features/toasts";
-
 import Card from "@/components/card";
 import Input from "@/components/forms/input";
+import { useAnalyser } from "@/features/analyser/contexts";
+import { useToasts } from "@/features/toasts";
 
 import { Extension } from "../";
 import { setupExtensionFromFile } from "../utils";
@@ -14,6 +14,7 @@ interface ExtensionSelectProps {
 
 function ExtensionSelect({ onUpdate }: ExtensionSelectProps) {
   const toasts = useToasts();
+  const { analyseFile } = useAnalyser();
 
   const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -53,6 +54,7 @@ function ExtensionSelect({ onUpdate }: ExtensionSelectProps) {
 
       try {
         const extension = await setupExtensionFromFile(file);
+        console.log("Extension setup completed:", await analyseFile(file));
         onUpdate?.(extension);
       } catch (error) {
         if (error instanceof Error) toasts.error(error);
