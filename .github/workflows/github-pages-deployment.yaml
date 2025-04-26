@@ -41,6 +41,12 @@ jobs:
         run: |
           cd analyser
           wasm-pack build --target web --release
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: wasm-module
+          path: ./analyser/pkg
+          
 
   # Deploy the static content to GitHub Pages
   deploy:
@@ -69,6 +75,10 @@ jobs:
         run: npm run build
       - name: Setup Pages
         uses: actions/configure-pages@v4
+      - name: Download WASM artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: wasm-module
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
