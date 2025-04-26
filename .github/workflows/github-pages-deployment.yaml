@@ -40,7 +40,7 @@ jobs:
       - name: Compress WASM folder
         run: |
           cd analyser
-          zip -r wasm-module.zip pkg
+          zip -r wasm-module.zip ./pkg/*
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
