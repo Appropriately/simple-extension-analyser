@@ -63,6 +63,10 @@ jobs:
       - name: Install dependencies
         working-directory: ./webapp
         run: npm ci
+      - name: Download WASM artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: wasm-module
       - name: Copy WASM module
         run: |
           mkdir -p webapp/src/features/analyser/lib/analyser
@@ -72,10 +76,6 @@ jobs:
         run: npm run build
       - name: Setup Pages
         uses: actions/configure-pages@v4
-      - name: Download WASM artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: wasm-module
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
