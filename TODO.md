@@ -14,8 +14,9 @@
 - [x] Build UI for flicking through files
 - [x] Analyse extension manifest and reject if not valid
 - [x] Improve loading UI
-- [ ] Add initial wasm support for analysing
+- [x] Add initial wasm support for analysing
 - [ ] Add store support for extension by id and version
+- [x] Build a drop box for zips
 - [ ] Async handling of entry opening.
 - [ ] Render line numbers for code blocks.
 - [ ] Build out mechanism for analysing extension
@@ -24,6 +25,7 @@
 ## Future features
 
 - [ ] Virustotal feature
+- [ ] Build a knowledge graph of functions and classes
 - [ ] AI feature
 
 ## Nice to have

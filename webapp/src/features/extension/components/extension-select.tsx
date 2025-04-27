@@ -1,13 +1,11 @@
-import { ChangeEvent } from "react";
-
 import Card from "@/components/card";
-import Input from "@/components/forms/input";
+import InputDrop from "@/components/forms/input-drop";
 import { useAnalyser } from "@/features/analyser/contexts";
 import { useToasts } from "@/features/toasts";
 
 import { Extension } from "../";
-import { setupExtensionFromFile } from "../utils";
 import { AnalysedFile } from "../types";
+import { setupExtensionFromFile } from "../utils";
 
 interface ExtensionSelectProps {
   onUpdate?: (extension?: Extension) => void;
@@ -17,9 +15,7 @@ function ExtensionSelect({ onUpdate }: ExtensionSelectProps) {
   const { error: toastError } = useToasts();
   const { analyseFile } = useAnalyser();
 
-  const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-
+  const handleFileChange = async (file?: File) => {
     if (file) {
       onUpdate?.(undefined);
 
@@ -55,12 +51,14 @@ function ExtensionSelect({ onUpdate }: ExtensionSelectProps) {
 
       try {
         const extension = await setupExtensionFromFile(file);
-        extension.analysedFiles = await analyseFile(file) as Record<string, AnalysedFile>;
+        extension.analysedFiles = (await analyseFile(file)) as Record<
+          string,
+          AnalysedFile
+        >;
         onUpdate?.(extension);
       } catch (error) {
         if (error instanceof Error) toastError(error);
 
-        event.target.value = "";
         console.error("Error setting up extension:", error);
         return;
       }
@@ -76,14 +74,16 @@ function ExtensionSelect({ onUpdate }: ExtensionSelectProps) {
         >
           Upload a browser extension file
         </label>
-        <Input
-          type="file"
+
+        <InputDrop
           id="file_input"
           accept=".zip,.crx"
-          onChange={handleFileChange}
+          onFileChange={handleFileChange}
           aria-describedby="file_input_help"
+          className="mb-2"
         />
-        <p id="file_input_help" className="mt-2 text-sm text-zinc-400">
+
+        <p id="file_input_help" className="text-sm text-zinc-400">
           Upload a .zip or .crx file containing the browser extension.
         </p>
       </div>
