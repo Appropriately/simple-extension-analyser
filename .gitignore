@@ -138,3 +138,6 @@ dist
 # Rust files
 Cargo.lock
 target/
+
+# MacOS Finder files
+.DS_Store

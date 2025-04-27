@@ -7,6 +7,7 @@ import { useToasts } from "@/features/toasts";
 
 import { Extension } from "../";
 import { setupExtensionFromFile } from "../utils";
+import { AnalysedFile } from "../types";
 
 interface ExtensionSelectProps {
   onUpdate?: (extension?: Extension) => void;
@@ -54,7 +55,7 @@ function ExtensionSelect({ onUpdate }: ExtensionSelectProps) {
 
       try {
         const extension = await setupExtensionFromFile(file);
-        console.log("Extension setup completed:", await analyseFile(file));
+        extension.analysedFiles = await analyseFile(file) as Record<string, AnalysedFile>;
         onUpdate?.(extension);
       } catch (error) {
         if (error instanceof Error) toastError(error);

@@ -68,7 +68,7 @@ function Viewer({ extension }: { extension: Extension }) {
         </nav>
 
         {entry ? (
-          <EntryView entry={entry} />
+          <EntryView extension={extension} entry={entry} />
         ) : (
           <ExtensionView extension={extension} />
         )}

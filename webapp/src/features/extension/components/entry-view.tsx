@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import Card from "@/components/card";
 import CodeBlock from "@/components/code";
 import Table from "@/components/table";
 import { useToasts } from "@/features/toasts";
 
-import { ExtendedEntry } from "../types";
+import { ExtendedEntry, Extension } from "../types";
 import { getEntryData } from "../utils";
 
 const ALLOWED_EXTENSIONS = [".json", ".txt", ".md", ".js", ".html", ".css"];
@@ -23,7 +23,12 @@ const FILE_EXTENSION_TO_LANGUAGE: Record<string, string> = {
   rs: "rust",
 };
 
-function EntryView({ entry }: { entry: ExtendedEntry }) {
+interface Props {
+  extension: Extension;
+  entry: ExtendedEntry;
+}
+
+function EntryView({ entry, extension }: Props) {
   const [rawData, setRawData] = useState<string>();
 
   const { error: toastError } = useToasts();
@@ -62,6 +67,11 @@ function EntryView({ entry }: { entry: ExtendedEntry }) {
     }
   }, [entry, toastError]);
 
+  const analysedFile = useMemo(
+    () => extension.analysedFiles?.[entry.filename],
+    [entry, extension]
+  );
+
   return (
     <div>
       <Card header={entry.filename.split("/").pop()} className="mb-3">
@@ -74,6 +84,12 @@ function EntryView({ entry }: { entry: ExtendedEntry }) {
           skipHeader
         />
       </Card>
+
+      {analysedFile && (
+        <Card header="Analysis" className="mb-3">
+          {JSON.stringify(analysedFile, null, 2)}
+        </Card>
+      )}
 
       {rawData ? (
         <CodeBlock

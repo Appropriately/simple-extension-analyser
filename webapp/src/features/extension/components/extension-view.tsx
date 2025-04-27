@@ -1,7 +1,11 @@
 import { Extension } from "../types";
 import CodeBlock from "@/components/code";
 
-function ExtensionView({ extension }: { extension: Extension }) {
+interface Props {
+  extension: Extension;
+}
+
+function ExtensionView({ extension }: Props) {
   return (
     <>
       {extension.manifest && (

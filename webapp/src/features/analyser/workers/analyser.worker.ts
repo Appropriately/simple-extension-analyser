@@ -48,7 +48,7 @@ self.onmessage = async (event: MessageEvent<WorkerRequest>) => {
     switch (type) {
       case "ANALYSE": {
         const extension = new analyser.Extension(new Uint8Array(payload));
-        const resultJson = extension.get_file_list();
+        const resultJson = extension.analyse_files();
         self.postMessage({
           type: "RESULT",
           payload: resultJson,
