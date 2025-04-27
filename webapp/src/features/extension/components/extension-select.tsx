@@ -13,7 +13,7 @@ interface ExtensionSelectProps {
 }
 
 function ExtensionSelect({ onUpdate }: ExtensionSelectProps) {
-  const toasts = useToasts();
+  const { error: toastError } = useToasts();
   const { analyseFile } = useAnalyser();
 
   const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
@@ -26,7 +26,7 @@ function ExtensionSelect({ onUpdate }: ExtensionSelectProps) {
       const fileExtension = file.name.slice(file.name.lastIndexOf("."));
 
       if (!validExtensions.includes(fileExtension)) {
-        toasts.error(
+        toastError(
           new Error(
             "Invalid file type. Please upload a browser extension file."
           )
@@ -49,7 +49,7 @@ function ExtensionSelect({ onUpdate }: ExtensionSelectProps) {
       };
 
       reader.onerror = () => {
-        if (reader.error instanceof Error) toasts.error(reader.error);
+        if (reader.error instanceof Error) toastError(reader.error);
       };
 
       try {
@@ -57,7 +57,7 @@ function ExtensionSelect({ onUpdate }: ExtensionSelectProps) {
         console.log("Extension setup completed:", await analyseFile(file));
         onUpdate?.(extension);
       } catch (error) {
-        if (error instanceof Error) toasts.error(error);
+        if (error instanceof Error) toastError(error);
 
         event.target.value = "";
         console.error("Error setting up extension:", error);

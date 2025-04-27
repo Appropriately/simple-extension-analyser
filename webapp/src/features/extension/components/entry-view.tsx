@@ -26,7 +26,7 @@ const FILE_EXTENSION_TO_LANGUAGE: Record<string, string> = {
 function EntryView({ entry }: { entry: ExtendedEntry }) {
   const [rawData, setRawData] = useState<string>();
 
-  const toasts = useToasts();
+  const { error: toastError } = useToasts();
 
   const tableItems = [
     { label: "Comment", value: entry.comment },
@@ -50,17 +50,17 @@ function EntryView({ entry }: { entry: ExtendedEntry }) {
         getEntryData(entry)
           .then((data) => setRawData(data ? data : undefined))
           .catch((error) => {
-            if (error instanceof Error) toasts.error(error);
+            if (error instanceof Error) toastError(error);
             setRawData(undefined);
           });
       } catch (error) {
-        if (error instanceof Error) toasts.error(error);
+        if (error instanceof Error) toastError(error);
         setRawData(undefined);
       }
     } else {
       setRawData(undefined);
     }
-  }, [entry, toasts]);
+  }, [entry, toastError]);
 
   return (
     <div>
