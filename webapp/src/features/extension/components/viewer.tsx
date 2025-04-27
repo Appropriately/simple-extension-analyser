@@ -1,14 +1,18 @@
-import { Fragment, MouseEvent, useEffect, useState } from "react";
+import { Fragment, MouseEvent, ReactNode, useEffect, useState } from "react";
 
 import { buildEntryTree, Extension } from "../";
 import { useEntryContext } from "../context";
 import { EntryTreeFilters, EntryTreeNode, ExtendedEntry } from "../types";
-import EntryView from "./entry-view";
-import ExtensionView from "./extension-view";
 import Tree from "./tree";
 import TreeFilters from "./tree-filters";
 
-function Viewer({ extension }: { extension: Extension }) {
+interface Props {
+  extension: Extension;
+  extensionComponent: ReactNode;
+  entryComponent: ReactNode;
+}
+
+function Viewer({ extension, extensionComponent, entryComponent }: Props) {
   const { entry, setEntry } = useEntryContext();
 
   const [entryTree, setEntryTree] = useState<EntryTreeNode>();
@@ -17,7 +21,9 @@ function Viewer({ extension }: { extension: Extension }) {
   useEffect(() => {
     buildEntryTree(
       (extension.entries ?? []).filter(
-        (entry) => !filters.term || entry.filename.toLowerCase().includes(filters.term.toLowerCase())
+        (entry) =>
+          !filters.term ||
+          entry.filename.toLowerCase().includes(filters.term.toLowerCase())
       )
     ).then((tree) => setEntryTree(tree));
   }, [extension.entries, filters]);
@@ -67,11 +73,7 @@ function Viewer({ extension }: { extension: Extension }) {
           </ol>
         </nav>
 
-        {entry ? (
-          <EntryView extension={extension} entry={entry} />
-        ) : (
-          <ExtensionView extension={extension} />
-        )}
+        {entry ? entryComponent : extensionComponent}
       </div>
     </div>
   );

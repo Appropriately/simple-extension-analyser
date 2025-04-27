@@ -3,6 +3,9 @@ import { useParams } from "react-router-dom";
 import { EntryProvider, ExtensionViewer } from "@/features/extension";
 import { store } from "@/stores";
 
+import EntryView from "./extension/entry";
+import ExtensionView from "./extension/extension";
+
 const ExtensionNotFound = ({ id }: { id?: string }) => {
   return (
     <div className="container mx-auto pt-5">
@@ -27,7 +30,11 @@ function Extension() {
 
   return (
     <EntryProvider>
-      <ExtensionViewer extension={extension} />
+      <ExtensionViewer
+        extension={extension}
+        entryComponent={<EntryView extension={extension} />}
+        extensionComponent={<ExtensionView extension={extension} />}
+      />
     </EntryProvider>
   );
 }

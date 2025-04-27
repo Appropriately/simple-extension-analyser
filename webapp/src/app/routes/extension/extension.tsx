@@ -1,5 +1,5 @@
-import { Extension } from "../types";
 import CodeBlock from "@/components/code";
+import { Extension } from "@/features/extension";
 
 interface Props {
   extension: Extension;

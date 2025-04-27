@@ -3,10 +3,9 @@ import { useEffect, useMemo, useState } from "react";
 import Card from "@/components/card";
 import CodeBlock from "@/components/code";
 import Table from "@/components/table";
+import { Extension, getEntryData } from "@/features/extension";
+import { useEntryContext } from "@/features/extension/context";
 import { useToasts } from "@/features/toasts";
-
-import { ExtendedEntry, Extension } from "../types";
-import { getEntryData } from "../utils";
 
 const ALLOWED_EXTENSIONS = [".json", ".txt", ".md", ".js", ".html", ".css"];
 
@@ -25,31 +24,35 @@ const FILE_EXTENSION_TO_LANGUAGE: Record<string, string> = {
 
 interface Props {
   extension: Extension;
-  entry: ExtendedEntry;
 }
 
-function EntryView({ entry, extension }: Props) {
-  const [rawData, setRawData] = useState<string>();
+function EntryView({ extension }: Props) {
+  const { entry } = useEntryContext();
 
   const { error: toastError } = useToasts();
 
+  const [rawData, setRawData] = useState<string>();
+
   const tableItems = [
-    { label: "Comment", value: entry.comment },
-    { label: "Encrypted", value: entry.encrypted ? "Yes" : "No" },
-    { label: "Compressed size", value: `${entry.compressedSize} bytes` },
-    { label: "Uncompressed size", value: `${entry.uncompressedSize} bytes` },
+    { label: "Comment", value: entry?.comment },
+    { label: "Encrypted", value: entry?.encrypted ? "Yes" : "No" },
+    { label: "Compressed size", value: `${entry?.compressedSize} bytes` },
+    { label: "Uncompressed size", value: `${entry?.uncompressedSize} bytes` },
     {
       label: "Last modified",
-      value: new Date(entry.lastModDate).toLocaleString(),
+      value: new Date(entry?.lastModDate ?? 0).toLocaleString(),
     },
-    ...Object.entries(entry.extraField ?? {}).map(([key, value]) => ({
+    ...Object.entries(entry?.extraField ?? {}).map(([key, value]) => ({
       label: key,
       value: Array.isArray(value) ? value.join(", ") : value,
     })),
   ];
 
   useEffect(() => {
-    if (ALLOWED_EXTENSIONS.some((ext) => entry.filename.endsWith(ext))) {
+    if (
+      entry &&
+      ALLOWED_EXTENSIONS.some((ext) => entry.filename.endsWith(ext))
+    ) {
       try {
         setRawData(undefined);
         getEntryData(entry)
@@ -67,10 +70,14 @@ function EntryView({ entry, extension }: Props) {
     }
   }, [entry, toastError]);
 
-  const analysedFile = useMemo(
-    () => extension.analysedFiles?.[entry.filename],
-    [entry, extension]
-  );
+  const analysedFile = useMemo(() => {
+    if (entry) return extension.analysedFiles?.[entry.filename];
+    return undefined;
+  }, [entry, extension]);
+
+  if (!entry) {
+    return <div className="text-zinc-300">No entry selected</div>;
+  }
 
   return (
     <div>
@@ -87,7 +94,7 @@ function EntryView({ entry, extension }: Props) {
 
       {analysedFile && (
         <Card header="Analysis" className="mb-3">
-          {JSON.stringify(analysedFile, null, 2)}
+          {JSON.stringify(analysedFile.urls, null, 2)}
         </Card>
       )}
 

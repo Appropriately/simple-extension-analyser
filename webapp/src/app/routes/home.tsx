@@ -1,12 +1,10 @@
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import {
-  Extension,
-  ExtensionSelect,
-  getExtensionId,
-} from "@/features/extension";
+import { Extension, getExtensionId } from "@/features/extension";
 import { addExtension } from "@/stores";
+
+import ExtensionSelect from "./home/extension-select";
 
 function Home() {
   const dispatch = useDispatch();

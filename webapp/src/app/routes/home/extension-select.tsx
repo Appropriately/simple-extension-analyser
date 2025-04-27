@@ -1,11 +1,9 @@
 import Card from "@/components/card";
 import InputDrop from "@/components/forms/input-drop";
 import { useAnalyser } from "@/features/analyser/contexts";
+import { AnalysedFile, Extension } from "@/features/extension/types";
+import { setupExtensionFromFile } from "@/features/extension/utils";
 import { useToasts } from "@/features/toasts";
-
-import { Extension } from "../";
-import { AnalysedFile } from "../types";
-import { setupExtensionFromFile } from "../utils";
 
 interface ExtensionSelectProps {
   onUpdate?: (extension?: Extension) => void;
