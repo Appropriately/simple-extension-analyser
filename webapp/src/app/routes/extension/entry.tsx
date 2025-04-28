@@ -81,28 +81,37 @@ function EntryView({ extension }: Props) {
 
   return (
     <div>
-      <Card header={entry.filename.split("/").pop()} className="mb-3">
-        <Table
-          data={tableItems}
-          columns={[
-            { label: "Label", key: "label", width: "200px" },
-            { label: "Value", key: "value" },
-          ]}
-          skipHeader
-        />
+      <Card className="mb-3">
+        <Card.Header>
+          <h2 className="text-lg font-semibold">
+            {entry.filename.split("/").pop()}
+          </h2>
+        </Card.Header>
+        <Card.Body>
+          <Table
+            data={tableItems}
+            columns={[
+              { label: "Label", key: "label", width: "200px" },
+              { label: "Value", key: "value" },
+            ]}
+            skipHeader
+          />
+        </Card.Body>
       </Card>
 
       {analysedFile && (
-        <Card header="Analysis" className="mb-3">
-          {JSON.stringify(analysedFile.urls, null, 2)}
+        <Card className="mb-3">
+          <Card.Header>Analysis</Card.Header>
+          <Card.Body>{JSON.stringify(analysedFile.urls, null, 2)}</Card.Body>
         </Card>
       )}
 
       {rawData ? (
         <CodeBlock
           language={
-            FILE_EXTENSION_TO_LANGUAGE[entry.filename.split(".").pop()!] ??
-            entry.filename.split(".").pop()
+            FILE_EXTENSION_TO_LANGUAGE[
+              entry.filename.split(".").pop()!.toLowerCase()
+            ] ?? entry.filename.split(".").pop()
           }
           raw={rawData}
         />

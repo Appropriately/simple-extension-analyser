@@ -1,15 +1,14 @@
-import Card from "@/components/card";
 import InputDrop from "@/components/forms/input-drop";
 import { useAnalyser } from "@/features/analyser/contexts";
 import { AnalysedFile, Extension } from "@/features/extension/types";
 import { setupExtensionFromFile } from "@/features/extension/utils";
 import { useToasts } from "@/features/toasts";
 
-interface ExtensionSelectProps {
+interface Props {
   onUpdate?: (extension?: Extension) => void;
 }
 
-function ExtensionSelect({ onUpdate }: ExtensionSelectProps) {
+function ExtensionSelect({ onUpdate }: Props) {
   const { error: toastError } = useToasts();
   const { analyseFile } = useAnalyser();
 
@@ -64,28 +63,26 @@ function ExtensionSelect({ onUpdate }: ExtensionSelectProps) {
   };
 
   return (
-    <Card className="mb-3">
-      <div>
-        <label
-          htmlFor="file_input"
-          className="block mb-2 text-sm font-medium text-zinc-300"
-        >
-          Upload a browser extension file
-        </label>
+    <>
+      <label
+        htmlFor="file_input"
+        className="block mb-2 text-sm font-medium text-zinc-300"
+      >
+        Upload a browser extension file
+      </label>
 
-        <InputDrop
-          id="file_input"
-          accept=".zip,.crx"
-          onFileChange={handleFileChange}
-          aria-describedby="file_input_help"
-          className="mb-2"
-        />
+      <InputDrop
+        id="file_input"
+        accept=".zip,.crx"
+        onFileChange={handleFileChange}
+        aria-describedby="file_input_help"
+        className="mb-2"
+      />
 
-        <p id="file_input_help" className="text-sm text-zinc-400">
-          Upload a .zip or .crx file containing the browser extension.
-        </p>
-      </div>
-    </Card>
+      <p id="file_input_help" className="text-sm text-zinc-400">
+        Upload a .zip or .crx file containing the browser extension.
+      </p>
+    </>
   );
 }
 

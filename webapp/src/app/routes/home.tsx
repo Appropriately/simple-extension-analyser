@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
+import Card from "@/components/card";
 import { Extension, getExtensionId } from "@/features/extension";
 import { addExtension } from "@/stores";
 
@@ -19,7 +20,11 @@ function Home() {
 
   return (
     <div className="container mx-auto mt-2">
-      <ExtensionSelect onUpdate={setExtension} />
+      <Card className="mb-3">
+        <Card.Body>
+          <ExtensionSelect onUpdate={setExtension} />
+        </Card.Body>
+      </Card>
     </div>
   );
 }
