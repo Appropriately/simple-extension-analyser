@@ -18,8 +18,11 @@
 - [ ] Add store support for extension by id and version
 - [x] Build a drop box for zips
 - [ ] Async handling of entry opening.
+- [ ] Tag and unminify files
+- [ ] Tag and unobfuscate files
 - [ ] Render line numbers for code blocks.
 - [ ] Build out mechanism for analysing extension
+- [ ] Build out a triple dot menu that contains settings page and github repo link
 - [ ] Add ability to store virustotal token
 
 ## Future features
