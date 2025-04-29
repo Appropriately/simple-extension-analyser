@@ -142,7 +142,7 @@ function CodeBlock({ raw, language }: Props) {
   }, [raw, language, toastError]);
 
   return (
-    <pre className="bg-black p-2 rounded text-xs overflow-x-auto">
+    <pre className="bg-black p-2 rounded text-xs overflow-x-auto min-h-[100px]">
       <code>{renderedContent}</code>
     </pre>
   );

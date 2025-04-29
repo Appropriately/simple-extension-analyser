@@ -7,18 +7,39 @@ import Layout from "./layout";
 
 const Home = lazy(() => import("./routes/home"));
 const Extension = lazy(() => import("./routes/extension"));
+const NotFound = lazy(() => import("./routes/not-found"));
 
 function Router() {
   return (
     <HashRouter>
-      <Suspense fallback={<Loading />}>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
-            <Route path="/extension/:id" element={<Extension />} />
-          </Route>
-        </Routes>
-      </Suspense>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route
+            index
+            element={
+              <Suspense fallback={<Loading />}>
+                <Home />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/extension/:id"
+            element={
+              <Suspense fallback={<Loading />}>
+                <Extension />
+              </Suspense>
+            }
+          />
+          <Route
+            path="*"
+            element={
+              <Suspense fallback={<Loading />}>
+                <NotFound />
+              </Suspense>
+            }
+          />
+        </Route>
+      </Routes>
     </HashRouter>
   );
 }
