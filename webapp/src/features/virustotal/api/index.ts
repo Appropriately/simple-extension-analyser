@@ -1,0 +1,1 @@
+export { createVirusTotal } from "./virustotal";

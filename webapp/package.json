@@ -17,7 +17,9 @@
     "lowlight": "^3.3.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-is": "^19.1.0",
     "react-redux": "^9.2.0",
+    "recharts": "^2.15.3",
     "redux-persist": "^6.0.0"
   },
   "devDependencies": {
