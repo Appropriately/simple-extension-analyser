@@ -52,16 +52,21 @@ function URL({ analysis }: { analysis: UrlAnalysis }) {
         <Card className="grow h-64 !bg-zinc-800">
           <Card.Body>
             <div className="overflow-y-auto h-60">
-              <Table
-                columns={COLUMNS}
-                headClassName="border-b border-zinc-700 bg-zinc-800"
-                data={
-                  Object.values(data.attributes.results) as unknown as Record<
-                    string,
-                    unknown
-                  >[]
-                }
-              />
+              <Table>
+                <Table.Header
+                  columns={COLUMNS}
+                  className="border-b border-zinc-700 bg-zinc-800"
+                />
+                <Table.Body
+                  data={
+                    Object.values(data.attributes.results) as unknown as Record<
+                      string,
+                      unknown
+                    >[]
+                  }
+                  columns={COLUMNS}
+                />
+              </Table>
             </div>
           </Card.Body>
         </Card>

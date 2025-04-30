@@ -88,14 +88,15 @@ function EntryView({ extension }: Props) {
           </h2>
         </Card.Header>
         <Card.Body>
-          <Table
-            data={tableItems}
-            columns={[
-              { label: "Label", key: "label", width: "200px" },
-              { label: "Value", key: "value" },
-            ]}
-            skipHeader
-          />
+          <Table>
+            <Table.Body
+              data={tableItems}
+              columns={[
+                { label: "Label", key: "label", width: "200px" },
+                { label: "Value", key: "value" },
+              ]}
+            />
+          </Table>
         </Card.Body>
       </Card>
 

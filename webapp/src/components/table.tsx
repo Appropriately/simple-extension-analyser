@@ -1,60 +1,81 @@
+import { ReactNode } from "react";
+
 export interface TableColumn {
   label: string;
   key: string;
   width?: string;
   align?: "left" | "center" | "right";
+  render?: (value: unknown, item: Record<string, unknown>) => ReactNode;
 }
 
 interface Props {
-  data: Record<string, unknown>[];
-  columns: TableColumn[];
-  skipHeader?: boolean;
   className?: string;
-  headClassName?: string;
-  bodyClassName?: string;
 }
 
-function Table({ data, columns, skipHeader, className, headClassName, bodyClassName }: Props) {
+interface TableHeaderProps extends Props {
+  columns: TableColumn[];
+}
+
+function TableHeader({ columns, className }: TableHeaderProps) {
   return (
-    <table className={`min-w-full ${className}`}>
-      {!skipHeader && (
-        <thead className={`sticky top-0 ${headClassName}`}>
-          <tr>
-            {columns.map((column) => (
-              <th
-                key={column.key}
-                className="py-2 px-1 text-left text-xs font-medium uppercase tracking-wider text-zinc-300"
-                style={{
-                  width: column.width,
-                  textAlign: column.align || "left",
-                }}
-              >
-                {column.label}
-              </th>
-            ))}
-          </tr>
-        </thead>
-      )}
-      <tbody className={`overflow-y-auto ${bodyClassName}`}>
-        {data.map((item, index) => (
-          <tr key={index}>
-            {columns.map((column) => (
-              <td
-                key={column.key}
-                className="py-2 px-1 whitespace-nowrap text-sm"
-                style={{
-                  width: column.width,
-                  textAlign: column.align || "left",
-                }}
-              >
-                {String(item[column.key])}
-              </td>
-            ))}
-          </tr>
+    <thead className={`sticky top-0 ${className}`}>
+      <tr>
+        {columns.map((column) => (
+          <th
+            key={column.key}
+            className="py-2 px-1 text-left text-xs font-medium uppercase tracking-wider text-zinc-300"
+            style={{
+              width: column.width,
+              textAlign: column.align || "left",
+            }}
+          >
+            {column.label}
+          </th>
         ))}
-      </tbody>
-    </table>
+      </tr>
+    </thead>
   );
 }
+
+interface TableBodyProps extends Props {
+  data: Record<string, unknown>[];
+  columns: TableColumn[];
+}
+
+function TableBody({ data, columns, className }: TableBodyProps) {
+  return (
+    <tbody className={`overflow-y-auto ${className}`}>
+      {data.map((item, index) => (
+        <tr key={index}>
+          {columns.map((column) => (
+            <td
+              key={column.key}
+              className="py-2 px-1 whitespace-nowrap text-sm"
+              style={{
+                width: column.width,
+                textAlign: column.align || "left",
+              }}
+            >
+              {column.render
+                ? column.render(item[column.key], item)
+                : String(item[column.key])}
+            </td>
+          ))}
+        </tr>
+      ))}
+    </tbody>
+  );
+}
+
+interface TableProps extends Props {
+  children?: ReactNode;
+}
+
+function Table({ className, children }: TableProps) {
+  return <table className={`min-w-full ${className}`}>{children}</table>;
+}
+
+Table.Header = TableHeader;
+Table.Body = TableBody;
 
 export default Table;
