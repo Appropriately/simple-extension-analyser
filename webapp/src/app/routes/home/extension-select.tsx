@@ -10,7 +10,7 @@ interface Props {
 
 function ExtensionSelect({ onUpdate }: Props) {
   const { error: toastError } = useToasts();
-  const { analyseFile } = useAnalyser();
+  const { analyseFile, initialiseByFile } = useAnalyser();
 
   const handleFileChange = async (file?: File) => {
     if (file) {
@@ -48,7 +48,8 @@ function ExtensionSelect({ onUpdate }: Props) {
 
       try {
         const extension = await setupExtensionFromFile(file);
-        extension.analysedFiles = (await analyseFile(file)) as Record<
+        extension.id = await initialiseByFile(file);
+        extension.analysedFiles = (await analyseFile(extension.id)) as Record<
           string,
           AnalysedFile
         >;

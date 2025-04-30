@@ -13,11 +13,13 @@ export interface AnalyserHandle {
   status: AnalyserStatus;
   error: string | null;
 
-  analyseFile: (file: File) => Promise<AnalysedFileResponse>;
+  initialiseByFile: (file: File) => Promise<string>;
+  analyseFile: (id: string) => Promise<AnalysedFileResponse>;
 }
 
 export type WorkerRequest =
-  | { type: "ANALYSE"; payload: ArrayBuffer }
+  | { type: "SETUP"; payload: ArrayBuffer }
+  | { type: "ANALYSE"; payload: { id: string } }
   | { type: "EXTRACT"; payload: { buffer: ArrayBuffer; filename: string } };
 
 export type WorkerResponse = {

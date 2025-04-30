@@ -4,18 +4,6 @@ import { Extension } from "../types";
 import { parseManifestEntry } from "./entries";
 
 /**
- * Returns the extension ID. Hashes the extension ID if it is not pulled
- * from the appropriate store.
- * @param extension The extension object.
- * @returns The extension ID.
- */
-export const getExtensionId = (extension: Extension): string => {
-  if (extension.extensionId) return extension.extensionId;
-
-  return "!";
-};
-
-/**
  * Takes a file and returns an extension object.
  * @param file The file upload.
  * @returns The extension object.

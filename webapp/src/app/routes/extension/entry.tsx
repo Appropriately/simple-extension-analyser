@@ -53,6 +53,11 @@ function EntryView({ extension }: Props) {
       entry &&
       ALLOWED_EXTENSIONS.some((ext) => entry.filename.endsWith(ext))
     ) {
+      if (!entry.getData) {
+        // When serialised and retrieved, the getData method is lost.
+        return;
+      }
+
       try {
         setRawData(undefined);
         getEntryData(entry)
@@ -107,7 +112,7 @@ function EntryView({ extension }: Props) {
         </Card>
       )}
 
-      {rawData ? (
+      {rawData && (
         <CodeBlock
           language={
             FILE_EXTENSION_TO_LANGUAGE[
@@ -116,7 +121,7 @@ function EntryView({ extension }: Props) {
           }
           raw={rawData}
         />
-      ) : null}
+      )}
     </div>
   );
 }

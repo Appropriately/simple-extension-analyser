@@ -11,7 +11,7 @@ export interface AnalysedFile {
 //  * Represents a browser extension.
 //  */
 export interface Extension {
-  extensionId?: string;
+  id?: string;
   filename?: string;
   entries?: ExtendedEntry[];
   manifest?: Manifest;

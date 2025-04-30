@@ -1,3 +1,2 @@
-export { getEntryData, buildEntryTree } from "./entries";
-export { getExtensionId, setupExtensionFromFile } from "./extension";
-
+export { buildEntryTree, getEntryData } from "./entries";
+export { setupExtensionFromFile } from "./extension";

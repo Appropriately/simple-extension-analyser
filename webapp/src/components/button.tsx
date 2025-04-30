@@ -6,7 +6,10 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 function Button({ className, ...props }: Props) {
   return (
-    <button className={`text-red ${className}`} {...props}>
+    <button
+      className={`bg-blue-500 text-white px-3 py-1 rounded cursor-pointer hover:bg-blue-600 ${className}`}
+      {...props}
+    >
       {props.children}
     </button>
   );

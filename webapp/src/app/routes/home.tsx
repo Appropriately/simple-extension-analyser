@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import Card from "@/components/card";
-import { Extension, getExtensionId } from "@/features/extension";
+import { Extension } from "@/features/extension";
 import { addExtension } from "@/stores";
 
 import ExtensionSelect from "./home/extension-select";
@@ -15,7 +15,7 @@ function Home() {
     if (!extension) return;
 
     dispatch(addExtension({ extension }));
-    navigate(`/extension/${getExtensionId(extension)}`);
+    navigate(`/extension/${extension.id}`);
   };
 
   return (

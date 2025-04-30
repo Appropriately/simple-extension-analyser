@@ -1,7 +1,10 @@
+import { Extension } from "../lib/analyser/analyser.js";
 import { WorkerRequest, WorkerResponse } from "../types";
 
 let analyser: typeof import("../lib/analyser/analyser.js") | null = null;
 let initError: Error | null = null;
+
+const EXTENSION_BY_ID: Record<string, Extension> = {};
 
 (async () => {
   try {
@@ -46,14 +49,32 @@ self.onmessage = async (event: MessageEvent<WorkerRequest>) => {
 
   try {
     switch (type) {
-      case "ANALYSE": {
+      case "SETUP": {
         const extension = new analyser.Extension(new Uint8Array(payload));
+        EXTENSION_BY_ID[extension.get_id()] = extension;
+
+        self.postMessage({
+          type: "RESULT",
+          payload: extension.get_id(),
+        } as WorkerResponse);
+        break;
+      }
+      case "ANALYSE": {
+        const { id } = payload;
+        const extension = EXTENSION_BY_ID[id];
+        if (!extension) {
+          self.postMessage({
+            type: "ERROR",
+            payload: `Extension not found: ${id}`,
+          } as WorkerResponse);
+          return;
+        }
+
         const resultJson = extension.analyse_files();
         self.postMessage({
           type: "RESULT",
           payload: resultJson,
         } as WorkerResponse);
-        extension.free();
         break;
       }
 
@@ -76,4 +97,11 @@ self.addEventListener("unhandledrejection", (event) => {
     type: "ERROR",
     payload: `Unhandled rejection: ${event.reason}`,
   } as WorkerResponse);
+});
+
+self.addEventListener("unload", () => {
+  for (const extension of Object.values(EXTENSION_BY_ID)) {
+    extension.free();
+    delete EXTENSION_BY_ID[extension.get_id()];
+  }
 });

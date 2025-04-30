@@ -1,5 +1,12 @@
-//! This file contains the Rust code for a WebAssembly module that reads a ZIP archive
-//! and provides a function to list the files within it.
+//! A WebAssembly module for analyzing browser extensions.
+//! 
+//! This module provides functionality to:
+//! - Read and parse extension ZIP files
+//! - Extract and analyze manifest.json
+//! - Generate unique extension IDs
+//! - Scan for URLs in extension files
+//! 
+//! The module is designed to be used from JavaScript through WebAssembly bindings.
 
 use std::{collections::HashMap, io::{Cursor, Read, Seek, SeekFrom, Write}};
 use serde_derive::{Deserialize, Serialize};
@@ -7,16 +14,28 @@ use wasm_bindgen::prelude::*;
 use zip::ZipArchive;
 use regex::Regex;
 use std::sync::LazyLock;
+use md5;
 
+/// Regular expression for matching URLs in extension files.
+/// 
+/// This regex matches HTTP, HTTPS, and FTP URLs with their full paths and query parameters.
 static URL_REGEX: LazyLock<Regex> = LazyLock::new(|| {
     Regex::new(r"(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])").unwrap()
 });
 
-#[derive(Serialize)] // Use serde to easily serialize to JSON
-#[derive(Deserialize)]
+/// Represents an analysed file from the extension.
+/// 
+/// Contains information about a file found in the extension, including:
+/// - The file's name
+/// - Its path within the extension
+/// - Any URLs found in its contents
+#[derive(Serialize, Deserialize)]
 pub struct AnalysedFile {
+    /// The name of the file
     name: String,
+    /// The full path of the file within the extension
     path: String,
+    /// URLs found in the file's contents
     urls: Vec<String>,
 }
 
@@ -33,27 +52,76 @@ extern "C" {
     fn log_many(a: &str, b: &str);
 }
 
-/// A struct representing an Extension, which is a ZIP archive.
+/// Represents a browser extension as a ZIP archive.
 /// 
-/// This struct contains a `ZipArchive` object that allows us to read the contents of the ZIP file.
+/// This struct provides methods to analyze the contents of a browser extension,
+/// including reading its manifest and scanning for URLs in various file types.
 #[wasm_bindgen]
 pub struct Extension {
+    /// The unique ID of the extension
+    id: String,
+    /// The ZIP archive containing the extension files
     archive: ZipArchive<Cursor<Vec<u8>>>,
 }
 
 #[wasm_bindgen]
 impl Extension {
-    /// Creates a new `Extension` instance from a byte slice representing the ZIP file.
-
+    /// Creates a new `Extension` instance from raw extension data.
+    /// 
+    /// # Arguments
+    /// 
+    /// * `data` - A byte slice containing the raw extension ZIP file data.
+    ///     This is due to the fact that this library is compiled to WebAssembly,
+    /// 
+    /// # Returns
+    /// 
+    /// A new `Extension` instance or an error if the data cannot be parsed as a ZIP file
     #[wasm_bindgen(constructor)]
     pub fn new(data: &[u8]) -> Result<Extension, JsValue> {
         let mut c = Cursor::new(Vec::new());
         c.write_all(data).unwrap();
         c.seek(SeekFrom::Start(0)).unwrap();
-        let archive = zip::ZipArchive::new(c).unwrap();
-        Ok(Extension { archive })
+        let mut archive = zip::ZipArchive::new(c).unwrap();
+
+        let mut manifest_file = None;
+        for i in 0..archive.len() {
+            let mut file = archive.by_index(i).map_err(|e| e.to_string())?;
+            if file.name() == "manifest.json" {
+                let mut contents = String::new();
+                file.read_to_string(&mut contents).map_err(|e| e.to_string())?;
+                manifest_file = Some(contents);
+                break;
+            }
+        }
+
+        let manifest_contents = manifest_file.ok_or_else(|| JsValue::from_str("manifest.json not found in extension"))?;
+
+        let hash = md5::compute(manifest_contents.as_bytes());
+        let id = format!("{:x}", hash);
+
+        Ok(Extension { id, archive })
     }
 
+    /// Returns the unique ID of the extension.
+    /// 
+    /// # Returns
+    /// 
+    /// A string representing the unique ID of the extension.
+    #[wasm_bindgen]
+    pub fn get_id(&self) -> String {
+        self.id.clone()
+    }
+
+    /// Analyses all files in the extension for URLs.
+    /// 
+    /// This method scans through all files in the extension, looking for URLs in:
+    /// - JavaScript files (*.js)
+    /// - JSON files (*.json)
+    /// 
+    /// # Returns
+    /// 
+    /// A JSON string containing a map of file paths to `AnalysedFile` objects,
+    /// or an error if any file cannot be read or parsed.
     #[wasm_bindgen]
     pub fn analyse_files(&mut self) -> Result<String, JsValue> {
         let mut analysed_files = HashMap::new();

@@ -7,21 +7,21 @@ import { configureStore } from "@reduxjs/toolkit";
 import { extensionsSlice } from "./reducers";
 
 const reducers = combineReducers({
-    extensions: extensionsSlice.reducer,
+  extensions: extensionsSlice.reducer,
 });
 
 const persistConfig = {
-    key: "root",
-    storage,
-    whitelist: [], // TODO: Handle serialisation issues with extensions
+  key: "root",
+  storage,
+  whitelist: ["extensions"],
 };
 
 export default configureStore({
-    reducer: persistReducer(persistConfig, reducers),
-    middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware({
-            serializableCheck: {
-                ignoredActions: ["persist/PERSIST", "persist/REHYDRATE"],
-            },
-        }),
+  reducer: persistReducer(persistConfig, reducers),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: ["persist/PERSIST", "persist/REHYDRATE"],
+      },
+    }),
 });
