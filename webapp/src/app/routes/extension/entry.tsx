@@ -3,9 +3,12 @@ import { useEffect, useMemo, useState } from "react";
 import Card from "@/components/card";
 import CodeBlock from "@/components/code";
 import Table from "@/components/table";
+import Tabs, { Tab } from "@/components/tabs";
 import { Extension, getEntryData } from "@/features/extension";
 import { useEntryContext } from "@/features/extension/context";
 import { useToasts } from "@/features/toasts";
+
+import AnalysedEntry from "./analysed-entry";
 
 const ALLOWED_EXTENSIONS = [".json", ".txt", ".md", ".js", ".html", ".css"];
 
@@ -22,6 +25,11 @@ const FILE_EXTENSION_TO_LANGUAGE: Record<string, string> = {
   rs: "rust",
 };
 
+const BASE_TABS: Tab[] = [
+  { key: "details" },
+  { key: "analysis", disabled: true },
+];
+
 interface Props {
   extension: Extension;
 }
@@ -32,6 +40,14 @@ function EntryView({ extension }: Props) {
   const { error: toastError } = useToasts();
 
   const [rawData, setRawData] = useState<string>();
+
+  const [currentTab, setCurrentTab] = useState<string>(BASE_TABS[0].key);
+  const [tabs, setTabs] = useState<Record<string, Tab>>(
+    BASE_TABS.reduce((acc, tab) => {
+      acc[tab.key] = tab;
+      return acc;
+    }, {} as Record<string, Tab>)
+  );
 
   const tableItems = [
     { label: "Comment", value: entry?.comment },
@@ -49,6 +65,8 @@ function EntryView({ extension }: Props) {
   ];
 
   useEffect(() => {
+    setCurrentTab(BASE_TABS[0].key);
+
     if (
       entry &&
       ALLOWED_EXTENSIONS.some((ext) => entry.filename.endsWith(ext))
@@ -80,49 +98,67 @@ function EntryView({ extension }: Props) {
     return undefined;
   }, [entry, extension]);
 
-  if (!entry) {
-    return <div className="text-zinc-300">No entry selected</div>;
-  }
+  useEffect(() => {
+    const newTabs = {
+      ...BASE_TABS.reduce((acc, tab) => {
+        acc[tab.key] = tab;
+        return acc;
+      }, {} as Record<string, Tab>),
+    };
+
+    if (analysedFile) newTabs["analysis"] = { key: "analysis" };
+    if (rawData) newTabs["entry"] = { key: "entry" };
+
+    setTabs(newTabs);
+  }, [entry, rawData, analysedFile]);
+
+  if (!entry) return <div className="text-zinc-300">No entry selected</div>;
 
   return (
-    <div>
-      <Card className="mb-3">
-        <Card.Header>
-          <h2 className="text-lg font-semibold">
-            {entry.filename.split("/").pop()}
-          </h2>
-        </Card.Header>
-        <Card.Body>
-          <Table>
-            <Table.Body
-              data={tableItems}
-              columns={[
-                { label: "Label", key: "label", width: "200px" },
-                { label: "Value", key: "value" },
-              ]}
+    <>
+      <Tabs
+        tabs={Object.values(tabs)}
+        className="mb-3"
+        initialPage={BASE_TABS[0].key}
+        onChange={setCurrentTab}
+      />
+
+      {
+        {
+          details: (
+            <Card className="mb-3">
+              <Card.Header>
+                <h2 className="text-lg font-semibold">
+                  {entry.filename.split("/").pop()}
+                </h2>
+              </Card.Header>
+              <Card.Body>
+                <Table>
+                  <Table.Body
+                    data={tableItems}
+                    columns={[
+                      { label: "Label", key: "label", width: "200px" },
+                      { label: "Value", key: "value" },
+                    ]}
+                  />
+                </Table>
+              </Card.Body>
+            </Card>
+          ),
+          analysis: <AnalysedEntry analysedFile={analysedFile!} />,
+          entry: (
+            <CodeBlock
+              language={
+                FILE_EXTENSION_TO_LANGUAGE[
+                  entry.filename.split(".").pop()!.toLowerCase()
+                ] ?? entry.filename.split(".").pop()
+              }
+              raw={rawData ?? ""}
             />
-          </Table>
-        </Card.Body>
-      </Card>
-
-      {analysedFile && (
-        <Card className="mb-3">
-          <Card.Header>Analysis</Card.Header>
-          <Card.Body>{JSON.stringify(analysedFile.urls, null, 2)}</Card.Body>
-        </Card>
-      )}
-
-      {rawData && (
-        <CodeBlock
-          language={
-            FILE_EXTENSION_TO_LANGUAGE[
-              entry.filename.split(".").pop()!.toLowerCase()
-            ] ?? entry.filename.split(".").pop()
-          }
-          raw={rawData}
-        />
-      )}
-    </div>
+          ),
+        }[currentTab]
+      }
+    </>
   );
 }
 
