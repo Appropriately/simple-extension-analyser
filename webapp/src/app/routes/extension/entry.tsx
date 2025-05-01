@@ -119,8 +119,8 @@ function EntryView({ extension }: Props) {
       <Tabs
         tabs={Object.values(tabs)}
         className="mb-3"
-        initialPage={BASE_TABS[0].key}
-        onChange={setCurrentTab}
+        value={currentTab}
+        setValue={setCurrentTab}
       />
 
       {

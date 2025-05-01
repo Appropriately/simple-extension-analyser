@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode } from "react";
 
 /**
  * Represents a single tab in the Tabs component.
@@ -18,20 +18,20 @@ export interface Tab {
  * @interface Props
  * @property {Tab[]} tabs - Array of tab configurations
  * @property {string} [className] - Additional CSS classes to apply to the tabs container
- * @property {string} initialPage - The key of the initially selected tab
- * @property {(page: string) => void} onChange - Callback function when tab selection changes
+ * @property {string} value - The key of the currently selected tab
+ * @property {(value: string) => void} setValue - Callback function when tab selection changes
  */
 interface Props {
   tabs: Tab[];
   className?: string;
-  initialPage: string;
-  onChange: (page: string) => void;
+  value: string;
+  setValue: (value: string) => void;
 }
 
 /**
  * A reusable tabs component that displays a horizontal list of tabs.
  * Supports disabled tabs, custom tab rendering, and controlled selection.
- * 
+ *
  * @component
  * @example
  * ```tsx
@@ -46,13 +46,7 @@ interface Props {
  * />
  * ```
  */
-function Tabs({ tabs, className, initialPage, onChange }: Props) {
-  const [currentPage, setCurrentPage] = useState<string>(initialPage);
-
-  useEffect(() => {
-    onChange(currentPage);
-  }, [currentPage, onChange]);
-
+function Tabs({ tabs, className, value, setValue }: Props) {
   return (
     <div
       className={`text-sm font-medium text-center border-b text-zinc-400 border-gray-700 ${className}`}
@@ -67,8 +61,8 @@ function Tabs({ tabs, className, initialPage, onChange }: Props) {
                   ? "cursor-not-allowed text-zinc-500"
                   : "hover:text-zinc-300 hover:border-zinc-300 cursor-pointer"
               }`}
-              aria-current={currentPage === tab.key ? "page" : undefined}
-              onClick={tab.disabled ? undefined : () => setCurrentPage(tab.key)}
+              aria-current={value === tab.key ? "page" : undefined}
+              onClick={tab.disabled ? undefined : () => setValue(tab.key)}
             >
               {tab.render ? tab.render() : tab.key}
             </button>
