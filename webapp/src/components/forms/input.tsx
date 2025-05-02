@@ -8,4 +8,5 @@ function Input({ className, ...props }: InputHTMLAttributes<HTMLInputElement>) {
     />
   );
 }
+
 export default Input;

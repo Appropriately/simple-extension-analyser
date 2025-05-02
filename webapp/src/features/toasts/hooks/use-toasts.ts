@@ -29,8 +29,8 @@ export const useToasts = () => {
     };
 
     return {
-      show: show,
-      error: error,
+      show,
+      error,
       hide: (id: ToastIdType) => context.current?.hide(id),
     };
   }, [context]);

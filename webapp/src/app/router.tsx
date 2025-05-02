@@ -7,6 +7,7 @@ import Layout from "./layout";
 
 const Home = lazy(() => import("./routes/home"));
 const Extension = lazy(() => import("./routes/extension"));
+const Settings = lazy(() => import("./routes/settings"));
 const NotFound = lazy(() => import("./routes/not-found"));
 
 function Router() {
@@ -27,6 +28,14 @@ function Router() {
             element={
               <Suspense fallback={<Loading />}>
                 <Extension />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/settings"
+            element={
+              <Suspense fallback={<Loading />}>
+                <Settings />
               </Suspense>
             }
           />
