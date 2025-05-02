@@ -143,7 +143,11 @@ function EntryView({ extension }: Props) {
                   <Table.Body
                     data={tableItems}
                     columns={[
-                      { label: "Label", key: "label", width: "200px" },
+                      {
+                        label: "Label",
+                        key: "label",
+                        props: { style: { width: "200px" } },
+                      },
                       { label: "Value", key: "value" },
                     ]}
                   />

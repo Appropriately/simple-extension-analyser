@@ -3,6 +3,11 @@
         "name": "Simple Extension Analyser"
     },
     "routes": {
+        "home": {
+            "extensions": {
+                "title": "Previously Analysed Extensions"
+            }
+        },
         "extension": {
             "entry": {
                 "details": "Details",

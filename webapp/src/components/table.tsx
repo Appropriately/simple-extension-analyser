@@ -1,10 +1,9 @@
-import { ReactNode } from "react";
+import { HTMLAttributes, ReactNode } from "react";
 
 export interface TableColumn {
   label: string;
   key: string;
-  width?: string;
-  align?: "left" | "center" | "right";
+  props?: HTMLAttributes<HTMLTableCellElement>;
   render?: (value: unknown, item: Record<string, unknown>) => ReactNode;
 }
 
@@ -24,10 +23,7 @@ function TableHeader({ columns, className }: TableHeaderProps) {
           <th
             key={column.key}
             className="py-2 px-1 text-left text-xs font-medium uppercase tracking-wider text-zinc-300"
-            style={{
-              width: column.width,
-              textAlign: column.align || "left",
-            }}
+            {...column.props}
           >
             {column.label}
           </th>
@@ -50,11 +46,8 @@ function TableBody({ data, columns, className }: TableBodyProps) {
           {columns.map((column) => (
             <td
               key={column.key}
-              className="py-2 px-1 whitespace-nowrap text-sm"
-              style={{
-                width: column.width,
-                textAlign: column.align || "left",
-              }}
+              className="py-2 px-1 text-sm align-top"
+              {...column.props}
             >
               {column.render
                 ? column.render(item[column.key], item)

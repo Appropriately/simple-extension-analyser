@@ -6,6 +6,7 @@ import { Extension } from "@/features/extension";
 import { addExtension } from "@/stores";
 
 import ExtensionSelect from "./home/extension-select";
+import Extensions from "./home/extensions";
 
 function Home() {
   const dispatch = useDispatch();
@@ -25,6 +26,8 @@ function Home() {
           <ExtensionSelect onUpdate={setExtension} />
         </Card.Body>
       </Card>
+
+      <Extensions />
     </div>
   );
 }

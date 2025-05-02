@@ -12,6 +12,10 @@ export interface AnalysedFile {
 //  */
 export interface Extension {
   id?: string;
+  name?: string;
+  version?: string;
+  description?: string;
+
   filename?: string;
   entries?: ExtendedEntry[];
   manifest?: Manifest;

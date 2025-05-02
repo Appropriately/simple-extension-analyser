@@ -7,9 +7,9 @@ import { STAT_TO_COLOUR } from "../utils";
 
 const COLUMNS: TableColumn[] = [
   { label: "Name", key: "engine_name" },
-  { label: "Method", key: "method", width: "100px" },
-  { label: "Category", key: "category", width: "100px" },
-  { label: "Result", key: "result", width: "150px" },
+  { label: "Method", key: "method", props: { style: { width: "100px" } } },
+  { label: "Category", key: "category", props: { style: { width: "100px" } } },
+  { label: "Result", key: "result", props: { style: { width: "150px" } } },
 ];
 
 function URL({ analysis }: { analysis: UrlAnalysis }) {
