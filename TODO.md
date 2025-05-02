@@ -15,12 +15,12 @@
 - [x] Analyse extension manifest and reject if not valid
 - [x] Improve loading UI
 - [x] Add initial wasm support for analysing
-- [ ] Add store support for extension by id and version
+- [x] Add store support for extension by id and version
 - [x] Build a drop box for zips
 - [ ] Async handling of entry opening.
 - [ ] Tag and unminify files
 - [ ] Tag and unobfuscate files
-- [ ] Render line numbers for code blocks.
+- [x] Render line numbers for code blocks.
 - [ ] Build out mechanism for analysing extension
 - [ ] Build out a triple dot menu that contains settings page and github repo link
 - [ ] Add ability to store virustotal token
@@ -33,7 +33,7 @@
 
 ## Nice to have
 
-- [ ] Look into `wee_alloc` for wasm
+- [ ] Look into `wee_alloc` for wasm - benefits are that it results in a smaller bundle size.
 - [ ] Solid error handling
 - [ ] Improve rendering of entry tree
 - [ ] Add light mode support

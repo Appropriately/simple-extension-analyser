@@ -51,6 +51,7 @@ const renderNodeToReact = (node: Nodes, path: string): ReactNode => {
 
 function CodeBlock({ raw, language }: Props) {
   const [renderedContent, setRenderedContent] = useState<ReactNode[]>([]);
+  const [lineCount, setLineCount] = useState(0);
 
   const nodesToRenderRef = useRef<Nodes[]>([]);
   const currentNodeIndexRef = useRef(0);
@@ -67,6 +68,10 @@ function CodeBlock({ raw, language }: Props) {
     setRenderedContent([]);
     currentNodeIndexRef.current = 0;
     nodesToRenderRef.current = [];
+
+    // Count lines in the raw text
+    const lines = raw.split("\n");
+    setLineCount(lines.length);
 
     let root: Root | null = null;
     try {
@@ -142,9 +147,20 @@ function CodeBlock({ raw, language }: Props) {
   }, [raw, language, toastError]);
 
   return (
-    <pre className="bg-black p-2 rounded text-xs overflow-x-auto min-h-[100px]">
-      <code>{renderedContent}</code>
-    </pre>
+    <div className="relative">
+      <pre className="bg-black p-2 rounded text-xs overflow-x-auto min-h-[100px]">
+        <div className="flex">
+          <div className="select-none text-zinc-600 pr-2 mr-2 border-r border-zinc-800 text-right">
+            {Array.from({ length: lineCount }, (_, i) => (
+              <div key={i} className="h-4 leading-4">
+                {i + 1}
+              </div>
+            ))}
+          </div>
+          <code className="flex-1">{renderedContent}</code>
+        </div>
+      </pre>
+    </div>
   );
 }
 
