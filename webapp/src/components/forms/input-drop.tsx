@@ -37,7 +37,7 @@ function InputDrop({ className, onFileChange, ...props }: Props) {
   };
 
   return (
-    <div className={`w-full ${className}`}>
+    <div className={`w-full ${className ? className : ""}`}>
       <label
         className="flex justify-center w-full h-24 px-4 transition bg-zinc-700 border-2 border-zinc-500 border-dashed rounded-md appearance-none cursor-pointer hover:border-zinc-600 focus:outline-none"
         onDrop={onDrop}
@@ -56,12 +56,7 @@ function InputDrop({ className, onFileChange, ...props }: Props) {
             <span className="text-zinc-300 underline">browse</span>
           </span>
         </span>
-        <input
-          type="file"
-          className="hidden"
-          onChange={onChange}
-          {...props}
-        />
+        <input type="file" className="hidden" onChange={onChange} {...props} />
       </label>
     </div>
   );

@@ -5,7 +5,9 @@
     "routes": {
         "home": {
             "extensions": {
-                "title": "Previously Analysed Extensions"
+                "title": "Previously Analysed Extensions",
+                "extensionSelectLabel": "Upload a browser extension file",
+                "extensionSelectHelp": "Upload a .zip or .crx file containing the browser extension."
             }
         },
         "extension": {

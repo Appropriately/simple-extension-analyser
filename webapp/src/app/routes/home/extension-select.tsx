@@ -1,3 +1,6 @@
+import { useTranslation } from "react-i18next";
+
+import FormGroup from "@/components/forms/form-group";
 import InputDrop from "@/components/forms/input-drop";
 import { useAnalyser } from "@/features/analyser/contexts";
 import { AnalysedFile, Extension } from "@/features/extension/types";
@@ -11,6 +14,7 @@ interface Props {
 function ExtensionSelect({ onUpdate }: Props) {
   const { error: toastError } = useToasts();
   const { analyseFile, initialiseByFile } = useAnalyser();
+  const { t } = useTranslation();
 
   const handleFileChange = async (file?: File) => {
     if (file) {
@@ -64,26 +68,12 @@ function ExtensionSelect({ onUpdate }: Props) {
   };
 
   return (
-    <>
-      <label
-        htmlFor="file_input"
-        className="block mb-2 text-sm font-medium text-zinc-300"
-      >
-        Upload a browser extension file
-      </label>
-
-      <InputDrop
-        id="file_input"
-        accept=".zip,.crx"
-        onFileChange={handleFileChange}
-        aria-describedby="file_input_help"
-        className="mb-2"
-      />
-
-      <p id="file_input_help" className="text-sm text-zinc-400">
-        Upload a .zip or .crx file containing the browser extension.
-      </p>
-    </>
+    <FormGroup
+      label={t("routes.home.extensions.extensionSelectLabel")}
+      help={t("routes.home.extensions.extensionSelectHelp")}
+    >
+      <InputDrop accept=".zip,.crx" onFileChange={handleFileChange} />
+    </FormGroup>
   );
 }
 
