@@ -26,8 +26,8 @@ const FILE_EXTENSION_TO_LANGUAGE: Record<string, string> = {
 };
 
 const BASE_TABS: Tab[] = [
-  { key: "details" },
-  { key: "analysis", disabled: true },
+  { key: "routes.extension.entry.details" },
+  { key: "routes.extension.entry.analysis", disabled: true },
 ];
 
 interface Props {
@@ -106,8 +106,14 @@ function EntryView({ extension }: Props) {
       }, {} as Record<string, Tab>),
     };
 
-    if (analysedFile) newTabs["analysis"] = { key: "analysis" };
-    if (rawData) newTabs["entry"] = { key: "entry" };
+    if (analysedFile)
+      newTabs["routes.extension.entry.analysis"] = {
+        key: "routes.extension.entry.analysis",
+      };
+    if (rawData)
+      newTabs["routes.extension.entry.entry"] = {
+        key: "routes.extension.entry.entry",
+      };
 
     setTabs(newTabs);
   }, [entry, rawData, analysedFile]);
@@ -125,7 +131,7 @@ function EntryView({ extension }: Props) {
 
       {
         {
-          details: (
+          "routes.extension.entry.details": (
             <Card className="mb-3">
               <Card.Header>
                 <h2 className="text-lg font-semibold">
@@ -145,8 +151,10 @@ function EntryView({ extension }: Props) {
               </Card.Body>
             </Card>
           ),
-          analysis: <AnalysedEntry analysedFile={analysedFile!} />,
-          entry: (
+          "routes.extension.entry.analysis": (
+            <AnalysedEntry analysedFile={analysedFile!} />
+          ),
+          "routes.extension.entry.entry": (
             <CodeBlock
               language={
                 FILE_EXTENSION_TO_LANGUAGE[

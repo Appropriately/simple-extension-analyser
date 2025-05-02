@@ -1,0 +1,32 @@
+{
+    "base": {
+        "name": "Simple Extension Analyser"
+    },
+    "routes": {
+        "extension": {
+            "entry": {
+                "details": "Details",
+                "analysis": "Analysis",
+                "entry": "Entry"
+            }
+        }
+    },
+    "components": {
+        "code": {
+            "largeFileWarning": {
+                "title": "Large File Warning",
+                "description": "This file has {{lineCount}} lines which may take a while to render. Rendering large files can impact performance.",
+                "renderAnyway": "Render Anyway"
+            }
+        }
+    },
+    "features": {
+        "extension": {
+            "tree": {
+                "filters": {
+                    "placeholder": "Search..."
+                }
+            }
+        }
+    }
+}

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import Input from "@/components/forms/input";
 
@@ -9,6 +10,8 @@ interface Props {
 }
 
 function TreeFilters({ onChange }: Props) {
+  const { t } = useTranslation();
+
   const [filters, setFilters] = useState<EntryTreeFilters>({});
 
   useEffect(() => onChange(filters), [filters, onChange]);
@@ -17,7 +20,7 @@ function TreeFilters({ onChange }: Props) {
     <>
       <Input
         type="text"
-        placeholder="Search..."
+        placeholder={t("features.extension.tree.filters.placeholder")}
         onChange={(e) => setFilters({ ...filters, term: e.target.value })}
       />
     </>

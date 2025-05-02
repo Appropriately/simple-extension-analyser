@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { Link, Outlet } from "react-router-dom";
 
 import Icon from "@/components/icon";
@@ -5,6 +6,8 @@ import Icon from "@/components/icon";
 import Navbar from "./navbar";
 
 const Layout = () => {
+  const { t } = useTranslation();
+
   return (
     <div>
       <Navbar>
@@ -12,7 +15,7 @@ const Layout = () => {
           <div className="">
             <Icon icon="search" className="text-blue-500" />
           </div>
-          Simple Extension Analyser
+          {t("base.name")}
         </Link>
       </Navbar>
 

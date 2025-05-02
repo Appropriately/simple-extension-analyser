@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 
 /**
  * Represents a single tab in the Tabs component.
@@ -47,6 +48,8 @@ interface Props {
  * ```
  */
 function Tabs({ tabs, className, value, setValue }: Props) {
+  const { t } = useTranslation();
+
   return (
     <div
       className={`text-sm font-medium text-center border-b text-zinc-400 border-gray-700 ${className}`}
@@ -56,15 +59,15 @@ function Tabs({ tabs, className, value, setValue }: Props) {
           <li className="me-2" key={tab.key}>
             <button
               type="button"
-              className={`inline-block px-4 py-2 border-b-2 rounded-t-sm capitalize [&[aria-current=page]]:bg-zinc-700 [&[aria-current=page]]:text-blue-300 ${
+              className={`inline-block px-4 py-2 border-b-2 rounded-t-sm capitalize [&[aria-current=page]]:bg-zinc-600 [&[aria-current=page]]:text-blue-300 ${
                 tab.disabled
                   ? "cursor-not-allowed text-zinc-500"
-                  : "hover:text-zinc-300 hover:border-zinc-300 cursor-pointer"
+                  : "hover:text-zinc-300 hover:border-zinc-300 cursor-pointer hover:bg-zinc-700"
               }`}
               aria-current={value === tab.key ? "page" : undefined}
               onClick={tab.disabled ? undefined : () => setValue(tab.key)}
             >
-              {tab.render ? tab.render() : tab.key}
+              {tab.render ? tab.render() : t(tab.key)}
             </button>
           </li>
         ))}

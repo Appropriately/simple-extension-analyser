@@ -2,15 +2,21 @@ import "@/styles/code.css";
 
 import { Nodes, Root } from "hast";
 import { createElement, ReactNode, useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
-import lowlight from "@/lib/lowlight";
+import Button from "@/components/button";
+import Card from "@/components/card";
+import Icon from "@/components/icon";
 import { useToasts } from "@/features/toasts";
+import lowlight from "@/lib/lowlight";
 
 const OPTIONS = {
   prefix: "code-",
 };
 
 const CHUNK_SIZE = 10;
+const LARGE_FILE_THRESHOLD = 1000; // lines
+const LARGE_FILE_SIZE_THRESHOLD = 10 * 1024; // 10KB
 
 interface Props {
   raw: string;
@@ -50,14 +56,17 @@ const renderNodeToReact = (node: Nodes, path: string): ReactNode => {
 };
 
 function CodeBlock({ raw, language }: Props) {
+  const { t } = useTranslation();
+  const { error: toastError } = useToasts();
+
   const [renderedContent, setRenderedContent] = useState<ReactNode[]>([]);
   const [lineCount, setLineCount] = useState(0);
+  const [showWarning, setShowWarning] = useState(false);
+  const [isRendering, setIsRendering] = useState(false);
 
   const nodesToRenderRef = useRef<Nodes[]>([]);
   const currentNodeIndexRef = useRef(0);
   const idleCallbackIdRef = useRef<number | null>(null);
-
-  const { error: toastError } = useToasts();
 
   useEffect(() => {
     if (idleCallbackIdRef.current) {
@@ -72,6 +81,19 @@ function CodeBlock({ raw, language }: Props) {
     // Count lines in the raw text
     const lines = raw.split("\n");
     setLineCount(lines.length);
+
+    // Check if file is large
+    const isLargeFile =
+      lines.length > LARGE_FILE_THRESHOLD ||
+      new Blob([raw]).size > LARGE_FILE_SIZE_THRESHOLD;
+
+    if (isLargeFile && !isRendering) {
+      setShowWarning(true);
+      return;
+    }
+
+    setShowWarning(false);
+    setIsRendering(true);
 
     let root: Root | null = null;
     try {
@@ -144,7 +166,36 @@ function CodeBlock({ raw, language }: Props) {
         idleCallbackIdRef.current = null;
       }
     };
-  }, [raw, language, toastError]);
+  }, [raw, language, toastError, isRendering]);
+
+  if (showWarning) {
+    return (
+      <Card>
+        <Card.Header className="flex items-center">
+          <Icon
+            icon="exclamation-warning"
+            className="fill-yellow-400 mr-2 inline-block"
+          />
+          {t("components.code.largeFileWarning.title")}
+        </Card.Header>
+        <Card.Body>
+          <p className="text-zinc-400">
+            {t("components.code.largeFileWarning.description", {
+              lineCount: lineCount.toLocaleString(),
+            })}
+          </p>
+        </Card.Body>
+        <Card.Footer>
+          <Button
+            onClick={() => setIsRendering(true)}
+            className="bg-yellow-600! hover:bg-yellow-700!"
+          >
+            {t("components.code.largeFileWarning.renderAnyway")}
+          </Button>
+        </Card.Footer>
+      </Card>
+    );
+  }
 
   return (
     <div className="relative">
