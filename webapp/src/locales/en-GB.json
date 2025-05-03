@@ -12,20 +12,18 @@
             }
         },
         "extension": {
+            "extension": {
+                "manifest": "Manifest",
+                "analysis": "Analysis"
+            },
             "entry": {
                 "details": "Details",
                 "analysis": "Analysis",
-                "entry": "Entry"
-            }
-        },
-        "settings": {
-            "virustotal": {
-                "title": "VirusTotal",
-                "apiKey": "API Key",
-                "apiKeyHelp": "Enter your VirusTotal API key to enable url scanning.",
-                "apiKeyPlaceholder": "Enter your VirusTotal API key",
-                "apiKeySuccess": "API key saved successfully",
-                "apiKeySuccessMessage": "The API key will be used to scan urls for malicious activity."
+                "entry": "Entry",
+                "urls": {
+                    "urls": "URLs",
+                    "urlsMissingApiKeyMessage": "Please enter your VirusTotal API key to enable URL scanning."
+                }
             }
         }
     },
@@ -44,6 +42,16 @@
                 "filters": {
                     "placeholder": "Search..."
                 }
+            }
+        },
+        "virustotal": {
+            "title": "VirusTotal",
+            "apiKey": {
+                "label": "API Key",
+                "help": "Enter your VirusTotal API key to enable url scanning.",
+                "placeholder": "Enter your VirusTotal API key",
+                "success": "API key saved successfully",
+                "successMessage": "The API key will be used to scan urls for malicious activity."
             }
         }
     }

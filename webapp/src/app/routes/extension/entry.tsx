@@ -8,7 +8,7 @@ import { Extension, getEntryData } from "@/features/extension";
 import { useEntryContext } from "@/features/extension/context";
 import { useToasts } from "@/features/toasts";
 
-import AnalysedEntry from "./analysed-entry";
+import EntryAnalysis from "./entry-analysis";
 
 const ALLOWED_EXTENSIONS = [".json", ".txt", ".md", ".js", ".html", ".css"];
 
@@ -42,12 +42,6 @@ function EntryView({ extension }: Props) {
   const [rawData, setRawData] = useState<string>();
 
   const [currentTab, setCurrentTab] = useState<string>(BASE_TABS[0].key);
-  const [tabs, setTabs] = useState<Record<string, Tab>>(
-    BASE_TABS.reduce((acc, tab) => {
-      acc[tab.key] = tab;
-      return acc;
-    }, {} as Record<string, Tab>)
-  );
 
   const tableItems = [
     { label: "Comment", value: entry?.comment },
@@ -98,7 +92,7 @@ function EntryView({ extension }: Props) {
     return undefined;
   }, [entry, extension]);
 
-  useEffect(() => {
+  const tabs = useMemo(() => {
     const newTabs = {
       ...BASE_TABS.reduce((acc, tab) => {
         acc[tab.key] = tab;
@@ -115,8 +109,8 @@ function EntryView({ extension }: Props) {
         key: "routes.extension.entry.entry",
       };
 
-    setTabs(newTabs);
-  }, [entry, rawData, analysedFile]);
+    return newTabs;
+  }, [rawData, analysedFile]);
 
   if (!entry) return <div className="text-zinc-300">No entry selected</div>;
 
@@ -156,7 +150,9 @@ function EntryView({ extension }: Props) {
             </Card>
           ),
           "routes.extension.entry.analysis": (
-            <AnalysedEntry analysedFile={analysedFile!} />
+            <div>
+              {analysedFile && <EntryAnalysis analysedFile={analysedFile} />}
+            </div>
           ),
           "routes.extension.entry.entry": (
             <CodeBlock

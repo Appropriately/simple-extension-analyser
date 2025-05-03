@@ -20,6 +20,7 @@
 - [ ] Async handling of entry opening.
 - [ ] Tag and unminify files
 - [ ] Tag and unobfuscate files
+- [ ] Handle http://li.ru^ in parsing
 - [x] Render line numbers for code blocks.
 - [ ] Build out mechanism for analysing extension
 - [ ] Build out a triple dot menu that contains settings page and github repo link

@@ -12,7 +12,7 @@ const COLUMNS: TableColumn[] = [
   { label: "Result", key: "result", props: { style: { width: "150px" } } },
 ];
 
-function URL({ analysis }: { analysis: UrlAnalysis }) {
+function Url({ analysis }: { analysis: UrlAnalysis }) {
   const { meta, data } = analysis;
 
   const stats = Object.entries(data.attributes.stats).map(([key, value]) => ({
@@ -40,7 +40,7 @@ function URL({ analysis }: { analysis: UrlAnalysis }) {
               </div>
             )}
             <div
-              className={`text-center font-bold capitalize text-lg text-${
+              className={`text-center font-bold capitalize text-lg ${
                 STAT_TO_COLOUR[label()]
               }`}
             >
@@ -75,4 +75,4 @@ function URL({ analysis }: { analysis: UrlAnalysis }) {
   );
 }
 
-export default URL;
+export default Url;

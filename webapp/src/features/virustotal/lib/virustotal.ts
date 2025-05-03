@@ -3,6 +3,8 @@ import { UrlAnalysis } from "../types";
 
 const virusTotal = createVirusTotal();
 
+const hasApiKey = () => virusTotal.hasApiKey();
+
 const setApiKey = (apiKey: string) => virusTotal.setApiKey(apiKey);
 
 const scanUrl = async (url: URL): Promise<UrlAnalysis> => {
@@ -18,4 +20,4 @@ const scanUrl = async (url: URL): Promise<UrlAnalysis> => {
   return analysis;
 };
 
-export { scanUrl, setApiKey };
+export { scanUrl, setApiKey, hasApiKey };

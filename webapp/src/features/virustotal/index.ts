@@ -1,3 +1,2 @@
-export { scanUrl, setApiKey } from "./lib/virustotal";
+export { scanUrl, setApiKey, hasApiKey } from "./lib/virustotal";
 export type { UrlAnalysis } from "./types/analysis";
-

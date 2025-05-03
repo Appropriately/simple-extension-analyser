@@ -5,6 +5,7 @@ export function createVirusTotal() {
   const session = new VirusTotalSession();
 
   return {
+    hasApiKey: () => !!session.getApiKey(),
     setApiKey: (apiKey: string) => session.setApiKey(apiKey),
     postUrl,
     getAnalysisById,

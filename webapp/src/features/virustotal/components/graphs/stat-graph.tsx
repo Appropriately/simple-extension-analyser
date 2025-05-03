@@ -1,6 +1,6 @@
 import { Cell, Pie, PieChart, Tooltip, TooltipProps } from "recharts";
 
-import { STAT_TO_COLOUR } from "../../utils";
+import { STAT_TO_FILL } from "../../utils";
 
 export interface Stat {
   name: string;
@@ -45,9 +45,9 @@ function StatGraph({ stats }: { stats: Stat[] }) {
         {stats.map((entry, index) => (
           <Cell
             key={`cell-${index}`}
-            className={`cursor-pointer fill-${
-              STAT_TO_COLOUR[
-                entry.name.toLowerCase() as keyof typeof STAT_TO_COLOUR
+            className={`cursor-pointer ${
+              STAT_TO_FILL[
+                entry.name.toLowerCase() as keyof typeof STAT_TO_FILL
               ]
             }`}
             fill={undefined}
