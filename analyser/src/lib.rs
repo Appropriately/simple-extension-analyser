@@ -162,7 +162,7 @@ impl Extension {
             };
 
             match file_type.as_str() {
-                "javascript" | "json" => {
+                "javascript" | "json" | "html" => {
                     let mut contents = String::new();
                     file.read_to_string(&mut contents).map_err(|e| e.to_string())?;
 
