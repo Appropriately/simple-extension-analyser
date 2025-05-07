@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-import Icon from "@/components/icon";
+import { Icon } from "@/components/ui";
 
 import { Toast } from "../types/toast";
 

@@ -1,10 +1,12 @@
 import { useTranslation } from "react-i18next";
 
-import FormGroup from "@/components/forms/form-group";
-import InputDrop from "@/components/forms/input-drop";
-import { useAnalyser } from "@/features/analyser/contexts";
-import { AnalysedFile, Extension } from "@/features/extension/types";
-import { setupExtensionFromFile } from "@/features/extension/utils";
+import { FormGroup, InputDrop } from "@/components/ui";
+import { useAnalyser } from "@/features/analyser";
+import {
+  setupExtensionFromFile,
+  AnalysedFile,
+  Extension,
+} from "@/features/extension";
 import { useToasts } from "@/features/toasts";
 
 interface Props {

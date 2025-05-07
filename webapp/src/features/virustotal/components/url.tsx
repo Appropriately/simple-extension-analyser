@@ -1,9 +1,8 @@
-import Card from "@/components/card";
-import Table, { TableColumn } from "@/components/table";
+import { Card, Table, TableColumn } from "@/components/ui";
 
 import { UrlAnalysis } from "../types";
-import StatGraph from "./graphs/stat-graph";
 import { STAT_TO_COLOUR } from "../utils";
+import StatGraph from "./graphs/stat-graph";
 
 const COLUMNS: TableColumn[] = [
   { label: "Name", key: "engine_name" },

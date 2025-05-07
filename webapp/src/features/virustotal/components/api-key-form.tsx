@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import Button from "@/components/button";
-import FormGroup from "@/components/forms/form-group";
-import Input from "@/components/forms/input";
+import { Button, FormGroup, Input } from "@/components/ui";
 
 interface Props {
   className?: string;

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import Input from "@/components/forms/input";
+import { Input } from "@/components/ui";
 
 import { EntryTreeFilters } from "../types";
 

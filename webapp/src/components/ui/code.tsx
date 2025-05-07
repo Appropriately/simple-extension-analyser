@@ -4,9 +4,7 @@ import { Nodes, Root } from "hast";
 import { createElement, ReactNode, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import Button from "@/components/button";
-import Card from "@/components/card";
-import Icon from "@/components/icon";
+import { Button, Card, Icon } from "@/components/ui";
 import { useToasts } from "@/features/toasts";
 import lowlight from "@/lib/lowlight";
 

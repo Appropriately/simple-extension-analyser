@@ -1,10 +1,12 @@
-import { useParams } from "react-router-dom";
-
+import EntryView from "@/components/routes/extension/entry";
+import ExtensionView from "@/components/routes/extension/extension";
 import { EntryProvider, ExtensionViewer } from "@/features/extension";
 import { store } from "@/stores";
+import { createLazyFileRoute, useParams } from "@tanstack/react-router";
 
-import EntryView from "./extension/entry";
-import ExtensionView from "./extension/extension";
+export const Route = createLazyFileRoute("/extension/$id")({
+  component: Extension,
+});
 
 const ExtensionNotFound = ({ id }: { id?: string }) => {
   return (
@@ -20,7 +22,7 @@ const ExtensionNotFound = ({ id }: { id?: string }) => {
 };
 
 function Extension() {
-  const { id } = useParams();
+  const { id } = useParams({ from: "/extension/$id" });
 
   if (!id) return ExtensionNotFound({ id });
 

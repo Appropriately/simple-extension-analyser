@@ -10,8 +10,21 @@ import { PersistGate } from "redux-persist/integration/react";
 import AnalyserProvider from "@/features/analyser/components/analyser-provider";
 import { ToastsProvider } from "@/features/toasts";
 import { store } from "@/stores";
+import {
+  createHashHistory,
+  createRouter,
+  RouterProvider,
+} from "@tanstack/react-router";
 
-import Router from "./router";
+import { routeTree } from "./routeTree.gen";
+
+const router = createRouter({ routeTree, history: createHashHistory() });
+
+declare module "@tanstack/react-router" {
+  interface Register {
+    router: typeof router;
+  }
+}
 
 const persistor = persistStore(store);
 
@@ -21,7 +34,7 @@ createRoot(document.getElementById("root")!).render(
       <PersistGate loading={null} persistor={persistor}>
         <AnalyserProvider>
           <ToastsProvider limit={5}>
-            <Router />
+            <RouterProvider router={router} />
           </ToastsProvider>
         </AnalyserProvider>
       </PersistGate>

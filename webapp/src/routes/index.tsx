@@ -1,12 +1,15 @@
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 
-import Card from "@/components/card";
+import ExtensionSelect from "@/components/routes/home/extension-select";
+import Extensions from "@/components/routes/home/extensions";
+import { Card } from "@/components/ui";
 import { Extension } from "@/features/extension";
 import { addExtension } from "@/stores";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 
-import ExtensionSelect from "./home/extension-select";
-import Extensions from "./home/extensions";
+export const Route = createFileRoute("/")({
+  component: Home,
+});
 
 function Home() {
   const dispatch = useDispatch();
@@ -16,7 +19,7 @@ function Home() {
     if (!extension) return;
 
     dispatch(addExtension({ extension }));
-    navigate(`/extension/${extension.id}`);
+    navigate({ to: `/extension/${extension.id}` });
   };
 
   return (
@@ -31,5 +34,3 @@ function Home() {
     </div>
   );
 }
-
-export default Home;

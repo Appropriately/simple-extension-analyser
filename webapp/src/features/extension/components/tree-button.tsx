@@ -1,6 +1,6 @@
 import { ButtonHTMLAttributes, ReactNode } from "react";
 
-import Icon from "@/components/icon";
+import { Icon } from "@/components/ui";
 import { ICONS } from "@/utils/icons";
 
 interface TreeButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {

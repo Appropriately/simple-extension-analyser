@@ -1,10 +1,8 @@
 import { useTranslation } from "react-i18next";
 
-import Card from "@/components/card";
-import Icon from "@/components/icon";
+import { Card, Icon } from "@/components/ui";
 import { useToasts } from "@/features/toasts";
-import { hasApiKey, setApiKey } from "@/features/virustotal";
-import ApiKeyForm from "@/features/virustotal/components/api-key-form";
+import { ApiKeyForm, hasApiKey, setApiKey } from "@/features/virustotal";
 
 interface Props {
   className?: string;

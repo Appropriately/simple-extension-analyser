@@ -1,12 +1,10 @@
 import { useTranslation } from "react-i18next";
 
-import Card from "@/components/card";
-import RouterLink from "@/components/router-link";
-import Table, { TableColumn } from "@/components/table";
+import { Card, RouterLink, Table, TableColumn } from "@/components/ui";
 import { store } from "@/stores";
 
 const idCell = (value: string) => (
-  <RouterLink to={`/extension/${value}`}>
+  <RouterLink to="/extension/$id" params={{ id: value }}>
     {String(value).slice(0, 10)}
   </RouterLink>
 );

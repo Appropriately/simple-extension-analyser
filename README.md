@@ -76,4 +76,4 @@ Due to the nature of the GitHub pages deployment, there are some pieces that cou
 
 1. Removal of the `homepage` field in `package.json`.
 2. Removal of the `base` field in `vite.config.js`.
-3. Changing the `HashRouter` to `BrowserRouter` in `webapp/src/app/router.tsx`. This was necessary to get the routing to work properly in the github pages deployment.
+3. Removing the `history` parameter in `webapp/src/app.tsx`. This was necessary to get the routing to work properly in the github pages deployment.

@@ -1,11 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 
-import Card from "@/components/card";
-import CodeBlock from "@/components/code";
-import Table from "@/components/table";
-import Tabs, { Tab } from "@/components/tabs";
-import { Extension, getEntryData } from "@/features/extension";
-import { useEntryContext } from "@/features/extension/context";
+import { Card, CodeBlock, Tab, Table, Tabs } from "@/components/ui";
+import { Extension, getEntryData, useEntryContext } from "@/features/extension";
 import { useToasts } from "@/features/toasts";
 
 import EntryAnalysis from "./entry-analysis";
@@ -94,10 +90,13 @@ function EntryView({ extension }: Props) {
 
   const tabs = useMemo(() => {
     const newTabs = {
-      ...BASE_TABS.reduce((acc, tab) => {
-        acc[tab.key] = tab;
-        return acc;
-      }, {} as Record<string, Tab>),
+      ...BASE_TABS.reduce(
+        (acc, tab) => {
+          acc[tab.key] = tab;
+          return acc;
+        },
+        {} as Record<string, Tab>
+      ),
     };
 
     if (analysedFile)

@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 
-import CodeBlock from "@/components/code";
-import Tabs, { Tab } from "@/components/tabs";
+import { CodeBlock, Tab, Tabs } from "@/components/ui";
 import { Extension } from "@/features/extension";
 
 import ExtensionAnalysis from "./extension-analysis";
@@ -20,10 +19,13 @@ function ExtensionView({ extension }: Props) {
 
   const tabs = useMemo(
     () =>
-      BASE_TABS.reduce((acc, tab) => {
-        acc[tab.key] = tab;
-        return acc;
-      }, {} as Record<string, Tab>),
+      BASE_TABS.reduce(
+        (acc, tab) => {
+          acc[tab.key] = tab;
+          return acc;
+        },
+        {} as Record<string, Tab>
+      ),
     []
   );
 

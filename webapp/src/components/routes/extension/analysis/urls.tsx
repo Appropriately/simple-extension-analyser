@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import Card from "@/components/card";
+import { Card } from "@/components/ui";
 import { useToasts } from "@/features/toasts";
 import {
+  ApiKeyForm,
   hasApiKey,
   scanUrl,
   setApiKey,
+  Url,
   UrlAnalysis,
 } from "@/features/virustotal";
-import ApiKeyForm from "@/features/virustotal/components/api-key-form";
-import Url from "@/features/virustotal/components/url";
 
 interface Props {
   urls: string[];
