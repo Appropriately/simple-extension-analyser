@@ -68,6 +68,9 @@ function CodeBlock({ raw, language }: Props) {
   const currentNodeIndexRef = useRef(0);
   const idleCallbackIdRef = useRef<number | null>(null);
 
+  const requestIdleCallbackFunc = requestIdleCallback ?? setTimeout;
+  const cancelIdleCallbackFunc = cancelIdleCallback ?? clearTimeout
+
   useEffect(() => {
     if (idleCallbackIdRef.current) {
       cancelIdleCallback(idleCallbackIdRef.current);
@@ -151,18 +154,18 @@ function CodeBlock({ raw, language }: Props) {
         }
 
         if (currentNodeIndexRef.current < nodesToRenderRef.current.length)
-          idleCallbackIdRef.current = requestIdleCallback(processChunk);
+          idleCallbackIdRef.current = requestIdleCallbackFunc(processChunk);
         else idleCallbackIdRef.current = null;
       };
 
-      idleCallbackIdRef.current = requestIdleCallback(processChunk);
+      idleCallbackIdRef.current = requestIdleCallbackFunc(processChunk);
     } else {
       setRenderedContent([]);
     }
 
     return () => {
       if (idleCallbackIdRef.current) {
-        cancelIdleCallback(idleCallbackIdRef.current);
+        cancelIdleCallbackFunc(idleCallbackIdRef.current);
         idleCallbackIdRef.current = null;
       }
     };

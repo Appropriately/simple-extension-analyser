@@ -17,6 +17,7 @@
 - [x] Add initial wasm support for analysing
 - [x] Add store support for extension by id and version
 - [x] Build a drop box for zips
+- [ ] Add an error ui rather than displaying a blank page
 - [ ] Generate an .ico and a png file for properly rendering favicon in safari.
 - [ ] Async handling of entry opening.
 - [ ] Tag and unminify files
