@@ -68,8 +68,8 @@ function CodeBlock({ raw, language }: Props) {
   const currentNodeIndexRef = useRef(0);
   const idleCallbackIdRef = useRef<number | null>(null);
 
-  const requestIdleCallbackFunc = requestIdleCallback ?? setTimeout;
-  const cancelIdleCallbackFunc = cancelIdleCallback ?? clearTimeout
+  const requestIdleCallbackFunc = window.requestIdleCallback ?? setTimeout;
+  const cancelIdleCallbackFunc = window.cancelIdleCallback ?? clearTimeout;
 
   useEffect(() => {
     if (idleCallbackIdRef.current) {
