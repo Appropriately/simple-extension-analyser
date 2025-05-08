@@ -7,6 +7,7 @@ export { default as InputDrop } from "./forms/input-drop";
 export { default as Icon } from "./icon";
 export { default as Loading } from "./loading";
 export { default as RouterLink } from "./router-link";
+export { default as Spinner } from "./spinner";
 export { default as Table } from "./table";
 export type { TableColumn } from "./table";
 export { default as Tabs } from "./tabs";

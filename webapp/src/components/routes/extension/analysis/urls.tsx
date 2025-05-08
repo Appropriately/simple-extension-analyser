@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Card } from "@/components/ui";
+import { Card, Spinner } from "@/components/ui";
 import { useToasts } from "@/features/toasts";
 import {
   ApiKeyForm,
@@ -25,6 +25,7 @@ function Urls({ urls }: Props) {
   const [processedUrls, setProcessedUrls] = useState<URL[] | undefined>(
     undefined
   );
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     // Process URLs in a non-blocking way
@@ -62,6 +63,9 @@ function Urls({ urls }: Props) {
 
   const analyse = async (url: URL | null) => {
     if (!url) return;
+    if (isLoading) return;
+
+    setIsLoading(true);
 
     try {
       const res = await scanUrl(url);
@@ -72,6 +76,8 @@ function Urls({ urls }: Props) {
       } else {
         error(new Error("An unknown error occurred"));
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -86,14 +92,14 @@ function Urls({ urls }: Props) {
           <Card.Body className="overflow-y-auto h-66 w-64">
             {processedUrls === undefined ? (
               <div className="flex items-center justify-center h-full">
-                <div className="animate-spin h-10 w-10 border-4 border-zinc-500 border-t-transparent rounded-full"></div>
+                <Spinner className="my-auto" />
               </div>
             ) : (
               processedUrls.map((url) => (
                 <button
                   key={url?.href}
                   className={`w-full text-left text-sm px-2 py-1 rounded-md ${
-                    hasApiKey()
+                    hasApiKey() && !isLoading
                       ? "hover:bg-zinc-800 active:bg-zinc-700 cursor-pointer"
                       : "cursor-not-allowed text-zinc-400"
                   }`}
@@ -108,13 +114,19 @@ function Urls({ urls }: Props) {
 
         <div className="w-full">
           <Card className="h-full">
-            <Card.Body>
-              {hasApiKey() ? (
-                analysis && <Url analysis={analysis} />
-              ) : (
-                <ApiKeyForm onSave={saveApiKey} />
-              )}
-            </Card.Body>
+            {isLoading ? (
+              <Card.Body className="flex items-center justify-center h-full">
+                <Spinner className="my-auto" size="xl" />
+              </Card.Body>
+            ) : (
+              <Card.Body>
+                {hasApiKey() ? (
+                  analysis && <Url analysis={analysis} />
+                ) : (
+                  <ApiKeyForm onSave={saveApiKey} />
+                )}
+              </Card.Body>
+            )}
           </Card>
         </div>
       </div>
