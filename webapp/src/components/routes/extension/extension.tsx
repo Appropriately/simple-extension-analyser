@@ -45,7 +45,10 @@ function ExtensionView({ extension }: Props) {
       {
         {
           "routes.extension.extension.manifest": (
-            <CodeBlock raw={JSON.stringify(extension.manifest, null, 2)} />
+            <CodeBlock
+              raw={JSON.stringify(extension.manifest, null, 2)}
+              language="json"
+            />
           ),
           "routes.extension.extension.analysis": (
             <ExtensionAnalysis extension={extension} />
