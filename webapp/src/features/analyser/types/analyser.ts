@@ -5,9 +5,7 @@ export type AnalyserStatus =
   | "busy"
   | "error";
 
-export interface AnalysedFileResponse {
-  [key: string]: unknown;
-}
+export type AnalysedFileResponse = Record<string, unknown>;
 
 export interface AnalyserHandle {
   status: AnalyserStatus;

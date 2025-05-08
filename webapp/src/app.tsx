@@ -7,7 +7,7 @@ import { Provider } from "react-redux";
 import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 
-import AnalyserProvider from "@/features/analyser/components/analyser-provider";
+import { AnalyserProvider } from "@/features/analyser";
 import { ToastsProvider } from "@/features/toasts";
 import { store } from "@/stores";
 import {
