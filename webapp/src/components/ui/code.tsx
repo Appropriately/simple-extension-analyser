@@ -167,7 +167,14 @@ function CodeBlock({ raw, language }: Props) {
         idleCallbackIdRef.current = null;
       }
     };
-  }, [raw, language, toastError, isRendering]);
+  }, [
+    raw,
+    language,
+    toastError,
+    isRendering,
+    requestIdleCallbackFunc,
+    cancelIdleCallbackFunc,
+  ]);
 
   if (showWarning) {
     return (

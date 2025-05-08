@@ -1,16 +1,17 @@
 import { Card } from "@/components/ui";
 
 interface Props {
-  error: any;
+  error: unknown;
 }
 
 function Error({ error }: Props) {
   let name = "Unknown Error";
   let message = "An unknown error occurred.";
 
-  if (error && "name" in error && "message" in error) {
-    name = error.name;
-    message = error.message;
+  if (typeof error === "object" && error !== null) {
+    const err = error as { name?: string; message?: string };
+    if (err.name) name = err.name;
+    if (err.message) message = err.message;
   }
 
   return (

@@ -35,11 +35,9 @@ export default tseslint.config(
       "check-file/filename-naming-convention": [
         "error",
         {
-          "**/__root.tsx": undefined,
-          "**/*.{ts,tsx}": "KEBAB_CASE",
+          "**/!(analyser_bg.wasm.d.ts).{ts,tsx}": "*(_)+([a-z0-9$-])",
         },
         {
-          // ignore the middle extensions of the filename to support filename like bable.config.js or smoke.spec.ts
           ignoreMiddleExtensions: true,
         },
       ],

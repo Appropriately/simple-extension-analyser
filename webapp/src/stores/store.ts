@@ -16,8 +16,8 @@ const reducers = combineReducers({
 });
 
 const transform = createTransform(
-  (inboundState, _) => JSON.stringify(inboundState, replacer),
-  (outboundState, _) => JSON.parse(outboundState, reviver)
+  (inboundState) => JSON.stringify(inboundState, replacer),
+  (outboundState) => JSON.parse(outboundState, reviver)
 );
 
 const persistConfig: PersistConfig<RootState> = {
