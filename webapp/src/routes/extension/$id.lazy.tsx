@@ -1,7 +1,9 @@
+import { useSelector } from "react-redux";
+
 import EntryView from "@/components/routes/extension/entry";
 import ExtensionView from "@/components/routes/extension/extension";
 import { EntryProvider, ExtensionViewer } from "@/features/extension";
-import { store } from "@/stores";
+import { RootState } from "@/stores";
 import { createLazyFileRoute, useParams } from "@tanstack/react-router";
 
 export const Route = createLazyFileRoute("/extension/$id")({
@@ -23,11 +25,10 @@ const ExtensionNotFound = ({ id }: { id?: string }) => {
 
 function Extension() {
   const { id } = useParams({ from: "/extension/$id" });
+  const extension = useSelector(
+    ({ extensions }: RootState) => extensions.extensions[id]
+  );
 
-  if (!id) return ExtensionNotFound({ id });
-
-  // TODO: Look into useSelector instead of the getState approach.
-  const extension = store.getState().extensions.extensions[id];
   if (!extension) return ExtensionNotFound({ id });
 
   return (
