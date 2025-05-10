@@ -1,21 +1,23 @@
 import { HTMLAttributes, ReactNode } from "react";
 
-export interface TableColumn {
+export interface TableColumn<T = unknown> {
   label: string;
-  key: string;
+  key: keyof T & string;
   props?: HTMLAttributes<HTMLTableCellElement>;
-  render?: (value: unknown, item: Record<string, unknown>) => ReactNode;
+  render?: (value: T[keyof T], item: T) => ReactNode;
 }
 
 interface Props {
   className?: string;
 }
 
-interface TableHeaderProps extends Props {
-  columns: TableColumn[];
+interface TableColumnProps<T = unknown> {
+  columns: TableColumn<T>[];
 }
 
-function TableHeader({ columns, className }: TableHeaderProps) {
+interface TableHeaderProps<T = unknown> extends Props, TableColumnProps<T> {}
+
+function TableHeader<T>({ columns, className }: TableHeaderProps<T>) {
   return (
     <thead className={`sticky top-0 ${className}`}>
       <tr>
@@ -33,12 +35,11 @@ function TableHeader({ columns, className }: TableHeaderProps) {
   );
 }
 
-interface TableBodyProps extends Props {
-  data: Record<string, unknown>[];
-  columns: TableColumn[];
+interface TableBodyProps<T = unknown> extends Props, TableColumnProps<T> {
+  data: T[];
 }
 
-function TableBody({ data, columns, className }: TableBodyProps) {
+function TableBody<T>({ data, columns, className }: TableBodyProps<T>) {
   return (
     <tbody className={`overflow-y-auto ${className}`}>
       {data.map((item, index) => (

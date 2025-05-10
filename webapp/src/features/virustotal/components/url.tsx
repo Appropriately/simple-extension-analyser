@@ -4,7 +4,7 @@ import { UrlAnalysis } from "../types";
 import { STAT_TO_COLOUR } from "../utils";
 import StatGraph from "./graphs/stat-graph";
 
-const COLUMNS: TableColumn[] = [
+const COLUMNS: TableColumn<Record<string, unknown>>[] = [
   { label: "Name", key: "engine_name" },
   { label: "Method", key: "method", props: { style: { width: "100px" } } },
   { label: "Category", key: "category", props: { style: { width: "100px" } } },

@@ -1,7 +1,9 @@
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 import { Card, RouterLink, Table, TableColumn } from "@/components/ui";
-import { store } from "@/stores";
+import { Extension } from "@/features/extension";
+import { RootState } from "@/stores";
 
 const idCell = (value: string) => (
   <RouterLink to="/extension/$id" params={{ id: value }}>
@@ -9,7 +11,7 @@ const idCell = (value: string) => (
   </RouterLink>
 );
 
-const COLUMNS: TableColumn[] = [
+const COLUMNS: TableColumn<Extension>[] = [
   {
     key: "id",
     label: "ID",
@@ -47,7 +49,9 @@ const COLUMNS: TableColumn[] = [
 function Extensions() {
   const { t } = useTranslation();
 
-  const extensions = store.getState().extensions.extensions;
+  const extensions = useSelector(
+    (state: RootState) => state.extensions.extensions
+  );
   if (Object.keys(extensions).length === 0) return null;
 
   return (
