@@ -23,7 +23,7 @@ function Home() {
   };
 
   return (
-    <div className="container mx-auto mt-2">
+    <div className="container mx-auto pt-2">
       <Card className="mb-3">
         <Card.Body>
           <ExtensionSelect onUpdate={setExtension} />

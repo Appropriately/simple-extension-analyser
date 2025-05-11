@@ -17,7 +17,7 @@ function Layout() {
   const { t } = useTranslation();
 
   return (
-    <div>
+    <>
       <Navbar>
         <NavButton>
           <Link to="/" className="flex items-center gap-2 p-4">
@@ -50,9 +50,9 @@ function Layout() {
         </NavButton>
       </Navbar>
 
-      <main className="min-h-[calc(100vh-4rem)]">
+      <main className="min-h-[calc(100vh-3.5rem)]">
         <Outlet />
       </main>
-    </div>
+    </>
   );
 }

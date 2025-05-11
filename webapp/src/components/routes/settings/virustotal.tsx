@@ -22,7 +22,7 @@ function VirusTotal({ className }: Props) {
     });
   };
   return (
-    <div className={`container mx-auto mt-2 ${className ? className : ""}`}>
+    <div className={`container mx-auto pt-2 ${className ? className : ""}`}>
       <Card>
         <Card.Header>
           <h1 className="flex items-center">
