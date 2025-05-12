@@ -2,6 +2,8 @@ import { ChangeEvent, DragEvent, InputHTMLAttributes } from "react";
 
 import Icon from "../icon";
 
+const DRAG_BG = "bg-zinc-700/80";
+
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
   onFileChange?: (file?: File) => void;
 }
@@ -17,11 +19,11 @@ function InputDrop({ className, onFileChange, ...props }: Props) {
 
   const onDragOver = (event: DragEvent<HTMLLabelElement>) => {
     event.preventDefault();
-    event.currentTarget.classList.add("bg-zinc-800");
+    event.currentTarget.classList.add(DRAG_BG);
   };
 
   const onDragLeave = (event: DragEvent<HTMLLabelElement>) => {
-    event.currentTarget.classList.remove("bg-zinc-800");
+    event.currentTarget.classList.remove(DRAG_BG);
   };
 
   const onDrop = (event: DragEvent<HTMLLabelElement>) => {
@@ -39,7 +41,7 @@ function InputDrop({ className, onFileChange, ...props }: Props) {
   return (
     <div className={`w-full ${className ? className : ""}`}>
       <label
-        className="flex justify-center w-full h-24 px-4 transition bg-zinc-700 border-2 border-zinc-500 border-dashed rounded-md appearance-none cursor-pointer hover:border-zinc-600 focus:outline-none"
+        className="flex justify-center w-full h-24 px-4 transition bg-zinc-700/60 border-2 border-zinc-500 border-dashed rounded-md appearance-none cursor-pointer hover:border-zinc-400 focus:outline-none"
         onDrop={onDrop}
         onDragOver={onDragOver}
         onDragLeave={onDragLeave}

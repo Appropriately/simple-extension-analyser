@@ -45,7 +45,7 @@ function Viewer({ extension, extensionComponent, entryComponent }: Props) {
         </div>
       </div>
 
-      <div className="grow border-l-1 border-zinc-700 p-3 overflow-auto h-[calc(100vh-3.5rem)]">
+      <div className="grow border-l-1 border-zinc-700 p-2 overflow-auto h-[calc(100vh-3.5rem)]">
         <nav className="mb-3">
           <ol className="flex items-center gap-x-2">
             <li>

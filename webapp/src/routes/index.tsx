@@ -2,7 +2,6 @@ import { useDispatch } from "react-redux";
 
 import ExtensionSelect from "@/components/routes/home/extension-select";
 import Extensions from "@/components/routes/home/extensions";
-import { Card } from "@/components/ui";
 import { Extension } from "@/features/extension";
 import { addExtension } from "@/stores";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
@@ -23,14 +22,16 @@ function Home() {
   };
 
   return (
-    <div className="container mx-auto pt-2">
-      <Card className="mb-3">
-        <Card.Body>
+    <>
+      <div className="bg-gradient-to-r from-blue-900 to-blue-950 py-3">
+        <div className="container mx-auto px-2">
           <ExtensionSelect onUpdate={setExtension} />
-        </Card.Body>
-      </Card>
+        </div>
+      </div>
 
-      <Extensions />
-    </div>
+      <div className="container mx-auto px-2 mt-3">
+        <Extensions />
+      </div>
+    </>
   );
 }
