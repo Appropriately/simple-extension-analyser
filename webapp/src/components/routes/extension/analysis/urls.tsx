@@ -17,7 +17,7 @@ interface Props {
   className?: string;
 }
 
-function Urls({ urls }: Props) {
+function Urls({ urls, className }: Props) {
   const { t } = useTranslation();
   const { error, show } = useToasts();
 
@@ -83,7 +83,7 @@ function Urls({ urls }: Props) {
 
   return (
     <>
-      <div className="flex gap-x-2">
+      <div className={`flex gap-x-2${className ? ` ${className}` : ""}`}>
         <Card className="h-full w-64">
           <Card.Header>
             {t("routes.extension.entry.urls.urls")} (

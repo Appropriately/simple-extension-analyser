@@ -23,7 +23,7 @@ function Home() {
 
   return (
     <>
-      <div className="bg-gradient-to-r from-blue-900 to-blue-950 py-3">
+      <div className="bg-gradient-to-r from-blue-900/70 to-blue-950 py-3">
         <div className="container mx-auto px-2">
           <ExtensionSelect onUpdate={setExtension} />
         </div>
