@@ -2,7 +2,7 @@ import { HTMLAttributes, ReactNode } from "react";
 
 export interface TableColumn<T = unknown> {
   label: string;
-  key: keyof T & string;
+  key: (keyof T & string) | string;
   props?: HTMLAttributes<HTMLTableCellElement>;
   render?: (value: T[keyof T], item: T) => ReactNode;
 }

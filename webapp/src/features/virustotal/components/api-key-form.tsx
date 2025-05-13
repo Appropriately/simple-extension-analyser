@@ -22,9 +22,9 @@ function ApiKeyForm({ onSave }: Props) {
   };
 
   return (
-    <>
+    <div className="flex items-center gap-3">
       <FormGroup
-        className="mb-3"
+        className="flex-1"
         label={t("features.virustotal.apiKey.label")}
         help={t("features.virustotal.apiKey.help")}
       >
@@ -37,8 +37,10 @@ function ApiKeyForm({ onSave }: Props) {
         />
       </FormGroup>
 
-      <Button onClick={save}>{t("base.save")}</Button>
-    </>
+      <Button onClick={save} className="ml-auto">
+        {t("base.save")}
+      </Button>
+    </div>
   );
 }
 
