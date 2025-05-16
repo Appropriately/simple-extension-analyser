@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Extension } from "@/features/extension";
 import { RootState } from "@/stores/store";
 
-import Analysis from "./analysis/ai/analysis";
+import { default as AIAnalysis } from "./analysis/ai/analysis";
 import Urls from "./analysis/urls";
 
 interface Props {
@@ -17,7 +17,7 @@ function ExtensionAnalysis({ extension }: Props) {
 
   return (
     <>
-      {activeProvider && <Analysis extension={extension} className="mb-2" />}
+      {activeProvider && <AIAnalysis extension={extension} className="mb-2" />}
       {
         <Urls
           urls={Object.values(extension.analysedFiles ?? {}).reduce(
