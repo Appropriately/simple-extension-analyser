@@ -18,7 +18,3 @@ wasm-bindgen = "0.2.100"
 version = "3.0.0"
 default-features = false
 features = ["deflate"]
-
-[profile.release]
-lto = true
-strip = true
