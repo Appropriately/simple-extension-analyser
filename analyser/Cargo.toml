@@ -15,7 +15,7 @@ md5 = "0.7.0"
 wasm-bindgen = "0.2.100"
 
 [dependencies.zip]
-version = "2.6.1"
+version = "3.0.0"
 default-features = false
 features = ["deflate"]
 
