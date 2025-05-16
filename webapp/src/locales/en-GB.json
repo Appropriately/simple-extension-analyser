@@ -21,7 +21,7 @@
                 "analysis": "Analysis",
                 "entry": "Entry",
                 "urls": {
-                    "urls": "URLs",
+                    "urls": "URLs ({{count}})",
                     "urlsMissingApiKeyMessage": "Please enter your VirusTotal API key to enable URL scanning."
                 }
             }

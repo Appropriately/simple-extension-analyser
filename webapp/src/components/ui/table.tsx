@@ -2,8 +2,9 @@ import { HTMLAttributes, ReactNode } from "react";
 
 export interface TableColumn<T = unknown> {
   label: string;
-  key: (keyof T & string) | string;
+  key: keyof T | string;
   props?: HTMLAttributes<HTMLTableCellElement>;
+  className?: string;
   render?: (value: T[keyof T], item: T) => ReactNode;
 }
 
@@ -23,8 +24,8 @@ function TableHeader<T>({ columns, className }: TableHeaderProps<T>) {
       <tr>
         {columns.map((column) => (
           <th
-            key={column.key}
-            className="py-2 px-1 text-left text-xs font-medium uppercase tracking-wider text-zinc-300"
+            key={String(column.key)}
+            className={`py-2 px-1 text-left text-xs font-medium uppercase tracking-wider text-zinc-300${column.className ? ` ${column.className}` : ""}`}
             {...column.props}
           >
             {column.label}
@@ -46,13 +47,13 @@ function TableBody<T>({ data, columns, className }: TableBodyProps<T>) {
         <tr key={index}>
           {columns.map((column) => (
             <td
-              key={column.key}
-              className="py-2 px-1 text-sm align-top"
+              key={String(column.key)}
+              className={`py-2 px-1 text-sm${column.className ? ` ${column.className}` : ""}`}
               {...column.props}
             >
               {column.render
-                ? column.render(item[column.key], item)
-                : String(item[column.key])}
+                ? column.render(item[column.key as keyof T], item)
+                : String(item[column.key as keyof T])}
             </td>
           ))}
         </tr>

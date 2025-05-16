@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import PlaceholderText from "@/components/placeholder-text";
 import { Card, Spinner } from "@/components/ui";
 import { useToasts } from "@/features/toasts";
 import {
@@ -86,13 +87,14 @@ function Urls({ urls, className }: Props) {
       <div className={`flex gap-x-2${className ? ` ${className}` : ""}`}>
         <Card className="h-full w-64">
           <Card.Header>
-            {t("routes.extension.entry.urls.urls")} (
-            {processedUrls?.length ?? 0})
+            {t("routes.extension.entry.urls.urls", {
+              count: processedUrls?.length ?? 0,
+            })}
           </Card.Header>
           <Card.Body className="overflow-y-auto h-66 w-64">
             {processedUrls === undefined ? (
-              <div className="flex items-center justify-center h-full">
-                <Spinner className="my-auto" />
+              <div className="flex flex-col gap-y-4 p-2">
+                <PlaceholderText className="w-full" quantity={5} />
               </div>
             ) : (
               processedUrls.map((url) => (
