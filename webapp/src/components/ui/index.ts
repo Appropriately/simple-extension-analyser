@@ -1,4 +1,5 @@
 export { default as Button } from "./button";
+export { default as ButtonIcon } from "./button-icon";
 export { default as Card } from "./card";
 export { default as CodeBlock } from "./code";
 export { default as FormGroup } from "./forms/form-group";
@@ -7,6 +8,7 @@ export { default as InputDrop } from "./forms/input-drop";
 export { default as Icon } from "./icon";
 export { default as Loading } from "./loading";
 export { default as RouterLink } from "./router-link";
+export { default as Select } from "./select";
 export { default as Spinner } from "./spinner";
 export { default as Table } from "./table";
 export type { TableColumn } from "./table";

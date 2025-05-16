@@ -1,7 +1,8 @@
 {
     "base": {
         "name": "Simple Extension Analyser",
-        "save": "Save"
+        "save": "Save",
+        "add": "Add"
     },
     "routes": {
         "home": {
@@ -14,7 +15,13 @@
         "extension": {
             "extension": {
                 "manifest": "Manifest",
-                "analysis": "Analysis"
+                "analysis": "Analysis",
+                "ai": {
+                    "model": "Model",
+                    "aiAnalysis": "AI Analysis",
+                    "aiAnalysisDescription": "Analyse the extension using your configured AI model to get a better understanding of the extension.",
+                    "aiAnalysisButton": "Analyse"
+                }
             },
             "entry": {
                 "details": "Details",
@@ -52,6 +59,23 @@
                 "placeholder": "Enter your VirusTotal API key",
                 "success": "API key saved successfully",
                 "successMessage": "The API key will be used to scan urls for malicious activity."
+            }
+        },
+        "ai": {
+            "title": "AI Analysis",
+            "provider": {
+                "label": "Provider",
+                "help": "Select the AI provider to use.",
+                "options": {
+                    "gemini": "Gemini"
+                }
+            },
+            "apiKey": {
+                "label": "API Key",
+                "help": "Enter your AI API key to enable AI analysis.",
+                "placeholder": "Enter your AI API key",
+                "success": "API key saved successfully",
+                "successMessage": "The API key will be used to analyse extensions."
             }
         }
     }

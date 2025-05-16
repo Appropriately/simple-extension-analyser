@@ -15,6 +15,7 @@ const COLUMNS: TableColumn<Extension>[] = [
   {
     key: "id",
     label: "ID",
+    className: "align-top",
     render: (value: unknown) => idCell(value as string),
     props: {
       style: {
@@ -25,6 +26,7 @@ const COLUMNS: TableColumn<Extension>[] = [
   {
     key: "name",
     label: "Name",
+    className: "align-top",
     props: {
       style: {
         width: "250px",
@@ -34,6 +36,7 @@ const COLUMNS: TableColumn<Extension>[] = [
   {
     key: "version",
     label: "Version",
+    className: "align-top",
     props: {
       style: {
         width: "150px",
@@ -43,6 +46,7 @@ const COLUMNS: TableColumn<Extension>[] = [
   {
     key: "description",
     label: "Description",
+    className: "align-top",
   },
 ];
 
