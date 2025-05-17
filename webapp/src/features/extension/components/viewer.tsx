@@ -35,12 +35,12 @@ function Viewer({ extension, extensionComponent, entryComponent }: Props) {
 
   return (
     <div className="flex">
-      <div className="w-64 flex-none h-[calc(100vh-3.5rem)]">
-        <div className="p-2 h-12 border-b-1 border-zinc-700">
+      <div className="w-64 flex-none h-[calc(100vh-3.5rem)] flex flex-col">
+        <div className="p-2 border-b-1 border-zinc-700">
           <TreeFilters onChange={(filters) => setFilters(filters)} />
         </div>
 
-        <div className="max-h-[calc(100vh-7rem)] overflow-y-auto overflow-x-hidden p-1">
+        <div className="flex-1 overflow-y-auto overflow-x-hidden p-1">
           {entryTree && <Tree rootNode={entryTree} />}
         </div>
       </div>
