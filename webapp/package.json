@@ -1,5 +1,6 @@
 {
   "name": "webapp",
+  "sideEffects": false,
   "private": true,
   "homepage": "https://appropriately.github.io/simple-extension-analyser",
   "version": "0.0.0",
@@ -12,7 +13,7 @@
     "analyze": "analyze"
   },
   "dependencies": {
-    "@google/genai": "^0.13.0",
+    "@google/genai": "^0.14.1",
     "@reduxjs/toolkit": "^2.8.2",
     "@tanstack/react-router": "^1.120.5",
     "@zip.js/zip.js": "^2.7.61",
@@ -43,7 +44,7 @@
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^16.1.0",
     "tailwindcss": "^4.1.4",
-    "typescript": "~5.7.2",
+    "typescript": "~5.8.3",
     "typescript-eslint": "^8.32.1",
     "vite": "^6.3.5",
     "vite-bundle-analyzer": "^0.20.2"
