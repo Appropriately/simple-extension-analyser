@@ -20,7 +20,10 @@ function Layout() {
     <>
       <Navbar>
         <NavButton>
-          <Link to="/" className="flex items-center gap-2 p-4">
+          <Link
+            to="/"
+            className="flex items-center gap-2 p-4 !text-zinc-200 hover:!no-underline"
+          >
             <Icon
               icon="search"
               className="text-blue-500"
@@ -35,7 +38,7 @@ function Layout() {
           <a
             href="https://github.com/Appropriately/simple-extension-analyser"
             target="_blank"
-            className="flex items-center justify-center w-full h-full px-4"
+            className="flex items-center justify-center w-full h-full px-4 !text-zinc-200"
           >
             <Icon icon="github" height={25} width={25} />
           </a>
@@ -43,7 +46,7 @@ function Layout() {
         <NavButton>
           <Link
             to="/settings"
-            className="flex items-center justify-center w-full h-full px-4"
+            className="flex items-center justify-center w-full h-full px-4 !text-zinc-200"
           >
             <Icon icon="gear" height={25} width={25} />
           </Link>

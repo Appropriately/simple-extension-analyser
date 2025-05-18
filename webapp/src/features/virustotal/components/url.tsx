@@ -28,7 +28,7 @@ function Url({ analysis }: { analysis: UrlAnalysis }) {
 
   return (
     <>
-      <h2 className="mb-2">{meta.url_info.url}</h2>
+      <h3 className="mb-2">{meta.url_info.url}</h3>
 
       <div className="flex gap-x-2">
         <Card className="w-48 h-64 !bg-zinc-800">

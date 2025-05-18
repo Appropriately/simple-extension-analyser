@@ -61,7 +61,7 @@ function Extensions() {
   return (
     <Card>
       <Card.Header>
-        <h1>{t("routes.home.extensions.title")}</h1>
+        <h4>{t("routes.home.extensions.title")}</h4>
       </Card.Header>
       <Card.Body>
         <Table>

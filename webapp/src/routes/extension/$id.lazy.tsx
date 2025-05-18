@@ -14,10 +14,10 @@ const ExtensionNotFound = ({ id }: { id?: string }) => {
   return (
     <div className="container mx-auto pt-5">
       <div className="flex flex-col items-center justify-center">
-        <h1 className="text-3xl font-bold">Extension Not Found</h1>
-        <p className="mt-2 text-lg text-zinc-400">
+        <h1 className="font-bold">Extension Not Found</h1>
+        <h3 className="mt-2">
           The extension with ID '<strong>{id}</strong>' was not found.
-        </p>
+        </h3>
       </div>
     </div>
   );

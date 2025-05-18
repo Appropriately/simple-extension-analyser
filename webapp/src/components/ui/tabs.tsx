@@ -52,9 +52,9 @@ function Tabs({ tabs, className, value, setValue }: Props) {
 
   return (
     <div
-      className={`text-sm font-medium text-center border-b text-zinc-400 border-zinc-700 ${className}`}
+      className={`text-sm font-medium text-center border-b border-zinc-700 ${className}`}
     >
-      <ul className="flex flex-wrap -mb-px">
+      <ul className="flex flex-wrap -mb-px !list-none !pl-0">
         {tabs.map((tab) => (
           <li className="me-2" key={tab.key}>
             <button

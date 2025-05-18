@@ -126,11 +126,6 @@ function EntryView({ extension }: Props) {
         {
           "routes.extension.entry.details": (
             <Card className="mb-3">
-              <Card.Header>
-                <h2 className="text-lg font-semibold">
-                  {entry.filename.split("/").pop()}
-                </h2>
-              </Card.Header>
               <Card.Body>
                 <Table>
                   <Table.Body

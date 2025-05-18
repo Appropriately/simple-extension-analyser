@@ -82,9 +82,7 @@ export function CardContent({ extension, service, models }: Props) {
       ) : (
         <>
           <Card.Body>
-            <p className="">
-              {t("routes.extension.extension.ai.aiAnalysisDescription")}
-            </p>
+            <p>{t("routes.extension.extension.ai.aiAnalysisDescription")}</p>
           </Card.Body>
 
           <Card.Footer className="flex justify-between">

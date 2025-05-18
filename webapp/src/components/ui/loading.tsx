@@ -4,7 +4,7 @@ function Loading() {
   return (
     <div className="container mx-auto py-5">
       <div className="flex justify-center items-center">
-        <h3 className="m-0 text-3xl">Loading...</h3>
+        <h1>Loading...</h1>
         <Spinner />
       </div>
     </div>

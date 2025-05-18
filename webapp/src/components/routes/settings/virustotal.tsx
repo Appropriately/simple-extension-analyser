@@ -26,7 +26,7 @@ function VirusTotal({ className }: Props) {
     <div className={className}>
       <Card>
         <Card.Header>
-          <h1 className="flex items-center">
+          <h4 className="flex items-center">
             {hasApiKey() && (
               <Icon
                 icon="check2-circle"
@@ -36,7 +36,7 @@ function VirusTotal({ className }: Props) {
               />
             )}
             {t("features.virustotal.title")}
-          </h1>
+          </h4>
         </Card.Header>
 
         <Card.Body>

@@ -47,15 +47,9 @@ function InputDrop({ className, onFileChange, ...props }: Props) {
         onDragLeave={onDragLeave}
       >
         <span className="flex items-center space-x-2">
-          <Icon
-            icon="cloud-upload"
-            width={18}
-            height={18}
-            className="text-zinc-300"
-          />
-          <span className="text-zinc-300">
-            Drop files to attach, or{" "}
-            <span className="text-zinc-300 underline">browse</span>
+          <Icon icon="cloud-upload" width={18} height={18} />
+          <span>
+            Drop files to attach, or <span className="underline">browse</span>
           </span>
         </span>
         <input type="file" className="hidden" onChange={onChange} {...props} />

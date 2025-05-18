@@ -12,7 +12,7 @@ function FormGroup({ children, label, help, className }: Props) {
 
   return (
     <div className={`flex flex-col gap-2 ${className ? className : ""}`}>
-      <label htmlFor={id} className="text-sm font-medium text-zinc-300">
+      <label htmlFor={id} className="font-medium">
         {label}
       </label>
       {cloneElement(children, { id })}

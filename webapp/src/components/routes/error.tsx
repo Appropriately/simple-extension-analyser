@@ -17,7 +17,7 @@ function Error({ error }: Props) {
   return (
     <div className="container mx-auto py-5">
       <div className="flex flex-col justify-center items-center">
-        <h3 className="mb-2 text-3xl">Error</h3>
+        <h1 className="mb-2">Error</h1>
 
         <Card className="min-w-128">
           <Card.Header>{name}</Card.Header>

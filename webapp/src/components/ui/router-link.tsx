@@ -6,11 +6,7 @@ interface Props extends LinkProps {
 }
 
 function RouterLink({ children, ...props }: Props) {
-  return (
-    <Link {...props} className="text-blue-400 hover:text-blue-500">
-      {children}
-    </Link>
-  );
+  return <Link {...props}>{children}</Link>;
 }
 
 export default RouterLink;

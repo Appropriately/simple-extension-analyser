@@ -156,10 +156,10 @@ function AI({ className }: Props) {
     <div className={className}>
       <Card>
         <Card.Header>
-          <h1 className="flex items-center">
+          <h4 className="flex items-center">
             <Icon icon="stars" className="inline-block me-2" />
             {t("features.ai.title")}
-          </h1>
+          </h4>
         </Card.Header>
 
         <Card.Body>

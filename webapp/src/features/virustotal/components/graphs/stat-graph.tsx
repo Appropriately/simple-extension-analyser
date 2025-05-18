@@ -12,7 +12,7 @@ const CustomTooltip = ({ active, payload }: TooltipProps<number, string>) => {
     const { name, value } = payload[0];
     return (
       <div className="bg-zinc-700 py-1 px-2 text-sm rounded-sm shadow-md">
-        <p className="text-zinc-200">{`${name}: ${value}`}</p>
+        <p>{`${name}: ${value}`}</p>
       </div>
     );
   }
