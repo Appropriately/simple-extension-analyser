@@ -1,0 +1,17 @@
+{
+    "base": {
+        "save": "Salvează",
+        "add": "Adaugă"
+    },
+    "routes": {
+        "extension": {
+            "extension": {
+                "analysis": "Analiză"
+            },
+            "entry": {
+                "details": "Detalii",
+                "analysis": "Analiză"
+            }
+        }
+    }
+}
