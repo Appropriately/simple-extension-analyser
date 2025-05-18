@@ -19,6 +19,8 @@ export const slice = createSlice({
     addProvider: (state, action: PayloadAction<ProviderConfig>) => {
       const { payload } = action;
       state.providers.push(payload);
+
+      if (state.providers.length === 1) state.activeProvider = payload.type;
     },
     updateProvider: (state, action: PayloadAction<ProviderConfig>) => {
       const { payload } = action;
