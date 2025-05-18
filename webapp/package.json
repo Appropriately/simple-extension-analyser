@@ -13,10 +13,10 @@
   },
   "dependencies": {
     "@google/genai": "^0.13.0",
-    "@reduxjs/toolkit": "^2.8.1",
-    "@tanstack/react-router": "^1.120.3",
+    "@reduxjs/toolkit": "^2.8.2",
+    "@tanstack/react-router": "^1.120.5",
     "@zip.js/zip.js": "^2.7.61",
-    "i18next": "^25.1.2",
+    "i18next": "^25.1.3",
     "lowlight": "^3.3.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
@@ -31,21 +31,21 @@
   "devDependencies": {
     "@eslint/js": "^9.22.0",
     "@stylistic/eslint-plugin": "^4.2.0",
-    "@tailwindcss/vite": "^4.1.6",
-    "@tanstack/router-plugin": "^1.120.3",
-    "@types/node": "^22.15.17",
-    "@types/react": "^19.1.3",
-    "@types/react-dom": "^19.1.4",
+    "@tailwindcss/vite": "^4.1.7",
+    "@tanstack/router-plugin": "^1.120.5",
+    "@types/node": "^22.15.18",
+    "@types/react": "^19.1.4",
+    "@types/react-dom": "^19.1.5",
     "@vitejs/plugin-react": "^4.4.1",
-    "eslint": "^9.26.0",
+    "eslint": "^9.27.0",
     "eslint-plugin-check-file": "^3.2.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^16.1.0",
     "tailwindcss": "^4.1.4",
     "typescript": "~5.7.2",
-    "typescript-eslint": "^8.32.0",
+    "typescript-eslint": "^8.32.1",
     "vite": "^6.3.5",
-    "vite-bundle-analyzer": "^0.20.1"
+    "vite-bundle-analyzer": "^0.20.2"
   }
 }
