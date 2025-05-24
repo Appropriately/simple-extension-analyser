@@ -1,23 +1,40 @@
+.code-block {
+  color: white;
+}
+
 .code-comment {
   color: #6a737d;
 }
+
 .code-tag,
 .code-attr {
   color: #9ecbff;
 }
+
 .code-string,
-.code-title {
+.code-title,
+.code-built_in {
   color: #ff7b72;
 }
-.function_ {
+
+.function_,
+.code-selector-class {
   color: #faef9b;
 }
+
 .code-literal,
 .code-number,
-.code-keyword {
+.code-keyword,
+.code-attribute {
   color: #79c0ff;
 }
+
 .code-property,
-.code-function {
+.code-function,
+.code-selector-id {
   color: #d2a8ff;
+}
+
+.code-selector-tag {
+  color: #3be8a8;
 }
