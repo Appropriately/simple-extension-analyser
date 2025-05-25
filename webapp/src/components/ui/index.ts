@@ -7,6 +7,7 @@ export { default as Input } from "./forms/input";
 export { default as InputDrop } from "./forms/input-drop";
 export { default as Icon } from "./icon";
 export { default as Loading } from "./loading";
+export { default as Modal } from "./modal";
 export { default as RouterLink } from "./router-link";
 export { default as Select } from "./select";
 export { default as Spinner } from "./spinner";
