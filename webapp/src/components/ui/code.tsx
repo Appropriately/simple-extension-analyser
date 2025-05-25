@@ -206,7 +206,7 @@ function CodeBlock({ raw, language }: Props) {
   }
 
   return (
-    <div className="relative">
+    <div className="code-block relative">
       <pre className="bg-black p-2 rounded text-xs overflow-x-auto min-h-[100px]">
         <div className="flex">
           <div className="select-none text-zinc-600 pr-2 mr-2 border-r border-zinc-800 text-right">

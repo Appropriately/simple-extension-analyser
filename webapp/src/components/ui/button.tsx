@@ -1,8 +1,10 @@
 import { ButtonHTMLAttributes, ReactNode } from "react";
 
 const VARIANT_CLASSES = {
-  primary: "bg-blue-500 text-white hover:bg-blue-600 active:bg-blue-700",
-  secondary: "bg-zinc-500 text-white hover:bg-zinc-600 active:bg-zinc-700",
+  primary:
+    "bg-blue-500 text-white hover:bg-blue-600 active:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-400 dark:active:bg-blue-600",
+  secondary:
+    "bg-zinc-500 text-white hover:bg-zinc-600 active:bg-zinc-700 dark:bg-zinc-500 dark:hover:bg-zinc-400 dark:active:bg-zinc-600",
 };
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {

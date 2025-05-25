@@ -37,6 +37,6 @@
 
 - [ ] Solid error handling
 - [ ] Improve rendering of entry tree
-- [ ] Add light mode support
+- [x] Add light mode support
 - [x] Translation support
 - [ ] Allow directories to be selected.

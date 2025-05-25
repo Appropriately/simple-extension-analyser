@@ -22,11 +22,11 @@ function Layout() {
         <NavButton>
           <Link
             to="/"
-            className="flex items-center gap-2 p-4 !text-zinc-200 hover:!no-underline"
+            className="flex items-center gap-2 p-4 !text-zinc-100 hover:!no-underline"
           >
             <Icon
               icon="search"
-              className="text-blue-500"
+              className="dark:text-blue-500"
               height={18}
               width={18}
             />

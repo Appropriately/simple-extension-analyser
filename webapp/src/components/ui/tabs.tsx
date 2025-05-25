@@ -52,17 +52,17 @@ function Tabs({ tabs, className, value, setValue }: Props) {
 
   return (
     <div
-      className={`text-sm font-medium text-center border-b border-zinc-700 ${className}`}
+      className={`text-sm font-medium text-center border-b border-zinc-400 dark:border-zinc-700 ${className}`}
     >
       <ul className="flex flex-wrap -mb-px !list-none !pl-0">
         {tabs.map((tab) => (
           <li className="me-2" key={tab.key}>
             <button
               type="button"
-              className={`inline-block px-4 py-2 border-b-2 rounded-t-sm capitalize [&[aria-current=page]]:bg-zinc-600 [&[aria-current=page]]:text-blue-300 ${
+              className={`inline-block px-4 py-2 border-b-2 rounded-t-sm capitalize [&[aria-current=page]]:bg-zinc-300 dark:[&[aria-current=page]]:bg-zinc-600 dark:[&[aria-current=page]]:text-blue-400 [&[aria-current=page]]:text-blue-500 ${
                 tab.disabled
-                  ? "cursor-not-allowed text-zinc-500"
-                  : "hover:text-zinc-300 hover:border-zinc-300 cursor-pointer hover:bg-zinc-700"
+                  ? "cursor-not-allowed text-zinc-500 dark:text-zinc-400"
+                  : "hover:text-blue-600 dark:hover:text-zinc-300 hover:border-zinc-600 dark:hover:border-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-700 hover:text-zinc-900 dark:hover:text-zinc-300 hover:border-zinc-600 dark:hover:border-zinc-300 cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-700"
               }`}
               aria-current={value === tab.key ? "page" : undefined}
               onClick={tab.disabled ? undefined : () => setValue(tab.key)}

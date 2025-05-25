@@ -102,7 +102,7 @@ function Urls({ urls, className }: Props) {
                   key={url?.href}
                   className={`w-full text-left text-sm px-2 py-1 rounded-md ${
                     hasApiKey() && !isLoading
-                      ? "hover:bg-zinc-800 active:bg-zinc-700 cursor-pointer"
+                      ? "hover:bg-zinc-300 dark:hover:bg-zinc-800 active:bg-zinc-400 dark:active:bg-zinc-700 cursor-pointer"
                       : "cursor-not-allowed text-zinc-400"
                   }`}
                   onClick={() => hasApiKey() && analyse(url)}

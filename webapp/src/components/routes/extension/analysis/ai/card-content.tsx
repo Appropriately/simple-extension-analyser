@@ -87,7 +87,7 @@ export function CardContent({ extension, service, models }: Props) {
 
           <Card.Footer className="flex justify-between">
             <div className="max-w-[500px] flex gap-2 items-center">
-              <label className="text-zinc-300">
+              <label className="text-zinc-600 dark:text-zinc-300">
                 {t("routes.extension.extension.ai.model")}
               </label>
               <Select

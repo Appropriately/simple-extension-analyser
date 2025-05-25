@@ -17,7 +17,10 @@ function FormGroup({ children, label, help, className }: Props) {
       </label>
       {cloneElement(children, { id })}
       {help && (
-        <p id={`${id}-help`} className="text-sm text-zinc-400">
+        <p
+          id={`${id}-help`}
+          className="text-sm text-zinc-700 dark:text-zinc-400"
+        >
           {help}
         </p>
       )}

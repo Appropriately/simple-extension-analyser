@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-import { Icon } from "@/components/ui";
+import { Card, Icon } from "@/components/ui";
 
 import { Toast } from "../types/toast";
 
@@ -52,23 +52,19 @@ function ToastItem({ toast, onClose }: ToastItemProps) {
   };
 
   return (
-    <div
-      className="bg-zinc-700 border-1 border-zinc-600 rounded shadow-lg text-sm min-w-72 max-w-96"
+    <Card
+      className="text-sm min-w-72 max-w-96"
       role="alert"
       aria-live="assertive"
       aria-atomic="true"
     >
-      {toast.header && typeof toast.header === "string" ? (
-        <div className="border-b-1 border-zinc-600 p-2 text-zinc-400 flex items-center">
-          {typeIcon()}
-          {toast.header}
-        </div>
-      ) : (
-        toast.header
-      )}
-      <div className="p-2">{toast.body}</div>
-      {toast.footer && <div className="p-2">{toast.footer}</div>}
-    </div>
+      <Card.Header className="flex items-center">
+        {typeIcon()}
+        <span>{toast.header}</span>
+      </Card.Header>
+      <Card.Body>{toast.body}</Card.Body>
+      {toast.footer && <Card.Footer>{toast.footer}</Card.Footer>}
+    </Card>
   );
 }
 

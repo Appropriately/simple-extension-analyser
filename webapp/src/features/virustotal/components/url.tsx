@@ -31,7 +31,7 @@ function Url({ analysis }: { analysis: UrlAnalysis }) {
       <h3 className="mb-2">{meta.url_info.url}</h3>
 
       <div className="flex gap-x-2">
-        <Card className="w-48 h-64 !bg-zinc-800">
+        <Card className="w-48 h-64 !bg-zinc-100 dark:!bg-zinc-800">
           <Card.Body>
             {Object.keys(data.attributes.stats).length > 0 && (
               <div className="flex items-center justify-center h-48 mb-1">
@@ -48,13 +48,13 @@ function Url({ analysis }: { analysis: UrlAnalysis }) {
           </Card.Body>
         </Card>
 
-        <Card className="grow h-64 !bg-zinc-800">
+        <Card className="grow h-64 !bg-zinc-100 dark:!bg-zinc-800">
           <Card.Body>
             <div className="overflow-y-auto h-60">
               <Table>
                 <Table.Header
                   columns={COLUMNS}
-                  className="border-b border-zinc-700 bg-zinc-800"
+                  className="border-b border-zinc-400 bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-800"
                 />
                 <Table.Body
                   data={

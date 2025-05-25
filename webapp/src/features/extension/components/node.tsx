@@ -39,7 +39,7 @@ function Node({ node, level }: Props) {
 
   return (
     <ul
-      className="ms-1 ps-1 [&:not(:first-child)]:border-l-1 border-zinc-700 !list-none !pl-0"
+      className="ms-1 [&:not(:first-child)]:border-l-1 border-zinc-700 !list-none !pl-0"
       aria-level={level}
     >
       {node.children.map((child) => (

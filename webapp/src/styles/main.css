@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 body {
-  @apply text-zinc-200 bg-zinc-800 w-screen;
+  @apply text-zinc-900 bg-zinc-100 dark:text-zinc-200 dark:bg-zinc-800 w-screen;
 }
 
 p > *:not(:last-child) {
@@ -13,7 +13,7 @@ p > *:not(:last-child) {
 }
 
 a {
-  @apply text-blue-400 hover:text-blue-300 hover:underline;
+  @apply text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 hover:underline;
 }
 
 ul {

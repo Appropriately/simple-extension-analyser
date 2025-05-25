@@ -17,7 +17,7 @@ function PlaceholderText({ className, quantity = 1, seed }: Props) {
       {Array.from({ length: quantity }).map((_, index) => (
         <div
           key={index}
-          className={`h-4 bg-zinc-600 rounded animate-pulse ${
+          className={`h-4 bg-zinc-400 dark:bg-zinc-600 rounded animate-pulse ${
             SIZES[random.genrand_int31() % SIZES.length]
           }${className ? ` ${className}` : ""}`}
         />
