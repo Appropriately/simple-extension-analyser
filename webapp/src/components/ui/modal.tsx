@@ -42,9 +42,9 @@ function Modal({ children, open = false }: ModalProps) {
     <>
       <dialog
         ref={ref}
-        className="bg-transparent min-w-96 max-w-[8000px] min-h-32 top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 backdrop:bg-zinc-900/60"
+        className="bg-transparent text-zinc-900 dark:text-zinc-200 min-w-96 max-w-[8000px] min-h-32 top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 backdrop:bg-zinc-900/60"
       >
-        <Card className="text-zinc-100">{childrenWithProps}</Card>
+        <Card>{childrenWithProps}</Card>
       </dialog>
 
       <button onClick={() => ref.current?.showModal()}>Open</button>
