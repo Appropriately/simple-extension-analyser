@@ -2,6 +2,7 @@ export { default as Button } from "./button";
 export { default as ButtonIcon } from "./button-icon";
 export { default as Card } from "./card";
 export { default as CodeBlock } from "./code";
+export { default as Form } from "./form";
 export { default as FormGroup } from "./forms/form-group";
 export { default as Input } from "./forms/input";
 export { default as InputDrop } from "./forms/input-drop";
